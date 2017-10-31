@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-const App = require('../App.js').default
- 
+import App from './App';
+
 AppRegistry.registerComponent('blueberry', () => App);
