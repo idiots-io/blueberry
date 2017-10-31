@@ -1,0 +1,3 @@
+rootProject.name = 'blueberry'
+
+include ':app'
