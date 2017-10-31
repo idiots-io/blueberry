@@ -1,11 +1,14 @@
 import React from 'react'
 import { TabNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/es/integration/react'
+
 import Settings from './pages/Settings'
 import Summary from './pages/Summary'
 import Timer from './pages/Timer'
 import Todo from './pages/Todo'
-import store from './store'
+import Loading from './components/Loading'
+import configureStore from './store'
 
 const AppNavigator = TabNavigator({
   Todo: { screen: Todo },
@@ -14,8 +17,12 @@ const AppNavigator = TabNavigator({
   Settings: { screen: Settings }
 })
 
+const { persistor, store } = configureStore()
+
 export default () => (
   <Provider store={store}>
-    <AppNavigator />
+    <PersistGate persistor={persistor} loading={<Loading />}>
+      <AppNavigator />
+    </PersistGate>
   </Provider>
 )
