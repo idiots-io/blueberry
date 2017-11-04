@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import logger from 'redux-logger'
-import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
+import storage from 'redux-persist/lib/storage'
 import reducers from './reducers' // where reducers is a object of reducers
 
 const config = {
@@ -11,7 +11,7 @@ const config = {
 
 const createStoreWithMiddleware = applyMiddleware(logger)(createStore)
 
-const reducer = persistCombineReducers(config, { reducers })
+const reducer = persistCombineReducers(config, { app: reducers })
 
 export default () => {
   const store = createStoreWithMiddleware(reducer)

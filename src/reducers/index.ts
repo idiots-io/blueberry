@@ -44,12 +44,10 @@ interface Action {
 export default (state = DEFAULT_STATE, action: Action) => {
   if (action.type === 'ADD_TODO') {
     return {
-      todos: [...state.todos, action.payload],
-      ...state
+      ...state,
+      todos: [...state.todos, action.payload]
     }
   }
 
-  return {
-    ...state
-  }
+  return state
 }
