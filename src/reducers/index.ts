@@ -24,7 +24,7 @@ interface Session {
   todoId: Number
 }
 
-interface Todo {
+export interface Todo {
   title: String
   isDone: Boolean
   createdAt: Date
@@ -36,7 +36,7 @@ interface State {
   settings: Object
 }
 
-interface Action {
+export interface Action {
   type: String
   payload: any
 }

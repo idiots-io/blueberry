@@ -2,8 +2,15 @@ import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions/todos'
+import { Action, Todo } from '../reducers'
 
-class Todo extends React.Component {
+namespace TodoComponent {
+  export interface Props {
+    todos: Todo[]
+    addTodo: (input: string) => Action
+  }
+}
+class TodoComponent extends React.Component<TodoComponent.Props> {
   render() {
     return (
       <View>
@@ -45,4 +52,4 @@ export default connect(
   {
     addTodo
   }
-)(Todo)
+)(TodoComponent)
