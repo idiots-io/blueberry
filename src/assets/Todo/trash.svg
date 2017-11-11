@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>trash copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="todo_swipe" transform="translate(-255.000000, -320.000000)" stroke="#FFFFFF" stroke-width="1.5">
+            <g id="trash-copy" transform="translate(256.000000, 321.000000)">
+                <polygon id="Shape" points="17.9090909 22 4.09090909 22 3 3 19 3"></polygon>
+                <path d="M19,3 L22,3" id="Shape"></path>
+                <path d="M3,3 L0,3" id="Shape"></path>
+                <polyline id="Shape" points="8 2 8 0 15 0 15 2"></polyline>
+                <path d="M7,6 L8,20" id="Shape"></path>
+                <path d="M16,6 L15,20" id="Shape"></path>
+                <path d="M11,6 L11,20" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="244px" height="68px" viewBox="0 0 244 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="0%" x2="127.987199%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#377FD8" offset="0%"></stop>
+            <stop stop-color="#4551F6" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="226" height="50" rx="25"></rect>
+        <filter x="-6.4%" y="-25.0%" width="112.8%" height="158.0%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.121568627   0 0 0 0 0.305882353   0 0 0 0 0.607843137  0 0 0 0.413043478 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <rect id="path-4" x="0" y="0" width="226" height="50" rx="25"></rect>
+        <ellipse id="path-6" cx="26" cy="25.5" rx="26" ry="25.5"></ellipse>
+        <rect id="path-8" x="0" y="0" width="226" height="50" rx="25"></rect>
+        <ellipse id="path-10" cx="33" cy="35" rx="33" ry="35"></ellipse>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="timer" transform="translate(-66.000000, -518.000000)">
+            <g id="Group-16" transform="translate(70.000000, 525.000000)">
+                <g id="Group-5" transform="translate(5.000000, 0.000000)">
+                    <g id="Rectangle-2-Copy-2">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                        <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+                    </g>
+                    <g id="Group-8">
+                        <g id="Group-6-Copy">
+                            <mask id="mask-5" fill="white">
+                                <use xlink:href="#path-4"></use>
+                            </mask>
+                            <g id="Mask"></g>
+                            <g mask="url(#mask-5)">
+                                <g transform="translate(34.000000, 31.000000) scale(-1, 1) translate(-34.000000, -31.000000) translate(1.000000, 1.000000)">
+                                    <ellipse id="Oval-Copy-3" fill="#FFFFFF" opacity="0.384057971" cx="40" cy="34.5" rx="26" ry="25.5"></ellipse>
+                                    <g id="Oval-Copy-3" stroke-width="1" fill="none" transform="translate(14.000000, 9.000000)">
+                                        <mask id="mask-7" fill="white">
+                                            <use xlink:href="#path-6"></use>
+                                        </mask>
+                                        <use id="Mask" fill="#FFFFFF" opacity="0" xlink:href="#path-6"></use>
+                                        <ellipse fill="#FFFFFF" opacity="0.543478261" mask="url(#mask-7)" cx="42.6111111" cy="9.20833333" rx="12.2777778" ry="12.0416667"></ellipse>
+                                    </g>
+                                    <g id="Group-11" stroke-width="1" fill="none" transform="translate(22.000000, 27.000000)">
+                                        <ellipse id="Oval-Copy-3" fill="#1F4E9B" cx="1.44444444" cy="1.42857143" rx="1.44444444" ry="1.42857143"></ellipse>
+                                        <ellipse id="Oval-Copy-4" fill="#1F4E9B" cx="11.5555556" cy="1.42857143" rx="1.44444444" ry="1.42857143"></ellipse>
+                                        <path d="M4.91111111,10.8571429 C6.6980591,10.8571429 8.14666667,9.57795643 8.14666667,8 C8.14666667,6.42204357 6.6980591,5.14285714 4.91111111,5.14285714" id="Oval-Copy-4" fill="#1F4E9B" transform="translate(6.528889, 8.000000) rotate(-270.000000) translate(-6.528889, -8.000000) "></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                        <g id="Group-10" transform="translate(113.000000, 25.000000) scale(1, -1) translate(-113.000000, -25.000000) ">
+                            <g id="Oval-Copy-3">
+                                <mask id="mask-9" fill="white">
+                                    <use xlink:href="#path-8"></use>
+                                </mask>
+                                <g id="Mask"></g>
+                                <g mask="url(#mask-9)">
+                                    <g transform="translate(162.000000, -5.000000)">
+                                        <mask id="mask-11" fill="white">
+                                            <use xlink:href="#path-10"></use>
+                                        </mask>
+                                        <use id="Mask" stroke="none" fill="#FFFFFF" fill-rule="evenodd" opacity="0" xlink:href="#path-10"></use>
+                                        <ellipse id="Oval-Copy-3" stroke="none" fill="#FFFFFF" fill-rule="evenodd" opacity="0.18115942" mask="url(#mask-11)" cx="46.0140845" cy="21" rx="19.9859155" ry="21"></ellipse>
+                                    </g>
+                                </g>
+                                <ellipse fill="#FFFFFF" opacity="0.18115942" mask="url(#mask-9)" cx="188.004098" cy="1" rx="19.9139344" ry="21"></ellipse>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

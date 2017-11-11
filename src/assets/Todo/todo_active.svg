@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="33px" height="41px" viewBox="0 0 33 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>document</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-33.3%" y="-15.6%" width="162.5%" height="146.9%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <polygon id="path-2" points="24 6.58 24 32 0 31 0 0 17.25 0"></polygon>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="todo" transform="translate(-30.000000, -611.000000)">
+            <g id="Group" transform="translate(27.000000, 613.000000)">
+                <g id="document" filter="url(#filter-1)" transform="translate(8.000000, 0.000000)">
+                    <polygon id="Shape" stroke="#377FD8" stroke-width="1.5" fill="#377FD8" stroke-linecap="round" stroke-linejoin="round" points="23 6.58 23 32 0 32 0 1 17.25 1"></polygon>
+                    <g id="Shape">
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <g id="Mask"></g>
+                        <polygon stroke="#FFFFFF" stroke-width="1.5" fill="#FFFFFF" opacity="0.644927536" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-3)" points="25 7 16 -2 16 7"></polygon>
+                    </g>
+                    <path d="M4,18 L18,18" id="Shape" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M4,13 L18,13" id="Shape" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M4,22 L18,22" id="Shape" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M4,26 L18,26" id="Shape" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

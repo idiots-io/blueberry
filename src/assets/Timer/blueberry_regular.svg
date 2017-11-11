@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="156px" height="156px" viewBox="0 0 156 156" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 7</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-3.7%" y="-2.3%" width="107.3%" height="107.3%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.36 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <circle id="path-2" cx="74.3697479" cy="74.3697479" r="74.3697479"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="timer" transform="translate(-110.000000, -322.000000)">
+            <g id="Group-9" transform="translate(0.000000, 195.000000)">
+                <g transform="translate(-74.000000, 66.000000)" id="Group-7">
+                    <g transform="translate(187.000000, 62.000000)">
+                        <g id="Group-8-Copy-11" filter="url(#filter-1)">
+                            <g id="Oval-Copy-3" transform="translate(0.630252, 0.630252)">
+                                <mask id="mask-3" fill="white">
+                                    <use xlink:href="#path-2"></use>
+                                </mask>
+                                <use id="Mask" fill="#377FD8" xlink:href="#path-2"></use>
+                                <circle fill="#FFFFFF" opacity="0.152060688" mask="url(#mask-3)" cx="113.413866" cy="35.3256303" r="35.3256303"></circle>
+                            </g>
+                        </g>
+                        <g id="Group-11" transform="translate(60.000000, 27.000000)" fill="#FFFFFF">
+                            <circle id="Oval-Copy-3" cx="3.21428571" cy="3.21428571" r="3.21428571"></circle>
+                            <circle id="Oval-Copy-4" cx="26.7857143" cy="3.21428571" r="3.21428571"></circle>
+                            <path d="M11.4285714,23.5714286 C15.3734625,23.5714286 18.5714286,20.8531574 18.5714286,17.5 C18.5714286,14.1468426 15.3734625,11.4285714 11.4285714,11.4285714" id="Oval-Copy-4" transform="translate(15.000000, 17.500000) rotate(-270.000000) translate(-15.000000, -17.500000) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

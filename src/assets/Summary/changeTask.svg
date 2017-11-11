@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="20px" viewBox="0 0 22 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>refresh-ccw</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="summary" transform="translate(-333.000000, -98.000000)" stroke="#377FD8" stroke-width="1.5">
+            <g id="refresh-ccw" transform="translate(334.000000, 99.000000)">
+                <polyline id="Shape" points="20 14.4666667 18.0666667 10.8 14.3333333 12.2"></polyline>
+                <polyline id="Shape" points="0 2.4 1.73333333 6.13333333 5.53333333 5.06666667"></polyline>
+                <path d="M1.73333333,6.13333333 C2.8,2.6 6.06666667,0 9.86666667,0 C13.6666667,0 16.8666667,2.53333333 18,6.06666667" id="Shape"></path>
+                <path d="M18.0666667,10.8 C17.1333333,14.5333333 13.8,17.3333333 9.86666667,17.3333333 C5.93333333,17.3333333 2.6,14.6 1.66666667,10.8666667" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

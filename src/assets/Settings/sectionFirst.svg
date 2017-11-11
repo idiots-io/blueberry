@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="69px" height="31px" viewBox="0 0 69 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="67" height="31"></rect>
+        <circle id="path-3" cx="22" cy="22" r="22"></circle>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="setting" transform="translate(-19.000000, -84.000000)">
+            <g id="Group-5" transform="translate(19.000000, 84.000000)">
+                <g id="Group-6-Copy">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <g id="Mask"></g>
+                    <g mask="url(#mask-2)">
+                        <g transform="translate(22.000000, 22.000000) scale(-1, 1) translate(-22.000000, -22.000000) ">
+                            <circle id="Oval-Copy-3" fill="#377FD8" cx="22" cy="22" r="22"></circle>
+                            <g id="Oval-Copy-3" stroke-width="1" fill="none">
+                                <mask id="mask-4" fill="white">
+                                    <use xlink:href="#path-3"></use>
+                                </mask>
+                                <g id="Mask" opacity="0"></g>
+                                <circle fill="#81ADE3" opacity="0.543478261" mask="url(#mask-4)" cx="36.0555556" cy="7.94444444" r="10.3888889"></circle>
+                            </g>
+                            <g id="Group-11" stroke-width="1" fill="none" transform="translate(6.000000, 16.000000)">
+                                <ellipse id="Oval-Copy-3" fill="#FFFFFF" cx="1.22222222" cy="1.14285714" rx="1.22222222" ry="1.14285714"></ellipse>
+                                <ellipse id="Oval-Copy-4" fill="#FFFFFF" cx="9.77777778" cy="1.14285714" rx="1.22222222" ry="1.14285714"></ellipse>
+                                <path d="M4.15555556,8.68571429 C5.66758847,8.68571429 6.89333333,7.66236514 6.89333333,6.4 C6.89333333,5.13763486 5.66758847,4.11428571 4.15555556,4.11428571" id="Oval-Copy-4" fill="#FFFFFF" transform="translate(5.524444, 6.400000) rotate(-270.000000) translate(-5.524444, -6.400000) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+                <g id="clock" transform="translate(54.000000, 8.000000)" stroke="#377FD8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle id="Oval" cx="7" cy="7" r="7"></circle>
+                    <polyline id="Shape" points="7 1.77333333 7 7 9.89333333 9.89333333"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

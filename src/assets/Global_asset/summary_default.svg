@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 47 (45396) - http://www.bohemiancoding.com/sketch -->
+    <title>bar-chart-1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="todo" transform="translate(-223.000000, -620.000000)" stroke-width="1.5" stroke="#377FD8">
+            <g id="Group-4" transform="translate(224.000000, 621.000000)">
+                <g id="bar-chart-1">
+                    <rect id="Rectangle-path" x="0" y="15.1333333" width="2.86666667" height="4.86666667"></rect>
+                    <rect id="Rectangle-path" x="5.73333333" y="6.26666667" width="2.86666667" height="13.7333333"></rect>
+                    <rect id="Rectangle-path" x="11.4" y="10.8" width="2.86666667" height="9.2"></rect>
+                    <rect id="Rectangle-path" x="17.1333333" y="0" width="2.86666667" height="20"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
