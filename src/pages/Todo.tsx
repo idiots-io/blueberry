@@ -3,6 +3,8 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions/todos'
 import { Action, Todo } from '../reducers'
+import PageLayout from '../components/PageLayout'
+import Header from '../components/Header'
 
 namespace TodoComponent {
   export interface Props {
@@ -13,8 +15,8 @@ namespace TodoComponent {
 class TodoComponent extends React.Component<TodoComponent.Props> {
   render() {
     return (
-      <View>
-        <View style={styles.statusBar} />
+      <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
+        <Header />
         <Text>Todo Page!!!!!</Text>
         <TouchableOpacity
           style={styles.button}
@@ -28,7 +30,7 @@ class TodoComponent extends React.Component<TodoComponent.Props> {
             </View>
           ))}
         </View>
-      </View>
+      </PageLayout>
     )
   }
 }
