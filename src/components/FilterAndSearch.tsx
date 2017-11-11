@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 5,
     shadowColor: 'gray',
-    shadowOffset: { height: 10, width: 0 }
+    shadowOffset: { height: 10, width: 0 },
+    zIndex: 10
   },
   selectedTabText: {
     color: fontColor.blue,
