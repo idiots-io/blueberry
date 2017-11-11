@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(245, 245, 245)',
     width: '100%',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingTop: 12,
+    paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'

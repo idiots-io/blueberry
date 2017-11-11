@@ -5,6 +5,7 @@ import { addTodo } from '../actions/todos'
 import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
+import FilterAndSearch from '../components/FilterAndSearch'
 
 namespace TodoComponent {
   export interface Props {
@@ -17,7 +18,7 @@ class TodoComponent extends React.Component<TodoComponent.Props> {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
-        <Text>Todo Page!!!!!</Text>
+        <FilterAndSearch />
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.props.addTodo('dummy todo')}>
