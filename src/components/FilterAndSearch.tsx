@@ -54,6 +54,7 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
     </View>
     <TouchableOpacity style={styles.searchBtnWrapper}>
       <Image source={require('../../src/assets/Todo/search.png')} />
+      {isSearchMode}
     </TouchableOpacity>
   </View>
 )

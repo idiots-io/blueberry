@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  View,
   StyleSheet,
   Text,
   ImageBackground,
@@ -8,7 +7,7 @@ import {
 } from 'react-native'
 
 const AddBlueberryBtn = ({ onPress = () => {} }) => (
-  <TouchableOpacity activeOpacity={0.8}>
+  <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
     <ImageBackground
       style={styles.btnWrapper}
       source={require('../../src/assets/Todo/addBtn.png')}>

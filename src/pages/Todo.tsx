@@ -24,7 +24,7 @@ class TodoComponent extends React.Component<TodoComponent.Props> {
         <TouchableOpacity
           style={styles.button}
           onPress={() => this.props.addTodo('dummy todo')}>
-          <Text>Add TODO</Text>
+          <Text>Add TOD</Text>
         </TouchableOpacity>
         <View>
           {this.props.todos.map(todo => (
