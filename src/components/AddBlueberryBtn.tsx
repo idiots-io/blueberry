@@ -10,7 +10,7 @@ const AddBlueberryBtn = ({ onPress = () => {} }) => (
   <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
     <ImageBackground
       style={styles.btnWrapper}
-      source={require('../../src/assets/Todo/addBtn.png')}>
+      source={require('../assets/Todo/addBtn.png')}>
       <Text style={styles.addTodoText}>+ 블루베리 추가하기</Text>
     </ImageBackground>
   </TouchableOpacity>

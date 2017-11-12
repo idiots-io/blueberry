@@ -98,7 +98,7 @@ class TodoComponent extends React.Component<
           marginBottom: 5
         }}>
         <Image
-          source={require('../../src/assets/Global/todo_default.png')}
+          source={require('../assets/Global/todo_default.png')}
           style={{ height: 22, width: 16 }}
         />
       </View>

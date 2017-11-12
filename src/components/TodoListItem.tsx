@@ -9,7 +9,7 @@ const TodoListItem = ({ text, sessionCount = 0 }) => (
         <Text style={styles.text}>{text}</Text>
       </View>
       <ImageBackground
-        source={require('../../src/assets/Todo/blueberry_ing.png')}
+        source={require('../assets/Todo/blueberry_ing.png')}
         style={styles.countWrapper}>
         <Text style={styles.countText}>{sessionCount}</Text>
       </ImageBackground>
