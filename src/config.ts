@@ -18,7 +18,8 @@ export const subColor = {
 export const fontColor = {
   main: '#1F243C',
   sub: '#A8B7C7',
-  blue: '#377FD8'
+  blue: '#377FD8',
+  dark: '#2139A3'
 }
 
 export const fontFamily = {

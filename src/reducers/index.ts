@@ -48,6 +48,9 @@ export default (state = DEFAULT_STATE, action: Action) => {
       todos: [...state.todos, action.payload]
     }
   }
+  if (action.type === 'RESET_TODOS') {
+    return { ...state, todos: [] }
+  }
 
   return state
 }
