@@ -88,13 +88,20 @@ class TodoComponent extends React.Component<
   }
 
   static navigationOptions = {
-    tabBarLabel: '할일 목록',
+    tabBarLabel: '할 일 목록',
     // Note: By default the icon is only shown on iOS. Search the showIcon option below.
     tabBarIcon: () => (
-      <Image
-        source={require('../../src/assets/Global/todo_default.png')}
-        style={{ height: 20, width: 20, padding: 5 }}
-      />
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: 5
+        }}>
+        <Image
+          source={require('../../src/assets/Global/todo_default.png')}
+          style={{ height: 22, width: 16 }}
+        />
+      </View>
     )
   }
 

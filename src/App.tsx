@@ -25,6 +25,13 @@ const AppNavigator = TabNavigator(
         height: 60,
         borderTopWidth: 0,
         backgroundColor: subColor.pale
+      },
+      tabStyle: {
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+      },
+      labelStyle: {
+        marginBottom: 7
       }
     }
   }
