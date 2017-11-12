@@ -9,13 +9,26 @@ import Timer from './pages/Timer'
 import Todo from './pages/Todo'
 import Loading from './components/Loading'
 import configureStore from './store'
+import { subColor } from './config'
 
-const AppNavigator = TabNavigator({
-  Todo: { screen: Todo },
-  Timer: { screen: Timer },
-  Summary: { screen: Summary },
-  Settings: { screen: Settings }
-})
+const AppNavigator = TabNavigator(
+  {
+    Todo: { screen: Todo },
+    Timer: { screen: Timer },
+    Summary: { screen: Summary },
+    Settings: { screen: Settings }
+  },
+  {
+    animationEnabled: true,
+    tabBarOptions: {
+      style: {
+        height: 60,
+        borderTopWidth: 0,
+        backgroundColor: subColor.pale
+      }
+    }
+  }
+)
 
 const { persistor, store } = configureStore()
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, ListView } from 'react-native'
+import { Text, View, ListView, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions/todos'
 import { Action, Todo } from '../reducers'
@@ -85,6 +85,17 @@ class TodoComponent extends React.Component<
         ]
       })
     }
+  }
+
+  static navigationOptions = {
+    tabBarLabel: '할일 목록',
+    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
+    tabBarIcon: () => (
+      <Image
+        source={require('../../src/assets/Global/todo_default.png')}
+        style={{ height: 20, width: 20, padding: 5 }}
+      />
+    )
   }
 
   componentDidUpdate(prevProps) {
