@@ -22,7 +22,7 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
           }}>
           {selectedTab === 'todo' ? (
             <Image
-              source={require('../../src/assets/Global/select_circle.png')}
+              source={require('../assets/Global/select_circle.png')}
             />
           ) : null}
         </View>
@@ -46,14 +46,14 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
           }}>
           {selectedTab === 'completed' ? (
             <Image
-              source={require('../../src/assets/Global/select_circle.png')}
+              source={require('../assets/Global/select_circle.png')}
             />
           ) : null}
         </View>
       </TouchableOpacity>
     </View>
     <TouchableOpacity style={styles.searchBtnWrapper}>
-      <Image source={require('../../src/assets/Todo/search.png')} />
+      <Image source={require('../assets/Todo/search.png')} />
       {isSearchMode}
     </TouchableOpacity>
   </View>

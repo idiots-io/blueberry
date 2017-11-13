@@ -4,7 +4,7 @@ import { fontColor } from '../config'
 
 const Header = ({ todaysCount = 100 }) => (
   <View style={styles.headerWrapper}>
-    <Image source={require('../../src/assets/Global/logo_upper.png')} />
+    <Image source={require('../assets/Global/logo_upper.png')} />
     <Text style={styles.headerText}>
       오늘{' '}
       <Text style={{ color: fontColor.blue }}>
