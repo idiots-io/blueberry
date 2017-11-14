@@ -16,7 +16,7 @@ const AppNavigator = TabNavigator(
     Todo: { screen: Todo },
     Timer: { screen: Timer },
     Summary: { screen: Summary },
-    Settings: { screen: Settings }
+    Settings: { screen: Settings },
   },
   {
     animationEnabled: true,
@@ -24,17 +24,17 @@ const AppNavigator = TabNavigator(
       style: {
         height: 60,
         borderTopWidth: 0,
-        backgroundColor: subColor.pale
+        backgroundColor: subColor.pale,
       },
       tabStyle: {
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
       },
       labelStyle: {
-        marginBottom: 7
-      }
-    }
-  }
+        marginBottom: 10,
+      },
+    },
+  },
 )
 
 const { persistor, store } = configureStore()
