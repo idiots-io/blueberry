@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, Image } from 'react-native'
 // import Hr from './Hr'
 
-const SettingSectionHeader = section => (
+const SettingSectionHeader = ({ section }) => (
   <View style={styles.listItemWrapper}>
     {/* {console.log(section)} */}
     {section == 'intervalSection' ? (
