@@ -17,7 +17,26 @@ namespace Timer {
     timers: { text: string, sessionCount: number }[]
   }
 }
-export default class Timer extends React.Component<Timer.Props> {
+export default class Timer extends React.Component<Timer.Props, Timer.State> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      timers: [
+        {
+          text: 'hi',
+          sessionCount: 100,
+        },
+        {
+          text: 'hi',
+          sessionCount: 200,
+        },
+        {
+          text: 'hi',
+          sessionCount: 300,
+        },
+      ]
+    }
+  }
 
   _renderTimers() {
     return (
@@ -38,10 +57,15 @@ export default class Timer extends React.Component<Timer.Props> {
           <Carousel
             style={styles.wrapper}
             sliderWidth={Dimensions.get('window').width}
-            sliderHeight={Dimensions.get('window').width}
             itemWidth={150}
-            data={[{sessionCount: 10}, {sessionCount: 20}]}
+            data={this.state.timers}
             renderItem={this._renderTimers}
+            onSnapToItem={(index: number) => {
+              const nextState = this.state;
+              nextState.timers[index].sessionCount = 0;
+              this.setState(nextState);
+              console.log(nextState.timers);
+            }}
           />
           {/* <StartTimerBtn
             onPress={() => { console.log('hi') }}
@@ -61,7 +85,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain'
   },
   CarouselItemWrapper: {
-    height: 150,
+    height: 400,
     width: 150,
     // flexDirection: 'column',
     justifyContent: 'center',
