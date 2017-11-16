@@ -1,51 +1,56 @@
 import React from 'react'
-import { StyleSheet, ImageBackground, Text, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  Text,
+  Dimensions,
+  View,
+  ViewStyle,
+  TextStyle,
+  ImageStyle,
+} from 'react-native';
+import { connect } from 'react-redux';
 const Carousel = require('react-native-snap-carousel').default;
 // import Carousel from 'react-native-snap-carousel';
+import { filter } from 'lodash';
 
-import { Todo } from '../reducers';
+import { State, Todo } from '../reducers';
 
 import PageLayout from '../components/PageLayout';
 import Header from '../components/Header';
-// import StartTimerBtn from '../components/StartTimerBtn';
+import StartTimerBtn from '../components/StartTimerBtn';
 
-namespace Timer {
+interface Timer {
+  todo: Todo;
+  sessionsCount: number;
+};
+
+namespace TimersPage {
   export interface Props {
-    todos: Todo[]
+    timers: Timer[];
   }
   export interface State {
-    timers: { text: string, sessionCount: number }[]
+    selectedTimerIndex: number;
   }
 }
-export default class Timer extends React.Component<Timer.Props, Timer.State> {
+class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
   constructor(props) {
     super(props);
     this.state = {
-      timers: [
-        {
-          text: 'hi',
-          sessionCount: 100,
-        },
-        {
-          text: 'hi',
-          sessionCount: 200,
-        },
-        {
-          text: 'hi',
-          sessionCount: 300,
-        },
-      ]
-    }
+      selectedTimerIndex: 0,
+    };
   }
 
-  _renderTimers() {
+  _renderTimers = ({ item, index }: { item: Timer, index: number }) => {
     return (
-      <ImageBackground
-        style={styles.CarouselItemWrapper}
-        imageStyle={styles.image}
-        source={require('../assets/Timer/blueberry_dark.png')}>
-        <Text style={styles.text}>{100}</Text>
-      </ImageBackground>
+      <View style={styles.timer}>
+        <Text>{this.state.selectedTimerIndex === index ? '' : item.todo.title}</Text>
+        <Image
+          style={styles.timerImage}
+          source={require('../assets/Timer/blueberry_dark.png')}>
+          <Text style={styles.timerSessionCounter}>{item.sessionsCount}</Text>
+        </Image>
+      </View>
     )
   }
 
@@ -53,47 +58,91 @@ export default class Timer extends React.Component<Timer.Props, Timer.State> {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
-          <Text>생성일   오늘 2017/10/10</Text>
-          <Carousel
-            style={styles.wrapper}
-            sliderWidth={Dimensions.get('window').width}
-            itemWidth={150}
-            data={this.state.timers}
-            renderItem={this._renderTimers}
-            onSnapToItem={(index: number) => {
-              const nextState = this.state;
-              nextState.timers[index].sessionCount = 0;
-              this.setState(nextState);
-              console.log(nextState.timers);
-            }}
-          />
-          {/* <StartTimerBtn
-            onPress={() => { console.log('hi') }}
-          /> */}
+          <View
+            style={styles.pageWrapper}
+          >
+            <View style={styles.createdDateText}>
+              <Text style={{ color: '#162e80', fontSize: 15 }}>생성일{'   '}</Text>
+              <Text style={{ color: '#a8b7c7', fontSize: 15 }}>
+                {this.props.timers[this.state.selectedTimerIndex].todo.createdAt.toDateString()}
+              </Text>
+            </View>
+            <Text style={styles.titleText}>
+              {this.props.timers[this.state.selectedTimerIndex].todo.title}
+            </Text>
+            <Carousel
+              style={styles.carousel}
+              sliderWidth={Dimensions.get('window').width}
+              itemWidth={Dimensions.get('window').width * 0.5}
+              data={this.props.timers}
+              renderItem={this._renderTimers}
+              onSnapToItem={(index: number) => {
+                this.setState({ selectedTimerIndex: index });
+              }}
+            />
+            <StartTimerBtn
+              onPress={() => { console.log('hi') }}
+            />
+          </View>
       </PageLayout>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    height: 400,
+interface StyleTypes {
+  pageWrapper: ViewStyle;
+  createdDateText: ViewStyle;
+  titleText: TextStyle;
+  carousel: ViewStyle;
+  timer: ViewStyle,
+  timerImage: ImageStyle,
+  timerSessionCounter: TextStyle;
+};
+const styles = StyleSheet.create<StyleTypes>({
+  pageWrapper: {
+    alignItems: 'center',
+  },
+  createdDateText: {
+    marginTop: Dimensions.get('window').height/10,
+    flexDirection: 'row',
+    marginBottom: 15,
+  },
+  titleText: {
+    marginBottom: Dimensions.get('window').height/20,
+    fontSize: 35,
+    color: '#377fd8'
+  },
+  carousel: {
     justifyContent: 'center',
     alignItems: 'center'
   },
-  image: {
-    resizeMode: 'contain'
-  },
-  CarouselItemWrapper: {
-    height: 400,
-    width: 150,
-    // flexDirection: 'column',
+  timer: {
+    marginBottom: Dimensions.get('window').height/20,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  text: {
+  timerImage: {
+    height: Dimensions.get('window').width * 0.5,
+    width: Dimensions.get('window').width * 0.5,
+    resizeMode: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  timerSessionCounter: {
     backgroundColor: 'transparent',
-    // color: 'white',
-    fontSize: 20,
+    color: 'white',
+    fontSize: 50,
+    opacity: 0.7,
+    zIndex: 1,
   }
-})
+});
+
+export default connect((state: { app: State }) => {
+  return {
+    timers: state.app.todos.reduce((result, todo) => {
+      const sessionsCount = filter(state.app.sessions, session => (session.todoId === todo.id)).length;
+      result.push({ todo, sessionsCount });
+      return result;
+    }, []),
+  };
+}, {})(TimersPage);
