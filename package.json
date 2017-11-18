@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
+		"precommit": "lint-staged",
 		"start": "node node_modules/react-native/local-cli/cli.js start",
 		"test": "jest",
 		"tsc": "tsc",
@@ -10,6 +11,13 @@
 		"build": "npm run clean && gulp && npm run tsc --",
 		"watch": "npm run build -- -w",
 		"start:ios": "npm run build && concurrently -r 'npm run watch' 'react-native run-ios'"
+	},
+	"lint-staged": {
+		"*.{ts,tsx}": [
+			"prettier --write",
+			"tslint --fix -c tslint.json -p tsconfig.json",
+			"git add"
+		]
 	},
 	"dependencies": {
 		"gulp": "^3.9.1",
@@ -33,12 +41,19 @@
 		"babel-preset-react-native": "4.0.0",
 		"concurrently": "^3.5.0",
 		"jest": "21.2.1",
+		"prettier": "^1.8.2",
 		"react-test-renderer": "16.0.0-beta.5",
 		"rimraf": "^2.6.2",
 		"tslint": "^5.8.0",
+		"tslint-config-prettier": "^1.6.0",
 		"typescript": "^2.5.3"
 	},
 	"jest": {
 		"preset": "react-native"
+	},
+	"prettier": {
+		"semi": false,
+		"trailingComma": "all",
+		"singleQuote": true
 	}
 }
