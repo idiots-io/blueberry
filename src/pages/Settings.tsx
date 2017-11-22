@@ -1,19 +1,29 @@
 import React from 'react'
-import { View, ListView, Image, Switch } from 'react-native'
+import {
+  View,
+  ListView,
+  Image,
+  Switch,
+  StyleSheet,
+  Text,
+  Animated,
+  TouchableHighlight,
+  Dimensions,
+} from 'react-native'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
-import SettingListItem from '../components/SettingListItem'
-import SettingSectionHeader from '../components/SettingSectionHeader'
 import SettingPicker from '../components/SettingPicker'
-import { mainColor } from '../config'
+import { mainColor, subColor, fontColor } from '../config'
 
 namespace Settings {
   export interface Props {}
   export interface State {
     ds: any
-    dataSource: any
     time: any
     select: any
+    picker: any
+    offSet: any
+    defaultTime: any
   }
 }
 
@@ -24,38 +34,17 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
       rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     })
+    const deviceHeight = Dimensions.get('window').height
+    const defaultTime = {
+      blueberry: '25분',
+    }
     this.state = {
       ds,
-      dataSource: ds.cloneWithRowsAndSections({
-        intervalSection: [
-          {
-            title: '블루베리 시간',
-            value: '25분',
-          },
-          {
-            title: '쉬는 시간',
-            value: '5분',
-          },
-        ],
-        soundSection: [
-          {
-            title: '블루베리 진행 소리 on/off',
-            value: (
-              <Switch
-                onTintColor={mainColor.default}
-                value={true}
-                style={{ height: 20 }}
-              />
-            ),
-          },
-          {
-            title: '블루베리 완료 소리',
-            value: 'Alert clock',
-          },
-        ],
-      }),
       time: [],
-      select: '25분',
+      select: defaultTime.blueberry,
+      defaultTime: defaultTime.blueberry,
+      picker: false,
+      offSet: new Animated.Value(deviceHeight),
     }
     for (let i = 1; i < 13; i++) {
       this.setState({
@@ -93,28 +82,102 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
   updateTime = time => {
     this.setState({ select: time })
   }
-
+  isPickerMode = () => this.setState({ picker: true })
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={item => (
-            <SettingListItem title={item.title} value={item.value} />
-          )}
-          renderSectionHeader={(_, category) => (
-            <SettingSectionHeader section={category} />
-          )}
-        />
-        <SettingPicker
-          time={this.state.time}
-          select={this.state.select}
-          updateTime={this.updateTime}
-        />
+        <View style={styles.listItemWrapper}>
+          <View style={styles.listItem}>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>블루베리 시간</Text>
+            </View>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={this.isPickerMode}
+            >
+              <Text style={styles.countText}>{this.state.select}</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={styles.listItem}>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>쉬는 시간</Text>
+            </View>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={this.isPickerMode}
+            >
+              <Text style={styles.countText}>{this.state.time[0]}</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={styles.listItem}>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>블루베리 진행 소리 on/off</Text>
+            </View>
+            <Switch
+              onTintColor={mainColor.default}
+              value={true}
+              style={{ height: 20 }}
+            />
+          </View>
+          <View style={styles.listItem}>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>블루베리 완료 소리</Text>
+            </View>
+            <TouchableHighlight underlayColor="transparent">
+              {/* // onPress={this.isPickerMode} */}
+              <Text style={styles.countText}>Alarm clock</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+        {this.state.picker ? (
+          <SettingPicker
+            time={this.state.time}
+            select={this.state.select}
+            updateTime={this.updateTime}
+            offSet={this.state.offSet}
+            closeModal={() =>
+              this.setState({ picker: false, select: this.state.defaultTime })}
+            updateValue={() =>
+              this.setState({ picker: false, select: this.state.select })}
+          />
+        ) : null}
       </PageLayout>
     )
   }
 }
 
+const styles = StyleSheet.create({
+  listItemWrapper: {
+    paddingHorizontal: 15,
+    backgroundColor: 'white',
+  },
+  countWrapper: {
+    height: 50,
+    width: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  countText: {
+    fontSize: 16,
+    color: fontColor.blue,
+  },
+  listItem: {
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    // borderBottomWidth: 0,
+    borderTopWidth: 1,
+    borderColor: subColor.pale,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontSize: 16,
+    color: fontColor.dark,
+  },
+})
 export default Settings

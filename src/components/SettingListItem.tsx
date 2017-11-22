@@ -1,14 +1,16 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
 import { fontColor, subColor } from '../config'
 
-const SettingListItem = ({ title, value }) => (
+const SettingListItem = ({ title, value, isPickerMode }) => (
   <View style={styles.listItemWrapper}>
     <View style={styles.listItem}>
       <View style={styles.textWrapper}>
         <Text style={styles.text}>{title}</Text>
       </View>
-      <Text style={styles.countText}>{value}</Text>
+      <TouchableHighlight underlayColor="transparent" onPress={isPickerMode}>
+        <Text style={styles.countText}>{value}</Text>
+      </TouchableHighlight>
     </View>
   </View>
 )
