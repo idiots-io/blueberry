@@ -4,6 +4,7 @@ import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
 import SettingListItem from '../components/SettingListItem'
 import SettingSectionHeader from '../components/SettingSectionHeader'
+import SettingPicker from '../components/SettingPicker'
 import { mainColor } from '../config'
 
 namespace Settings {
@@ -11,6 +12,8 @@ namespace Settings {
   export interface State {
     ds: any
     dataSource: any
+    time: any
+    select: any
   }
 }
 
@@ -23,33 +26,20 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     })
     this.state = {
       ds,
-      // dataSource: ds.cloneWithRowsAndSections([...props.todos])
       dataSource: ds.cloneWithRowsAndSections({
         intervalSection: [
           {
-            title: 'Interval Duration',
+            title: '블루베리 시간',
             value: '25분',
           },
           {
-            title: 'Short Break',
+            title: '쉬는 시간',
             value: '5분',
-          },
-          {
-            title: 'Long Break',
-            value: '15분',
-          },
-          {
-            title: 'Long Break After',
-            value: '4분',
-          },
-          {
-            title: 'Target',
-            value: '10 intervals per day',
           },
         ],
         soundSection: [
           {
-            title: 'Chronometer Sound',
+            title: '블루베리 진행 소리 on/off',
             value: (
               <Switch
                 onTintColor={mainColor.default}
@@ -59,25 +49,18 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             ),
           },
           {
-            title: 'Interval Completed Sound',
-            value: 'Alert >',
-          },
-          {
-            title: 'End Break Sound',
-            value: 'Horn >',
-          },
-          {
-            title: 'Never Sleep',
-            value: (
-              <Switch
-                onTintColor={mainColor.default}
-                value={true}
-                style={{ height: 20 }}
-              />
-            ),
+            title: '블루베리 완료 소리',
+            value: 'Alert clock',
           },
         ],
       }),
+      time: [],
+      select: '25분',
+    }
+    for (let i = 1; i < 13; i++) {
+      this.setState({
+        time: this.state.time.push(`${i * 5}분`),
+      })
     }
   }
 
@@ -107,6 +90,10 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     ),
   }
 
+  updateTime = time => {
+    this.setState({ select: time })
+  }
+
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
@@ -119,6 +106,11 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
           renderSectionHeader={(_, category) => (
             <SettingSectionHeader section={category} />
           )}
+        />
+        <SettingPicker
+          time={this.state.time}
+          select={this.state.select}
+          updateTime={this.updateTime}
         />
       </PageLayout>
     )
