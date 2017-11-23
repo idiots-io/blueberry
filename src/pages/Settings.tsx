@@ -17,11 +17,11 @@ import { mainColor, subColor, fontColor } from '../config'
 namespace Settings {
   export interface Props {}
   export interface State {
-    time: any
-    blueberryTimeSelect: any
-    breakTimeSelect: any
-    defaultBlueberryTime: any
-    defaultBreakTime: any
+    time: any[]
+    blueberryTimeSelect: string
+    breakTimeSelect: string
+    defaultBlueberryTime: string
+    defaultBreakTime: string
     picker: boolean
     blueberryTimePicker: boolean
     soundOn: boolean
@@ -51,9 +51,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
       offSet: new Animated.Value(deviceHeight),
     }
     for (let i = 1; i < 13; i++) {
-      this.setState({
-        time: this.state.time.push(`${i * 5}분`),
-      })
+      this.state.time.push(`${i * 5}분`)
     }
   }
 
@@ -174,7 +172,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
               updateValue={() =>
                 this.setState({
                   picker: false,
-                  blueberryTimeSelect: this.state.blueberryTimeSelect,
+                  breakTimeSelect: this.state.breakTimeSelect,
                 })
               }
             />
