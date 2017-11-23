@@ -172,7 +172,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
               updateValue={() =>
                 this.setState({
                   picker: false,
-                  breakTimeSelect: this.state.breakTimeSelect,
+                  blueberryTimeSelect: this.state.blueberryTimeSelect,
                 })
               }
             />
