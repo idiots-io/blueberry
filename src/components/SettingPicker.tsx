@@ -8,7 +8,7 @@ import {
   View,
   Text,
 } from 'react-native'
-import { subColor, mainColor } from '../config'
+import { subColor, fontColor } from '../config'
 
 namespace SettingPicker {
   export interface Props {
@@ -20,7 +20,7 @@ namespace SettingPicker {
     offSet: any
   }
   export interface State {
-    opacity: any
+    opacity: number
   }
 }
 
@@ -35,38 +35,33 @@ class SettingPicker extends React.Component<
     }
   }
   componentDidMount() {
-    Animated.timing(
-      this.props.offSet, // The animated value to drive
-      {
-        toValue: 80, // Animate to opacity: 1 (opaque)
-        duration: 500, // Make it take a while
-      },
-    ).start() // Starts the animation
+    // slide animation
+    Animated.timing(this.props.offSet, {
+      toValue: 20,
+      duration: 500,
+    }).start()
 
-    Animated.timing(
-      this.state.opacity, // The animated value to drive
-      {
-        toValue: 1, // Animate to opacity: 1 (opaque)
-        duration: 800, // Make it take a while
-      },
-    ).start() // Starts the animation
+    // opacity animation
+    Animated.timing(this.state.opacity, {
+      toValue: 1,
+      duration: 800,
+    }).start()
   }
 
-  closeModal() {
-    // const deviceHeight = Dimensions.get('window').height
+  closeModal = () => {
+    const deviceHeight = Dimensions.get('window').height
     Animated.timing(this.props.offSet, {
-      toValue: 100,
+      toValue: deviceHeight,
       duration: 500,
     }).start(this.props.closeModal)
   }
 
-  updateAndCloseModal() {
+  updateAndCloseModal = () => {
     const deviceHeight = Dimensions.get('window').height
     Animated.timing(this.props.offSet, {
       toValue: deviceHeight,
       duration: 500,
     }).start(this.props.updateValue)
-    // this.props.select
   }
 
   render() {
@@ -77,18 +72,18 @@ class SettingPicker extends React.Component<
           opacity: this.state.opacity,
         }}
       >
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
+        <View style={styles.pickerUpperBar}>
           <TouchableHighlight
             onPress={() => this.closeModal()}
             underlayColor="transparent"
           >
-            <Text>취소</Text>
+            <Text style={{ color: fontColor.sub }}>취소</Text>
           </TouchableHighlight>
           <TouchableHighlight
             onPress={() => this.updateAndCloseModal()}
             underlayColor="transparent"
           >
-            <Text>선택</Text>
+            <Text style={{ color: fontColor.blue }}>선택</Text>
           </TouchableHighlight>
         </View>
         <Picker
@@ -105,28 +100,19 @@ class SettingPicker extends React.Component<
   }
 }
 
-// const SettingPicker = ({ time, select, updateTime, closeModal }) => (
-//   <SlideUp>
-//     <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-//       <TouchableHighlight onPress={closeModal} underlayColor="transparent">
-//         <Text>취소</Text>
-//       </TouchableHighlight>
-//       <TouchableHighlight onPress={closeModal} underlayColor="transparent">
-//         <Text>선택</Text>
-//       </TouchableHighlight>
-//     </View>
-//     <Picker
-//       selectedValue={select}
-//       onValueChange={updateTime}
-//       style={styles.picker}
-//     >
-//       {time.map((time, i) => <Picker.Item label={time} value={time} key={i} />)}
-//     </Picker>
-//   </SlideUp>
-// )
 const styles = StyleSheet.create({
   picker: {
-    backgroundColor: subColor.light,
+    backgroundColor: 'white',
+  },
+  pickerUpperBar: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    borderBottomColor: subColor.default,
+    borderTopColor: subColor.default,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
   },
 })
 

@@ -18,32 +18,37 @@ import { mainColor, subColor, fontColor } from '../config'
 namespace Settings {
   export interface Props {}
   export interface State {
-    ds: any
-    time: any
-    select: any
-    picker: any
+    time: Array<number>
+    blueberryTimeSelect: any
+    breakTimeSelect: any
+    defaultBlueberryTime: any
+    defaultBreakTime: any
+    picker: boolean
+    blueberryTimePicker: boolean
+    soundOn: boolean
     offSet: any
-    defaultTime: any
   }
 }
 
 class Settings extends React.Component<Settings.Props, Settings.State> {
   constructor(props) {
     super(props)
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    })
     const deviceHeight = Dimensions.get('window').height
+
     const defaultTime = {
       blueberry: '25분',
+      break: '5분',
     }
+
     this.state = {
-      ds,
       time: [],
-      select: defaultTime.blueberry,
-      defaultTime: defaultTime.blueberry,
+      blueberryTimeSelect: defaultTime.blueberry,
+      breakTimeSelect: defaultTime.break,
+      defaultBlueberryTime: defaultTime.blueberry,
+      defaultBreakTime: defaultTime.break,
       picker: false,
+      blueberryTimePicker: false,
+      soundOn: true,
       offSet: new Animated.Value(deviceHeight),
     }
     for (let i = 1; i < 13; i++) {
@@ -79,14 +84,38 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     ),
   }
 
-  updateTime = time => {
-    this.setState({ select: time })
+  updateBlueberryTime = time => {
+    this.setState({ blueberryTimeSelect: time })
   }
-  isPickerMode = () => this.setState({ picker: true })
+
+  updateBreakTime = time => {
+    this.setState({ breakTimeSelect: time })
+  }
+
+  changeSoundOn = () => {
+    this.state.soundOn
+      ? this.setState({ soundOn: false })
+      : this.setState({ soundOn: true })
+  }
+
+  isBlueberryTimePickerMode = () =>
+    this.setState({ picker: true, blueberryTimePicker: true })
+
+  isBreakTimePickerMode = () => this.setState({ picker: true })
+
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
+        <View
+          style={{
+            paddingHorizontal: 15,
+            backgroundColor: 'white',
+            paddingTop: 20,
+          }}
+        >
+          <Image source={require('../assets/Settings/sectionFirst.png')} />
+        </View>
         <View style={styles.listItemWrapper}>
           <View style={styles.listItem}>
             <View style={styles.textWrapper}>
@@ -94,9 +123,11 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             </View>
             <TouchableHighlight
               underlayColor="transparent"
-              onPress={this.isPickerMode}
+              onPress={this.isBlueberryTimePickerMode}
             >
-              <Text style={styles.countText}>{this.state.select}</Text>
+              <Text style={styles.countText}>
+                {this.state.blueberryTimeSelect}
+              </Text>
             </TouchableHighlight>
           </View>
           <View style={styles.listItem}>
@@ -105,9 +136,9 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             </View>
             <TouchableHighlight
               underlayColor="transparent"
-              onPress={this.isPickerMode}
+              onPress={this.isBreakTimePickerMode}
             >
-              <Text style={styles.countText}>{this.state.time[0]}</Text>
+              <Text style={styles.countText}>{this.state.breakTimeSelect}</Text>
             </TouchableHighlight>
           </View>
           <View style={styles.listItem}>
@@ -116,7 +147,8 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             </View>
             <Switch
               onTintColor={mainColor.default}
-              value={true}
+              onValueChange={this.changeSoundOn}
+              value={this.state.soundOn}
               style={{ height: 20 }}
             />
           </View>
@@ -125,22 +157,50 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
               <Text style={styles.text}>블루베리 완료 소리</Text>
             </View>
             <TouchableHighlight underlayColor="transparent">
-              {/* // onPress={this.isPickerMode} */}
               <Text style={styles.countText}>Alarm clock</Text>
             </TouchableHighlight>
           </View>
         </View>
         {this.state.picker ? (
-          <SettingPicker
-            time={this.state.time}
-            select={this.state.select}
-            updateTime={this.updateTime}
-            offSet={this.state.offSet}
-            closeModal={() =>
-              this.setState({ picker: false, select: this.state.defaultTime })}
-            updateValue={() =>
-              this.setState({ picker: false, select: this.state.select })}
-          />
+          this.state.blueberryTimePicker ? (
+            <SettingPicker
+              time={this.state.time}
+              select={this.state.blueberryTimeSelect}
+              updateTime={this.updateBlueberryTime}
+              offSet={this.state.offSet}
+              closeModal={() =>
+                this.setState({
+                  picker: false,
+                  blueberryTimeSelect: this.state.defaultBlueberryTime,
+                })
+              }
+              updateValue={() =>
+                this.setState({
+                  picker: false,
+                  blueberryTimeSelect: this.state.blueberryTimeSelect,
+                })
+              }
+            />
+          ) : (
+            <SettingPicker
+              time={this.state.time}
+              select={this.state.breakTimeSelect}
+              updateTime={this.updateBreakTime}
+              offSet={this.state.offSet}
+              closeModal={() =>
+                this.setState({
+                  picker: false,
+                  breakTimeSelect: this.state.defaultBreakTime,
+                })
+              }
+              updateValue={() =>
+                this.setState({
+                  picker: false,
+                  breakTimeSelect: this.state.breakTimeSelect,
+                })
+              }
+            />
+          )
         ) : null}
       </PageLayout>
     )
