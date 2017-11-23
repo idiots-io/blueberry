@@ -43,7 +43,7 @@ export interface Todo {
   createdAt: Date
 }
 
-interface State {
+export interface State {
   sessions: Session[]
   todos: Todo[]
   settings: object
