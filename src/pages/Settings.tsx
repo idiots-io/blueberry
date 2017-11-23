@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  ListView,
   Image,
   Switch,
   StyleSheet,
@@ -18,7 +17,7 @@ import { mainColor, subColor, fontColor } from '../config'
 namespace Settings {
   export interface Props {}
   export interface State {
-    time: Array<number>
+    time: any
     blueberryTimeSelect: any
     breakTimeSelect: any
     defaultBlueberryTime: any
@@ -59,8 +58,6 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
   }
 
   static navigationOptions = {
-    tabBarLabel: '환경설정',
-    // Note: By default the icon is only shown on iOS. Search the showIcon option below.
     tabBarIcon: ({ focused }) => (
       <View
         style={{

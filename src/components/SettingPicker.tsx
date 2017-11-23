@@ -20,7 +20,7 @@ namespace SettingPicker {
     offSet: any
   }
   export interface State {
-    opacity: number
+    opacity: any
   }
 }
 
