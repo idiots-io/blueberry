@@ -67,12 +67,12 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
         {focused ? (
           <Image
             source={require('../assets/Settings/setting_active.png')}
-            style={{ height: 30, width: 30, marginTop: 12 }}
+            style={{ height: 30, width: 30, marginTop: 7 }}
           />
         ) : (
           <Image
             source={require('../assets/Global/setting_default.png')}
-            style={{ height: 24, width: 24, marginTop: 10 }}
+            style={{ height: 24, width: 24, marginTop: 5 }}
           />
         )}
       </View>

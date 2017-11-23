@@ -21,17 +21,26 @@ const AppNavigator = TabNavigator(
   {
     animationEnabled: true,
     tabBarOptions: {
+      showLabel: false,
       style: {
         height: 60,
         borderTopWidth: 0,
         backgroundColor: subColor.pale,
+<<<<<<< HEAD
+=======
+        paddingVertical: 15,
+>>>>>>> 982c8403d6af21d7b61ffd7d14daed5fe50912fc
       },
       tabStyle: {
         justifyContent: 'flex-end',
         alignItems: 'center',
       },
       labelStyle: {
+<<<<<<< HEAD
         marginBottom: 10,
+=======
+        marginBottom: 7,
+>>>>>>> 982c8403d6af21d7b61ffd7d14daed5fe50912fc
       },
     },
   },
