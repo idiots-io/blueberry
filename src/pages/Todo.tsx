@@ -29,7 +29,7 @@ class TodoComponent extends React.Component<
     super(props)
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     })
     this.state = {
       ds,
@@ -38,77 +38,85 @@ class TodoComponent extends React.Component<
         '2017/10/08': [
           {
             text: 'Study React',
-            sessionCount: 38
+            sessionCount: 38,
           },
           {
             text: 'Study Typescript',
-            sessionCount: 12
-          }
+            sessionCount: 12,
+          },
         ],
         '2017/11/04': [
           {
             text: 'Work on Resume',
-            sessionCount: 3
+            sessionCount: 3,
           },
           {
             text: 'Git commit',
-            sessionCount: 42
-          }
+            sessionCount: 42,
+          },
         ],
         '2017/11/02': [
           {
             text: 'Work on Resume',
-            sessionCount: 3
+            sessionCount: 3,
           },
           {
             text: 'Git commit',
-            sessionCount: 42
+            sessionCount: 42,
           },
           {
             text: 'Work on Resume',
-            sessionCount: 3
+            sessionCount: 3,
           },
           {
             text: 'Git commit',
-            sessionCount: 42
-          }
+            sessionCount: 42,
+          },
         ],
         '2017/11/01': [
           {
             text: 'Work on Resume',
-            sessionCount: 3
+            sessionCount: 3,
           },
           {
             text: 'Git commit',
-            sessionCount: 42
-          }
-        ]
-      })
+            sessionCount: 42,
+          },
+        ],
+      }),
     }
   }
 
   static navigationOptions = {
     tabBarLabel: '할 일 목록',
     // Note: By default the icon is only shown on iOS. Search the showIcon option below.
-    tabBarIcon: () => (
+    tabBarIcon: ({ focused }) => (
       <View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          marginBottom: 5
-        }}>
-        <Image
-          source={require('../assets/Global/todo_default.png')}
-          style={{ height: 22, width: 16 }}
-        />
+          marginBottom: 5,
+        }}
+      >
+        {focused ? (
+          <Image
+            source={require('../assets/Todo/todo_active.png')}
+            style={{ height: 23, width: 23, marginTop: 7 }}
+          />
+        ) : (
+          <Image
+            source={require('../assets/Global/todo_default.png')}
+            style={{ height: 17, width: 22, marginTop: 5 }}
+          />
+        )}
       </View>
-    )
+    ),
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.todos.length !== this.props.todos.length) {
       this.setState({
-        dataSource: this.state.ds.cloneWithRows([...this.props.todos])
+        dataSource: this.state.ds.cloneWithRows([...this.props.todos]),
       })
     }
   }
@@ -137,8 +145,9 @@ class TodoComponent extends React.Component<
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
                 paddingLeft: 15,
-                height: 50
-              }}>
+                height: 50,
+              }}
+            >
               <View style={{ backgroundColor: 'red', flex: 1, height: 50 }}>
                 <Text>Delete</Text>
               </View>
@@ -156,9 +165,9 @@ class TodoComponent extends React.Component<
 
 export default connect(
   state => ({
-    todos: state.app.todos
+    todos: state.app.todos,
   }),
   {
-    addTodo
-  }
+    addTodo,
+  },
 )(TodoComponent)
