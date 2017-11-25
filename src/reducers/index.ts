@@ -1,9 +1,10 @@
 import { times, sample } from 'lodash';
+import * as moment from 'moment';
 
 const DEFAULT_STATE: State = {
   sessions: times(40, num => ({
     id: num.toString(),
-    duration: num,
+    duration: moment.duration(num, 'm'),
     createdAt: new Date,
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
@@ -29,9 +30,9 @@ const DEFAULT_STATE: State = {
   }
 }
 
-interface Session {
+export interface Session {
   id: string
-  duration: number
+  duration: moment.Duration
   createdAt: Date
   todoId: string,
 }
@@ -63,6 +64,13 @@ export default (state = DEFAULT_STATE, action: Action) => {
   }
   if (action.type === 'RESET_TODOS') {
     return { ...state, todos: [] }
+  }
+
+  if (action.type === 'ADD_SESSION') {
+    return {
+      ...state,
+      sessions: [...state.sessions, action.payload]
+    }
   }
 
   return state
