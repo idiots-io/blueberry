@@ -12,20 +12,29 @@ import {
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
 import SettingPicker from '../components/SettingPicker'
+import { connect } from 'react-redux'
+import { Action } from '../reducers'
 import { mainColor, subColor, fontColor } from '../config'
+import { toggleAutoStart, toggleSoundMode } from '../actions/settings'
 
 namespace Settings {
-  export interface Props {}
+  export interface Props {
+    workInterval: string
+    breakTime: string
+    completeSound: string
+    autoStart: boolean
+    isSoundMode: boolean
+    toggleSoundMode: (input: boolean) => Action
+    toggleAutoStart: (input: boolean) => Action
+  }
   export interface State {
-    time: any[]
-    blueberryTimeSelect: string
-    breakTimeSelect: string
-    defaultBlueberryTime: string
-    defaultBreakTime: string
+    range: string[]
+    type: string
     picker: boolean
-    blueberryTimePicker: boolean
-    soundOn: boolean
+    isSoundMode: any
+    autoStart: any
     offSet: any
+    currentValue: string
   }
 }
 
@@ -34,24 +43,14 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     super(props)
     const deviceHeight = Dimensions.get('window').height
 
-    const defaultTime = {
-      blueberry: '25분',
-      break: '5분',
-    }
-
     this.state = {
-      time: [],
-      blueberryTimeSelect: defaultTime.blueberry,
-      breakTimeSelect: defaultTime.break,
-      defaultBlueberryTime: defaultTime.blueberry,
-      defaultBreakTime: defaultTime.break,
+      range: [],
       picker: false,
-      blueberryTimePicker: false,
-      soundOn: true,
+      autoStart: true,
+      isSoundMode: true,
       offSet: new Animated.Value(deviceHeight),
-    }
-    for (let i = 1; i < 13; i++) {
-      this.state.time.push(`${i * 5}분`)
+      type: '',
+      currentValue: '',
     }
   }
 
@@ -79,24 +78,48 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     ),
   }
 
-  updateBlueberryTime = time => {
-    this.setState({ blueberryTimeSelect: time })
-  }
-
-  updateBreakTime = time => {
-    this.setState({ breakTimeSelect: time })
-  }
-
   changeSoundOn = () => {
-    this.state.soundOn
-      ? this.setState({ soundOn: false })
-      : this.setState({ soundOn: true })
+    this.props.isSoundMode
+      ? this.props.toggleSoundMode(false)
+      : this.props.toggleSoundMode(true)
+  }
+  changeAutoStart = () => {
+    this.props.autoStart
+      ? this.props.toggleAutoStart(false)
+      : this.props.toggleAutoStart(true)
   }
 
-  isBlueberryTimePickerMode = () =>
-    this.setState({ picker: true, blueberryTimePicker: true })
+  isBlueberryTimePickerMode = () => {
+    for (let i = 1; i < 13; i++) {
+      this.state.range.push(`${i * 5}분`)
+    }
+    this.setState({
+      picker: true,
+      type: '블루베리 시간',
+      currentValue: this.props.workInterval,
+      range: this.state.range,
+    })
+  }
 
-  isBreakTimePickerMode = () => this.setState({ picker: true })
+  isBreakTimePickerMode = () => {
+    for (let i = 1; i < 13; i++) {
+      this.state.range.push(`${i * 5}분`)
+    }
+    this.setState({
+      picker: true,
+      type: '쉬는 시간',
+      currentValue: this.props.breakTime,
+      range: this.state.range,
+    })
+  }
+
+  isSoundPickerMode = () =>
+    this.setState({
+      picker: true,
+      type: '블루베리 완료 소리',
+      currentValue: this.props.completeSound,
+      range: ['Alarm clock', 'Bottles', 'Chimes', 'Jungle'],
+    })
 
   render() {
     return (
@@ -119,10 +142,9 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             <TouchableHighlight
               underlayColor="transparent"
               onPress={this.isBlueberryTimePickerMode}
+              disabled={this.state.picker}
             >
-              <Text style={styles.countText}>
-                {this.state.blueberryTimeSelect}
-              </Text>
+              <Text style={styles.countText}>{this.props.workInterval}</Text>
             </TouchableHighlight>
           </View>
           <View style={styles.listItem}>
@@ -132,9 +154,19 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             <TouchableHighlight
               underlayColor="transparent"
               onPress={this.isBreakTimePickerMode}
+              disabled={this.state.picker}
             >
-              <Text style={styles.countText}>{this.state.breakTimeSelect}</Text>
+              <Text style={styles.countText}>{this.props.breakTime}</Text>
             </TouchableHighlight>
+          </View>
+
+          <View
+            style={{
+              backgroundColor: 'white',
+              paddingTop: 20,
+            }}
+          >
+            <Image source={require('../assets/Settings/sectionSecond.png')} />
           </View>
           <View style={styles.listItem}>
             <View style={styles.textWrapper}>
@@ -143,7 +175,18 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             <Switch
               onTintColor={mainColor.default}
               onValueChange={this.changeSoundOn}
-              value={this.state.soundOn}
+              value={this.props.isSoundMode}
+              style={{ height: 20 }}
+            />
+          </View>
+          <View style={styles.listItem}>
+            <View style={styles.textWrapper}>
+              <Text style={styles.text}>블루베리 자동 진행</Text>
+            </View>
+            <Switch
+              onTintColor={mainColor.default}
+              onValueChange={this.changeAutoStart}
+              value={this.props.autoStart}
               style={{ height: 20 }}
             />
           </View>
@@ -151,51 +194,28 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             <View style={styles.textWrapper}>
               <Text style={styles.text}>블루베리 완료 소리</Text>
             </View>
-            <TouchableHighlight underlayColor="transparent">
-              <Text style={styles.countText}>Alarm clock</Text>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={this.isSoundPickerMode}
+              disabled={this.state.picker}
+            >
+              <Text style={styles.countText}>{this.props.completeSound}</Text>
             </TouchableHighlight>
           </View>
         </View>
         {this.state.picker ? (
-          this.state.blueberryTimePicker ? (
-            <SettingPicker
-              time={this.state.time}
-              select={this.state.blueberryTimeSelect}
-              updateTime={this.updateBlueberryTime}
-              offSet={this.state.offSet}
-              closeModal={() =>
-                this.setState({
-                  picker: false,
-                  blueberryTimeSelect: this.state.defaultBlueberryTime,
-                })
-              }
-              updateValue={() =>
-                this.setState({
-                  picker: false,
-                  blueberryTimeSelect: this.state.blueberryTimeSelect,
-                })
-              }
-            />
-          ) : (
-            <SettingPicker
-              time={this.state.time}
-              select={this.state.breakTimeSelect}
-              updateTime={this.updateBreakTime}
-              offSet={this.state.offSet}
-              closeModal={() =>
-                this.setState({
-                  picker: false,
-                  breakTimeSelect: this.state.defaultBreakTime,
-                })
-              }
-              updateValue={() =>
-                this.setState({
-                  picker: false,
-                  breakTimeSelect: this.state.breakTimeSelect,
-                })
-              }
-            />
-          )
+          <SettingPicker
+            type={this.state.type}
+            range={this.state.range}
+            currentValue={this.state.currentValue}
+            offSet={this.state.offSet}
+            closeModal={() =>
+              this.setState({
+                picker: false,
+                range: [],
+              })
+            }
+          />
         ) : null}
       </PageLayout>
     )
@@ -235,4 +255,17 @@ const styles = StyleSheet.create({
     color: fontColor.dark,
   },
 })
-export default Settings
+
+export default connect(
+  state => ({
+    workInterval: state.app.settings.workInterval.value,
+    breakTime: state.app.settings.breakTime.value,
+    completeSound: state.app.settings.completeSound.value,
+    autoStart: state.app.settings.autoStart.value,
+    isSoundMode: state.app.settings.isSoundMode.value,
+  }),
+  dispatch => ({
+    toggleSoundMode: boolean => dispatch(toggleSoundMode(boolean)),
+    toggleAutoStart: boolean => dispatch(toggleAutoStart(boolean)),
+  }),
+)(Settings)
