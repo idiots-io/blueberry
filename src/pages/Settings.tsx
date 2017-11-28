@@ -31,8 +31,8 @@ namespace Settings {
     range: string[]
     type: string
     picker: boolean
-    isSoundMode: any
-    autoStart: any
+    isSoundMode: boolean
+    autoStart: boolean
     offSet: any
     currentValue: string
   }
@@ -78,18 +78,18 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     ),
   }
 
-  changeSoundOn = () => {
+  changeSoundOn = (): void => {
     this.props.isSoundMode
       ? this.props.toggleSoundMode(false)
       : this.props.toggleSoundMode(true)
   }
-  changeAutoStart = () => {
+  changeAutoStart = (): void => {
     this.props.autoStart
       ? this.props.toggleAutoStart(false)
       : this.props.toggleAutoStart(true)
   }
 
-  isBlueberryTimePickerMode = () => {
+  isBlueberryTimePickerMode = (): void => {
     for (let i = 1; i < 13; i++) {
       this.state.range.push(`${i * 5}분`)
     }
@@ -101,7 +101,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     })
   }
 
-  isBreakTimePickerMode = () => {
+  isBreakTimePickerMode = (): void => {
     for (let i = 1; i < 13; i++) {
       this.state.range.push(`${i * 5}분`)
     }
@@ -113,7 +113,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     })
   }
 
-  isSoundPickerMode = () =>
+  isSoundPickerMode = (): void =>
     this.setState({
       picker: true,
       type: '블루베리 완료 소리',
@@ -209,7 +209,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
             range={this.state.range}
             currentValue={this.state.currentValue}
             offSet={this.state.offSet}
-            closeModal={() =>
+            closeModal={(): void =>
               this.setState({
                 picker: false,
                 range: [],

@@ -17,7 +17,7 @@ namespace SettingPicker {
   export interface Props {
     closeModal: any
     range: string[]
-    offSet: any
+    offSet: number
     type: string
     currentValue: string
     changeSetting: (type: string, value: string) => Action

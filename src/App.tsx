@@ -13,10 +13,10 @@ import { subColor } from './config'
 
 const AppNavigator = TabNavigator(
   {
-    Settings: { screen: Settings },
     Todo: { screen: Todo },
     Timer: { screen: Timer },
     Summary: { screen: Summary },
+    Settings: { screen: Settings },
   },
   {
     tabBarOptions: {
