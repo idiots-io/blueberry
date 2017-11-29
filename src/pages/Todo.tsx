@@ -10,6 +10,7 @@ import AddBlueberryBtn from '../components/AddBlueberryBtn'
 import TodoListItem from '../components/TodoListItem'
 import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
+import AddTodoModal from '../components/AddTodoModal'
 
 namespace TodoComponent {
   export interface Props {
@@ -123,6 +124,7 @@ class TodoComponent extends React.Component<
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
+        <AddTodoModal />
         <Header />
         <FilterAndSearch />
         <AddBlueberryBtn
