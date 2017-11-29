@@ -6,7 +6,7 @@ import reducers from './reducers' // where reducers is a object of reducers
 
 const config = {
   key: 'root',
-  storage
+  storage,
 }
 
 const createStoreWithMiddleware = applyMiddleware(logger)(createStore)
@@ -16,5 +16,6 @@ const reducer = persistCombineReducers(config, { app: reducers })
 export default () => {
   const store = createStoreWithMiddleware(reducer)
   const persistor = persistStore(store)
+  // persistor.purge()
   return { persistor, store }
 }

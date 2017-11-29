@@ -13,7 +13,10 @@ import {
 import { mainColor } from '../config'
 
 namespace AddTodoModalComponent {
-  export interface Props {}
+  export interface Props {
+    visible: boolean
+    close: any
+  }
   export interface State {
     text: string
   }
@@ -34,35 +37,45 @@ class AddTodoModal extends React.Component<
       <Modal
         animationType="slide"
         transparent={false}
-        visible={true}
+        visible={this.props.visible}
         onRequestClose={() => {
           alert('Modal has been closed.')
         }}
       >
         <View style={styles.modalBox}>
           <View style={styles.contentsAlign}>
-            <View style={{ marginTop: 50, marginLeft: 15 }}>
+            <TouchableOpacity activeOpacity={0.8} onPress={this.props.close}>
+              <Image
+                source={require('../assets/Todo/close.png')}
+                style={{ position: 'absolute', right: 0, top: 15 }}
+              />
+            </TouchableOpacity>
+            <View style={{ marginTop: 20, marginLeft: 15 }}>
               <Text style={{ color: 'white' }}>2017.11.11. 화요일</Text>
               <TextInput
-                style={{ height: 100, fontSize: 40, color: 'white' }}
+                style={{
+                  height: Dimensions.get('window').height - 150,
+                  fontSize: 40,
+                  color: 'white',
+                  marginTop: 25,
+                }}
                 placeholder="할일 추가"
                 onChangeText={text => this.setState({ text })}
                 editable={true}
-                maxLength={40}
+                multiline={true}
+                autoFocus={true}
+                // maxLength={40}
+                numberOfLines={4}
               />
             </View>
             <KeyboardAvoidingView behavior="position">
-              <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                // onPress={onPress}
+              >
                 <Image
                   source={require('../assets/Todo/addBlueberry.png')}
-                  style={{
-                    // position: 'absolute',
-                    // justifyContent: 'flex-end',
-                    // bottom: 0,
-                    // flex: 1,
-                    // alignItems: 'flex-end',
-                    right: 0,
-                  }}
+                  style={{ right: 0, position: 'absolute', bottom: 0 }}
                 />
               </TouchableOpacity>
             </KeyboardAvoidingView>

@@ -1,11 +1,11 @@
-import { times, sample } from 'lodash';
-import * as moment from 'moment';
+import { times, sample } from 'lodash'
+import * as moment from 'moment'
 
 const DEFAULT_STATE: State = {
   sessions: times(40, num => ({
     id: num.toString(),
     duration: moment.duration(num, 'm'),
-    createdAt: new Date,
+    createdAt: new Date(),
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
   todos: times(4, num => ({
@@ -100,9 +100,9 @@ export default (state = DEFAULT_STATE, action: Action) => {
   if (action.type === 'ADD_SESSION') {
     return {
       ...state,
-      sessions: [...state.sessions, action.payload]
+      sessions: [...state.sessions, action.payload],
     }
-
+  }
   if (action.type === 'CHANGE_SETTING_WITH_PICKER') {
     const nextState = { ...state }
     switch (action.payload[0]) {

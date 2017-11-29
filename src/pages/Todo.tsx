@@ -20,6 +20,7 @@ namespace TodoComponent {
   export interface State {
     ds: any
     dataSource: any
+    isAddMode: boolean
   }
 }
 class TodoComponent extends React.Component<
@@ -85,6 +86,7 @@ class TodoComponent extends React.Component<
           },
         ],
       }),
+      isAddMode: false,
     }
   }
 
@@ -121,15 +123,17 @@ class TodoComponent extends React.Component<
       })
     }
   }
+
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
-        <AddTodoModal />
+        <AddTodoModal
+          visible={this.state.isAddMode}
+          close={() => this.setState({ isAddMode: false })}
+        />
         <Header />
         <FilterAndSearch />
-        <AddBlueberryBtn
-          onPress={() => this.props.addTodo('Study Hard, Play Harder')}
-        />
+        <AddBlueberryBtn onPress={() => this.setState({ isAddMode: true })} />
         <SwipeListView
           dataSource={this.state.dataSource}
           renderRow={todo => (
