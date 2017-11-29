@@ -19,7 +19,6 @@ const AppNavigator = TabNavigator(
     Settings: { screen: Settings },
   },
   {
-    animationEnabled: true,
     tabBarOptions: {
       showLabel: false,
       style: {
