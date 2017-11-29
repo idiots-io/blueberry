@@ -1,10 +1,11 @@
-import { times, sample } from 'lodash'
+import { times, sample } from 'lodash';
+import * as moment from 'moment';
 
 const DEFAULT_STATE: State = {
   sessions: times(40, num => ({
     id: num.toString(),
-    duration: num,
-    createdAt: new Date(),
+    duration: moment.duration(num, 'm'),
+    createdAt: new Date,
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
   todos: times(4, num => ({
@@ -37,9 +38,9 @@ const DEFAULT_STATE: State = {
   },
 }
 
-interface Session {
+export interface Session {
   id: string
-  duration: number
+  duration: moment.Duration
   createdAt: Date
   todoId: string
 }
@@ -96,6 +97,12 @@ export default (state = DEFAULT_STATE, action: Action) => {
     return { ...state, todos: [] }
   }
 
+  if (action.type === 'ADD_SESSION') {
+    return {
+      ...state,
+      sessions: [...state.sessions, action.payload]
+    }
+
   if (action.type === 'CHANGE_SETTING_WITH_PICKER') {
     const nextState = { ...state }
     switch (action.payload[0]) {
@@ -111,6 +118,7 @@ export default (state = DEFAULT_STATE, action: Action) => {
     }
     return nextState
   }
+
   if (action.type === 'TOGGLE_AUTO_START') {
     const nextState = { ...state }
     nextState.settings.autoStart.value = action.payload

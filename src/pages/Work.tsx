@@ -18,23 +18,25 @@ import { State, Todo } from '../reducers'
 
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
-import StartTimerBtn from '../components/StartTimerBtn'
+import StartWorkBtn from '../components/StartWorkBtn'
+import WorkModal from './WorkModal'
 
-interface Timer {
+export interface Work {
   todo: Todo
   sessionsCount: number
 }
 
-namespace TimersPage {
+namespace WorkPage {
   export interface Props {
-    timers: Timer[]
+    timers: Work[]
   }
   export interface State {
+    modal: boolean
     selectedTimerIndex: number
   }
 }
 
-class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
+class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   static navigationOptions = {
     tabBarIcon: ({ focused }) => (
       <View
@@ -45,7 +47,7 @@ class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
         }}>
         {focused ? (
           <Image
-            source={require('../assets/Timer/timer_active.png')}
+            source={require('../assets/Global/timer_active.png')}
             style={{ height: 28, width: 28, marginTop: 8 }}
           />
         ) : (
@@ -60,11 +62,12 @@ class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
   constructor(props) {
     super(props)
     this.state = {
+      modal: false,
       selectedTimerIndex: 0,
     }
   }
 
-  _renderTimers = ({ item, index }: { item: Timer; index: number }) => {
+  _renderTimers = ({ item, index }: { item: Work; index: number }) => {
     return (
       <View style={styles.timer}>
         <Text>
@@ -72,7 +75,7 @@ class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
         </Text>
         <Image
           style={styles.timerImage}
-          source={require('../assets/Timer/blueberry_dark.png')}>
+          source={require('../assets/Timer/blueberry_regular.png')}>
           <Text style={styles.timerSessionCounter}>{item.sessionsCount}</Text>
         </Image>
       </View>
@@ -83,6 +86,11 @@ class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
+        <WorkModal
+          work={this.props.timers[this.state.selectedTimerIndex]}
+          visible={this.state.modal}
+          onClose={() => { this.setState({ ...this.state, modal: false })}}
+        />
         <View style={styles.pageWrapper}>
           <View style={styles.createdDateText}>
             <Text style={{ color: '#162e80', fontSize: 15 }}>생성일{'   '}</Text>
@@ -105,9 +113,12 @@ class TimersPage extends React.Component<TimersPage.Props, TimersPage.State> {
               this.setState({ selectedTimerIndex: index })
             }}
           />
-          <StartTimerBtn
+          <StartWorkBtn
             onPress={() => {
-              console.log('hi')
+              this.setState({
+                ...this.state,
+                modal: true
+              })
             }}
           />
         </View>
@@ -175,4 +186,4 @@ export default connect((state: { app: State }) => {
       return result
     }, []),
   }
-}, {})(TimersPage)
+}, {})(WorkPage)
