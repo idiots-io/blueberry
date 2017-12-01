@@ -9,8 +9,7 @@ export default class Settings extends React.Component {
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: 5,
-        }}
-      >
+        }}>
         {focused ? (
           <Image
             source={require('../assets/Settings/setting_active.png')}

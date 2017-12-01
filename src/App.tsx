@@ -13,9 +13,9 @@ import { subColor } from './config'
 
 const AppNavigator = TabNavigator(
   {
+    Summary: { screen: Summary },
     Todo: { screen: Todo },
     Timer: { screen: Timer },
-    Summary: { screen: Summary },
     Settings: { screen: Settings },
   },
   {
@@ -26,7 +26,6 @@ const AppNavigator = TabNavigator(
         height: 60,
         borderTopWidth: 0,
         backgroundColor: subColor.pale,
-        paddingVertical: 15,
       },
       tabStyle: {
         justifyContent: 'flex-end',
