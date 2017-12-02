@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 
 import Settings from './pages/Settings'
 import Summary from './pages/Summary'
-import Timer from './pages/Timer'
+import Work from './pages/Work'
 import Todo from './pages/Todo'
 import Loading from './components/Loading'
 import configureStore from './store'
@@ -15,11 +15,10 @@ const AppNavigator = TabNavigator(
   {
     Summary: { screen: Summary },
     Todo: { screen: Todo },
-    Timer: { screen: Timer },
+    Timer: { screen: Work },
     Settings: { screen: Settings },
   },
   {
-    animationEnabled: true,
     tabBarOptions: {
       showLabel: false,
       style: {
