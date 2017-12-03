@@ -4,10 +4,25 @@ import Header from '../components/Header'
 import DateSelector from '../components/DateSelector'
 import SummaryGraph from '../components/SummaryGraph'
 import SummaryMeta from '../components/SummaryMeta'
+import GraphModeSelector from '../components/GraphModeSelector'
 import { View, Image } from 'react-native'
 import moment from 'moment'
 
 export default class Summary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentDate: moment(),
+      selectedMode: 'day',
+    }
+  }
+
+  onChangeSelectedMode = (mode /* 'day', 'week', 'month' */) => {
+    this.setState({
+      selectedMode: mode,
+    })
+  }
+
   static navigationOptions = {
     tabBarIcon: ({ focused }) => (
       <View
@@ -35,7 +50,17 @@ export default class Summary extends React.Component {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
-        <DateSelector currentDate={moment().format('YYYY.MM.DD')} />
+        <DateSelector
+          currentDate={moment().format('YYYY.MM.DD')}
+          onNextDayClick={() => console.log('Go to next date')}
+          onPrevDayClick={() => console.log('Go to previous date')}
+        />
+        <GraphModeSelector
+          selectedMode={this.state.selectedMode} // week, month
+          onSelectDay={() => this.onChangeSelectedMode('day')}
+          onSelectWeek={() => this.onChangeSelectedMode('week')}
+          onSelectMonth={() => this.onChangeSelectedMode('month')}
+        />
         <SummaryGraph />
         <SummaryMeta />
       </PageLayout>

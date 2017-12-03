@@ -1,6 +1,12 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
-
+import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { fontColor } from '../config'
+/*
+ * DateSelector 
+ * 수동적으로 값을 받아서 표시만 하는 Component
+ * 날짜 이동 제한이나 각각의 Left, Right 버튼을 눌렀을 때의
+ * Behavior는 상위에서 관리한다 
+ */
 const DateSelector = ({
   currentDate,
   onNextDayClick,
@@ -14,18 +20,34 @@ const DateSelector = ({
     style={{
       justifyContent: 'center',
       alignItems: 'center',
-      marginTop: 10,
+      marginTop: 30,
     }}>
     <View
       style={{
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}>
       <TouchableOpacity onPress={onPrevDayClick}>
-        <Text>{'<'}</Text>
+        <Image source={require('../assets/Summary/arrowLeft.png')} />
       </TouchableOpacity>
-      <Text>{currentDate}</Text>
+      <View
+        style={{
+          marginHorizontal: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            color: fontColor.darkNavy,
+            fontSize: 16,
+            letterSpacing: 2,
+          }}>
+          {currentDate}
+        </Text>
+      </View>
       <TouchableOpacity onPress={onNextDayClick}>
-        <Text>{'>'}</Text>
+        <Image source={require('../assets/Summary/arrowRight.png')} />
       </TouchableOpacity>
     </View>
   </View>
