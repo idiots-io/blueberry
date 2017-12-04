@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
-import { fontColor, subColor } from '../config'
+import { fontColor, subColor, fontFamily } from '../config'
 
 const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
   <View style={styles.filterAndSearchWrapper}>
@@ -24,7 +24,7 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
             <Image
               source={require('../assets/Global/select_circle.png')}
             />
-          ) : null}
+          ) : undefined}
         </View>
       </TouchableOpacity>
     </View>
@@ -40,15 +40,14 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
         </Text>
         <View
           style={{
-            marginTop: 3,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}>
           {selectedTab === 'completed' ? (
             <Image
               source={require('../assets/Global/select_circle.png')}
             />
-          ) : null}
+          ) : undefined}
         </View>
       </TouchableOpacity>
     </View>
@@ -74,10 +73,12 @@ const styles = StyleSheet.create({
   },
   selectedTabText: {
     color: fontColor.blue,
-    fontWeight: 'bold'
+    fontFamily: fontFamily.regular,
+    marginBottom: 5,
   },
   defaultTabText: {
-    color: fontColor.main
+    color: fontColor.main,
+    fontFamily: fontFamily.light,
   },
   btnWrapper: {
     flex: 0.5,

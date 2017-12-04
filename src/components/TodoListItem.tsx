@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   countText: {
-    fontSize: 20,
+    fontFamily: fontFamily.regular,
+    fontSize: 18,
     backgroundColor: 'transparent',
     color: 'white',
-    fontWeight: 'bold'
   },
   listItem: {
     paddingVertical: 15,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-    fontFamily: fontFamily.regular
+    fontFamily: fontFamily.regular,
     fontSize: 16,
     color: fontColor.dark
   }
