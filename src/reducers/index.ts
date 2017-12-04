@@ -8,12 +8,29 @@ const DEFAULT_STATE: State = {
     createdAt: new Date(),
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
-  todos: times(4, num => ({
-    id: num.toString(),
-    title: `Todo #${num}`,
-    isDone: num % 2 === 0,
-    createdAt: new Date(),
-  })),
+  todos: [
+    {
+      id: 1,
+      title: 'text',
+      isDone: false,
+      createdAt: '2017.12.04 월요일',
+      sessionCount: 2,
+    },
+    {
+      id: 2,
+      title: 'text2',
+      isDone: false,
+      createdAt: '2017.12.04 월요일',
+      sessionCount: 4,
+    },
+    {
+      id: 3,
+      title: 'text3',
+      isDone: false,
+      createdAt: '2017.12.03 일요일',
+      sessionCount: 10,
+    },
+  ],
   settings: {
     workInterval: {
       labelKor: '블루베리 시간',
@@ -49,7 +66,8 @@ export interface Todo {
   id: string
   title: string
   isDone: boolean
-  createdAt: Date
+  createdAt: string
+  sessionCount: number
 }
 
 export interface Setting {

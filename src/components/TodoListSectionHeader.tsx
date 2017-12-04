@@ -2,9 +2,9 @@ import React from 'react'
 import { subColor, fontColor } from '../config'
 import Hr from './Hr'
 
-const TodoListSectionHeader = ({ date, dayOfWeek = '화요일' }) => (
+const TodoListSectionHeader = ({ date }) => (
   <Hr
-    text={`${date} ${dayOfWeek}`}
+    text={`${date}`}
     hrStyle={{
       backgroundColor: 'white',
       justifyContent: 'flex-end'

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, View, ListView, Image } from 'react-native'
 import { connect } from 'react-redux'
-import { addTodo } from '../actions/todos'
 import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
@@ -11,6 +10,7 @@ import TodoListItem from '../components/TodoListItem'
 import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import AddTodoModal from '../components/AddTodoModal'
+import _ from 'lodash'
 
 namespace TodoComponent {
   export interface Props {
@@ -23,10 +23,11 @@ namespace TodoComponent {
     isAddMode: boolean
   }
 }
+
 class TodoComponent extends React.Component<
   TodoComponent.Props,
   TodoComponent.State
-> {
+  > {
   constructor(props) {
     super(props)
     const ds = new ListView.DataSource({
@@ -36,56 +37,9 @@ class TodoComponent extends React.Component<
     this.state = {
       ds,
       // dataSource: ds.cloneWithRowsAndSections([...props.todos])
-      dataSource: ds.cloneWithRowsAndSections({
-        '2017/10/08': [
-          {
-            text: 'Study React',
-            sessionCount: 38,
-          },
-          {
-            text: 'Study Typescript',
-            sessionCount: 12,
-          },
-        ],
-        '2017/11/04': [
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-        ],
-        '2017/11/02': [
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-        ],
-        '2017/11/01': [
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-        ],
-      }),
+      dataSource: ds.cloneWithRowsAndSections(
+        _.groupBy(this.props.todos, 'createdAt'),
+      ),
       isAddMode: false,
     }
   }
@@ -107,11 +61,11 @@ class TodoComponent extends React.Component<
             style={{ height: 23, width: 23, marginTop: 7 }}
           />
         ) : (
-          <Image
-            source={require('../assets/Global/todo_default.png')}
-            style={{ height: 17, width: 22, marginTop: 5 }}
-          />
-        )}
+            <Image
+              source={require('../assets/Global/todo_default.png')}
+              style={{ height: 17, width: 22, marginTop: 5 }}
+            />
+          )}
       </View>
     ),
   }
@@ -119,7 +73,9 @@ class TodoComponent extends React.Component<
   componentDidUpdate(prevProps) {
     if (prevProps.todos.length !== this.props.todos.length) {
       this.setState({
-        dataSource: this.state.ds.cloneWithRows([...this.props.todos]),
+        dataSource: this.state.ds.cloneWithRowsAndSections(
+          _.groupBy(this.props.todos, 'createdAt'),
+        ),
       })
     }
   }
@@ -137,7 +93,7 @@ class TodoComponent extends React.Component<
         <SwipeListView
           dataSource={this.state.dataSource}
           renderRow={todo => (
-            <TodoListItem text={todo.text} sessionCount={todo.sessionCount} />
+            <TodoListItem title={todo.title} sessionCount={todo.sessionCount} />
           )}
           disableRightSwipe
           renderSectionHeader={(_, category) => (
@@ -173,7 +129,5 @@ export default connect(
   state => ({
     todos: state.app.todos,
   }),
-  {
-    addTodo,
-  },
+  undefined,
 )(TodoComponent)

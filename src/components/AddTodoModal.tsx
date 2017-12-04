@@ -11,11 +11,16 @@ import {
   Dimensions,
 } from 'react-native'
 import { mainColor } from '../config'
+import { connect } from 'react-redux'
+import { addTodo } from '../actions/todos'
+import * as moment from 'moment'
+import 'moment/locale/ko'
 
 namespace AddTodoModalComponent {
   export interface Props {
     visible: boolean
     close: any
+    addTodo: any
   }
   export interface State {
     text: string
@@ -31,9 +36,18 @@ class AddTodoModal extends React.Component<
       text: '',
     }
   }
+  addTodo = () => {
+    this.props.addTodo({
+      id: 4,
+      title: this.state.text,
+      isDone: false,
+      createdAt: moment.utc().format('L') + ' ' + moment.utc().format('dddd'),
+      sessionCount: 0,
+    })
+    this.props.close()
+  }
   render(): JSX.Element {
     return (
-      // <View style={{ paddingHorizontal: 15, paddingVertical: 15 }}>
       <Modal
         animationType="slide"
         transparent={false}
@@ -51,7 +65,14 @@ class AddTodoModal extends React.Component<
               />
             </TouchableOpacity>
             <View style={{ marginTop: 20, marginLeft: 15 }}>
-              <Text style={{ color: 'white' }}>2017.11.11. 화요일</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={{ color: 'white' }}>
+                  {moment.utc().format('L')}{' '}
+                </Text>
+                <Text style={{ color: 'white' }}>
+                  {moment.utc().format('dddd')}
+                </Text>
+              </View>
               <TextInput
                 style={{
                   height: Dimensions.get('window').height - 150,
@@ -59,11 +80,12 @@ class AddTodoModal extends React.Component<
                   color: 'white',
                   marginTop: 25,
                 }}
-                placeholder="할일 추가"
+                placeholder=" 할일 추가"
                 onChangeText={text => this.setState({ text })}
                 editable={true}
                 multiline={true}
                 autoFocus={true}
+                placeholderTextColor="#9CB9EF"
                 // maxLength={40}
                 numberOfLines={4}
               />
@@ -71,7 +93,7 @@ class AddTodoModal extends React.Component<
             <KeyboardAvoidingView behavior="position">
               <TouchableOpacity
                 activeOpacity={0.8}
-                // onPress={onPress}
+                onPress={() => this.addTodo()}
               >
                 <Image
                   source={require('../assets/Todo/addBlueberry.png')}
@@ -107,4 +129,10 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AddTodoModal
+const mapDispatchToProps = (dispatch: any): any => {
+  return {
+    addTodo: todo => dispatch(addTodo(todo)),
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(AddTodoModal)
