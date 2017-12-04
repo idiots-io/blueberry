@@ -51,11 +51,11 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
             style={{ height: 28, width: 28, marginTop: 8 }}
           />
         ) : (
-          <Image
-            source={require('../assets/Global/timer_default.png')}
-            style={{ height: 22, width: 22, marginTop: 5 }}
-          />
-        )}
+            <Image
+              source={require('../assets/Global/timer_default.png')}
+              style={{ height: 22, width: 22, marginTop: 5 }}
+            />
+          )}
       </View>
     ),
   }
@@ -89,7 +89,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
         <WorkModal
           work={this.props.timers[this.state.selectedTimerIndex]}
           visible={this.state.modal}
-          onClose={() => { this.setState({ ...this.state, modal: false })}}
+          onClose={() => { this.setState({ ...this.state, modal: false }) }}
         />
         <View style={styles.pageWrapper}>
           <View style={styles.createdDateText}>
@@ -97,7 +97,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
             <Text style={{ color: '#a8b7c7', fontSize: 15 }}>
               {this.props.timers[
                 this.state.selectedTimerIndex
-              ].todo.createdAt.toDateString()}
+              ].todo.createdAt}
             </Text>
           </View>
           <Text style={styles.titleText}>
