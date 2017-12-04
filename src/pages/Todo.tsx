@@ -1,5 +1,13 @@
 import React from 'react'
-import { Text, View, ListView, Image } from 'react-native'
+import {
+  Text,
+  View,
+  ListView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native'
 import { connect } from 'react-redux'
 import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
@@ -11,6 +19,7 @@ import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import AddTodoModal from '../components/AddTodoModal'
 import _ from 'lodash'
+import { mainColor } from '../config'
 
 namespace TodoComponent {
   export interface Props {
@@ -27,7 +36,7 @@ namespace TodoComponent {
 class TodoComponent extends React.Component<
   TodoComponent.Props,
   TodoComponent.State
-  > {
+> {
   constructor(props) {
     super(props)
     const ds = new ListView.DataSource({
@@ -61,11 +70,11 @@ class TodoComponent extends React.Component<
             style={{ height: 23, width: 23, marginTop: 7 }}
           />
         ) : (
-            <Image
-              source={require('../assets/Global/todo_default.png')}
-              style={{ height: 17, width: 22, marginTop: 5 }}
-            />
-          )}
+          <Image
+            source={require('../assets/Global/todo_default.png')}
+            style={{ height: 17, width: 22, marginTop: 5 }}
+          />
+        )}
       </View>
     ),
   }
@@ -90,36 +99,57 @@ class TodoComponent extends React.Component<
         <Header />
         <FilterAndSearch />
         <AddBlueberryBtn onPress={() => this.setState({ isAddMode: true })} />
-        <SwipeListView
-          dataSource={this.state.dataSource}
-          renderRow={todo => (
-            <TodoListItem title={todo.title} sessionCount={todo.sessionCount} />
-          )}
-          disableRightSwipe
-          renderSectionHeader={(_, category) => (
-            <TodoListSectionHeader date={category} />
-          )}
-          renderHiddenRow={() => (
-            <View
-              style={{
-                alignItems: 'center',
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                paddingLeft: 15,
-                height: 50,
-              }}
-            >
-              <View style={{ backgroundColor: 'red', flex: 1, height: 50 }}>
-                <Text>Delete</Text>
-              </View>
-              <View style={{ backgroundColor: 'blue' }}>
-                <Text>Start</Text>
-              </View>
+        {this.props.todos.length === 0 ? (
+          <View style={styles.emptyBox}>
+            <View>
+              <Text style={styles.emptyText}>블루베리로</Text>
+              <Text style={styles.emptyText}>할 일을</Text>
+              <Text style={styles.emptyText}>시작해볼까요?</Text>
             </View>
-          )}
-          rightOpenValue={-75}
-        />
+            <View style={{ alignItems: 'flex-end' }}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.setState({ isAddMode: true })}
+              >
+                <Image source={require('../assets/Todo/blueberry_empty.png')} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : (
+          <SwipeListView
+            dataSource={this.state.dataSource}
+            renderRow={todo => (
+              <TodoListItem
+                title={todo.title}
+                sessionCount={todo.sessionCount}
+              />
+            )}
+            disableRightSwipe
+            renderSectionHeader={(_, category) => (
+              <TodoListSectionHeader date={category} />
+            )}
+            renderHiddenRow={() => (
+              <View
+                style={{
+                  alignItems: 'center',
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  paddingLeft: 15,
+                  height: 50,
+                }}
+              >
+                <View style={{ backgroundColor: 'red', flex: 1, height: 50 }}>
+                  <Text>Delete</Text>
+                </View>
+                <View style={{ backgroundColor: 'blue' }}>
+                  <Text>Start</Text>
+                </View>
+              </View>
+            )}
+            rightOpenValue={-75}
+          />
+        )}
       </PageLayout>
     )
   }
@@ -131,3 +161,18 @@ export default connect(
   }),
   undefined,
 )(TodoComponent)
+
+const styles = StyleSheet.create({
+  emptyText: {
+    // fontFamily: fontFamily.thin,
+    fontSize: 40,
+    color: mainColor.light,
+  },
+  emptyBox: {
+    justifyContent: 'space-between',
+    alignContent: 'space-between',
+    paddingHorizontal: 42,
+    paddingVertical: 70,
+    height: Dimensions.get('window').height - 240,
+  },
+})
