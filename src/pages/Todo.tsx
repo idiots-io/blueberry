@@ -24,7 +24,7 @@ namespace TodoComponent {
 class TodoComponent extends React.Component<
   TodoComponent.Props,
   TodoComponent.State
-> {
+  > {
   constructor(props) {
     super(props)
     const ds = new ListView.DataSource({
@@ -37,7 +37,7 @@ class TodoComponent extends React.Component<
       dataSource: ds.cloneWithRowsAndSections({
         '2017/10/08': [
           {
-            text: 'Study React',
+            text: '타입스크립트 공부하기',
             sessionCount: 38,
           },
           {
@@ -104,11 +104,11 @@ class TodoComponent extends React.Component<
             style={{ height: 23, width: 23, marginTop: 7 }}
           />
         ) : (
-          <Image
-            source={require('../assets/Global/todo_default.png')}
-            style={{ height: 17, width: 22, marginTop: 5 }}
-          />
-        )}
+            <Image
+              source={require('../assets/Global/todo_default.png')}
+              style={{ height: 17, width: 22, marginTop: 5 }}
+            />
+          )}
       </View>
     ),
   }
