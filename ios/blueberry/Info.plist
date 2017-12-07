@@ -47,6 +47,15 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/Spoqa Han Sans Bold.ttf</string>
+		<string>Fonts/Spoqa Han Sans Regular.ttf</string>
+		<string>Fonts/Spoqa Han Sans Light.ttf</string>
+		<string>Fonts/Spoqa Han Sans Thin.ttf</string>
+	</array>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableHighlight } from 'react-native'
-import { fontColor, subColor } from '../config'
+import { fontColor, subColor, fontFamily } from '../config'
 
 const SettingListItem = ({ title, value, isPickerMode }) => (
   <View style={styles.listItemWrapper}>
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   countText: {
+    fontFamily: fontFamily.regular,
     fontSize: 16,
     color: fontColor.blue,
   },
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    fontFamily: fontFamily.regular,
     fontSize: 16,
     color: fontColor.dark,
   },

@@ -102,7 +102,7 @@ export default (state = DEFAULT_STATE, action: Action) => {
       ...state,
       sessions: [...state.sessions, action.payload]
     }
-
+  }
   if (action.type === 'CHANGE_SETTING_WITH_PICKER') {
     const nextState = { ...state }
     switch (action.payload[0]) {
