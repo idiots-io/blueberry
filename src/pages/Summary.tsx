@@ -8,7 +8,18 @@ import GraphModeSelector from '../components/GraphModeSelector'
 import { View, Image } from 'react-native'
 import moment from 'moment'
 
-export default class Summary extends React.Component {
+namespace Summary {
+  export interface Props {}
+  export interface State {
+    selectedMode: string
+    currentDate: any
+  }
+}
+
+export default class Summary extends React.Component<
+  Summary.Props,
+  Summary.State
+> {
   constructor(props) {
     super(props)
     this.state = {
@@ -48,12 +59,13 @@ export default class Summary extends React.Component {
 
   render() {
     return (
-      <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
+      <PageLayout statusBarBackgroundColor="white">
         <Header />
         <DateSelector
           currentDate={moment().format('YYYY.MM.DD')}
           onNextDayClick={() => console.log('Go to next date')}
           onPrevDayClick={() => console.log('Go to previous date')}
+          selectedMode={this.state.selectedMode}
         />
         <GraphModeSelector
           selectedMode={this.state.selectedMode} // week, month
@@ -61,8 +73,15 @@ export default class Summary extends React.Component {
           onSelectWeek={() => this.onChangeSelectedMode('week')}
           onSelectMonth={() => this.onChangeSelectedMode('month')}
         />
-        <SummaryGraph />
-        <SummaryMeta />
+        <SummaryGraph
+          mode={this.state.selectedMode}
+          currentDate={this.state.currentDate}
+        />
+        <SummaryMeta
+          sessionsCount={121}
+          blueberriesCount={3212}
+          totalTime="99시간 40분"
+        />
       </PageLayout>
     )
   }

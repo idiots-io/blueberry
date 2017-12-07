@@ -11,46 +11,54 @@ const DateSelector = ({
   currentDate,
   onNextDayClick,
   onPrevDayClick,
+  selectedMode,
 }: {
   currentDate?: string
   onNextDayClick?: any
   onPrevDayClick?: any
-}) => (
-  <View
-    style={{
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 30,
-    }}>
+  selectedMode: string
+}) => {
+  let displayedDate = currentDate
+  if (selectedMode === 'date') {
+    displayedDate = currentDate
+  }
+  return (
     <View
       style={{
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 30,
       }}>
-      <TouchableOpacity onPress={onPrevDayClick}>
-        <Image source={require('../assets/Summary/arrowLeft.png')} />
-      </TouchableOpacity>
       <View
         style={{
-          marginHorizontal: 20,
+          flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text
+        <TouchableOpacity onPress={onPrevDayClick}>
+          <Image source={require('../assets/Summary/arrowLeft.png')} />
+        </TouchableOpacity>
+        <View
           style={{
-            color: fontColor.darkNavy,
-            fontSize: 16,
-            letterSpacing: 2,
+            marginHorizontal: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          {currentDate}
-        </Text>
+          <Text
+            style={{
+              color: fontColor.darkNavy,
+              fontSize: 16,
+              letterSpacing: 1.2,
+            }}>
+            {displayedDate}
+          </Text>
+        </View>
+        <TouchableOpacity onPress={onNextDayClick}>
+          <Image source={require('../assets/Summary/arrowRight.png')} />
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={onNextDayClick}>
-        <Image source={require('../assets/Summary/arrowRight.png')} />
-      </TouchableOpacity>
     </View>
-  </View>
-)
+  )
+}
 
 export default DateSelector

@@ -1,49 +1,62 @@
 import React from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
-import { fontColor, subColor } from '../config'
-import LinearGradient from 'react-native-linear-gradient'
+import { View, TouchableOpacity, Text, ImageBackground } from 'react-native'
+import { fontColor /*subColor*/ } from '../config'
 
-const ModeItem = ({
-  label,
-  onPress,
-  isFirst = false,
-  isLast = false,
-  isActive = false,
-}) => (
-  <LinearGradient
-    colors={
-      isActive ? ['rgb(55, 127, 216)', 'rgb(69, 81, 246)'] : ['transparent']
-    }
-    start={{ x: 0, y: 0.5 }}
-    style={{
-      flex: 1,
-      backgroundColor: 'transparent',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingVertical: 10,
-      borderColor: subColor.dark,
-      borderWidth: isActive ? 0 : 1,
-      // borderRadius: 50,
-      borderTopLeftRadius: isFirst ? 50 : 0,
-      borderBottomLeftRadius: isFirst ? 50 : 0,
-      borderTopRightRadius: isLast ? 50 : 0,
-      borderBottomRightRadius: isLast ? 50 : 0,
-    }}>
+const btnImages = {
+  dailyBtn: {
+    active: require('../assets/Summary/dailyBtnActive.png'),
+    default: require('../assets/Summary/dailyBtnDefault.png'),
+  },
+  weekBtn: {
+    active: require('../assets/Summary/weekBtnActive.png'),
+    default: require('../assets/Summary/weekBtnDefault.png'),
+  },
+  monthBtn: {
+    active: require('../assets/Summary/monthBtnActive.png'),
+    default: require('../assets/Summary/monthBtnDefault.png'),
+  },
+}
+
+const ModeItem = ({ label, onPress, isActive = false }) => {
+  let bgImage
+  if (label === '일간' && isActive) {
+    bgImage = btnImages.dailyBtn.active
+  } else if (label === '일간' && !isActive) {
+    bgImage = btnImages.dailyBtn.default
+  } else if (label === '주간' && isActive) {
+    bgImage = btnImages.weekBtn.active
+  } else if (label === '주간' && !isActive) {
+    bgImage = btnImages.weekBtn.default
+  } else if (label === '월간' && isActive) {
+    bgImage = btnImages.monthBtn.active
+  } else if (label === '월간' && !isActive) {
+    bgImage = btnImages.monthBtn.default
+  }
+
+  return (
     <TouchableOpacity
       onPress={onPress}
       style={{
         flex: 1,
-      }}>
-      <Text
-        style={{
-          fontSize: 14,
-          color: isActive ? 'white' : fontColor.sub,
-        }}>
-        {label}
-      </Text>
+        flexDirection: 'row',
+        height: '100%',
+      }}
+      activeOpacity={0.8}>
+      <ImageBackground
+        source={bgImage}
+        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text
+          style={{
+            fontSize: 14,
+            color: isActive ? 'white' : fontColor.sub,
+          }}>
+          {label}
+        </Text>
+      </ImageBackground>
     </TouchableOpacity>
-  </LinearGradient>
-)
+  )
+}
+
 const GraphModeSelector = ({
   selectedMode = 'day',
   onSelectDay,
@@ -59,12 +72,12 @@ const GraphModeSelector = ({
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: 30,
+      backgroundColor: 'transparent',
     }}>
     <ModeItem
       onPress={onSelectDay}
       isActive={selectedMode === 'day'}
       label="일간"
-      isFirst
     />
     <ModeItem
       onPress={onSelectWeek}
@@ -75,7 +88,6 @@ const GraphModeSelector = ({
       onPress={onSelectMonth}
       isActive={selectedMode === 'month'}
       label="월간"
-      isLast
     />
   </View>
 )
