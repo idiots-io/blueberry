@@ -15,6 +15,7 @@ import { connect } from 'react-redux'
 import { addTodo } from '../actions/todos'
 import * as moment from 'moment'
 import 'moment/locale/ko'
+import uuid from 'uuid/v4'
 
 namespace AddTodoModalComponent {
   export interface Props {
@@ -38,7 +39,7 @@ class AddTodoModal extends React.Component<
   }
   addTodo = () => {
     this.props.addTodo({
-      id: 4,
+      id: uuid,
       title: this.state.text,
       isDone: false,
       createdAt: moment.utc().format('L') + ' ' + moment.utc().format('dddd'),

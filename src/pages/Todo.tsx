@@ -36,7 +36,7 @@ namespace TodoComponent {
 class TodoComponent extends React.Component<
   TodoComponent.Props,
   TodoComponent.State
-> {
+  > {
   constructor(props) {
     super(props)
     const ds = new ListView.DataSource({
@@ -46,10 +46,63 @@ class TodoComponent extends React.Component<
     this.state = {
       ds,
       // dataSource: ds.cloneWithRowsAndSections([...props.todos])
+<<<<<<< HEAD
       dataSource: ds.cloneWithRowsAndSections(
         _.groupBy(this.props.todos, 'createdAt'),
       ),
       isAddMode: false,
+=======
+      dataSource: ds.cloneWithRowsAndSections({
+        '2017/10/08': [
+          {
+            text: '타입스크립트 공부하기',
+            sessionCount: 38,
+          },
+          {
+            text: 'Study Typescript',
+            sessionCount: 12,
+          },
+        ],
+        '2017/11/04': [
+          {
+            text: 'Work on Resume',
+            sessionCount: 3,
+          },
+          {
+            text: 'Git commit',
+            sessionCount: 42,
+          },
+        ],
+        '2017/11/02': [
+          {
+            text: 'Work on Resume',
+            sessionCount: 3,
+          },
+          {
+            text: 'Git commit',
+            sessionCount: 42,
+          },
+          {
+            text: 'Work on Resume',
+            sessionCount: 3,
+          },
+          {
+            text: 'Git commit',
+            sessionCount: 42,
+          },
+        ],
+        '2017/11/01': [
+          {
+            text: 'Work on Resume',
+            sessionCount: 3,
+          },
+          {
+            text: 'Git commit',
+            sessionCount: 42,
+          },
+        ],
+      }),
+>>>>>>> 3b094875a25df2d9febbc755ca23ba1e333fe336
     }
   }
 
@@ -70,11 +123,11 @@ class TodoComponent extends React.Component<
             style={{ height: 23, width: 23, marginTop: 7 }}
           />
         ) : (
-          <Image
-            source={require('../assets/Global/todo_default.png')}
-            style={{ height: 17, width: 22, marginTop: 5 }}
-          />
-        )}
+            <Image
+              source={require('../assets/Global/todo_default.png')}
+              style={{ height: 17, width: 22, marginTop: 5 }}
+            />
+          )}
       </View>
     ),
   }

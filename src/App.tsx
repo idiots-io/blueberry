@@ -14,7 +14,7 @@ import { subColor } from './config'
 const AppNavigator = TabNavigator(
   {
     Todo: { screen: Todo },
-    Timer: { screen: Work },
+    // Timer: { screen: Work },
     Summary: { screen: Summary },
     Settings: { screen: Settings },
   },

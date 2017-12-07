@@ -16,6 +16,6 @@ const reducer = persistCombineReducers(config, { app: reducers })
 export default () => {
   const store = createStoreWithMiddleware(reducer)
   const persistor = persistStore(store)
-  // persistor.purge()
+  persistor.purge()
   return { persistor, store }
 }

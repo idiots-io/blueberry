@@ -5,8 +5,9 @@ import {
   ImageBackground,
   TouchableOpacity
 } from 'react-native'
+import { fontFamily } from '../config'
 
-const AddBlueberryBtn = ({ onPress = () => {} }) => (
+const AddBlueberryBtn = ({ onPress = () => { } }) => (
   <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
     <ImageBackground
       style={styles.btnWrapper}
@@ -25,10 +26,12 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   addTodoText: {
+    fontFamily: fontFamily.light,
+    letterSpacing: -0.3,
     backgroundColor: 'transparent',
     marginTop: 5,
     color: 'white',
-    fontSize: 18
+    fontSize: 17
   }
 })
 

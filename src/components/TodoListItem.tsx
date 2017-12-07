@@ -1,6 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, Text, ImageBackground } from 'react-native'
+<<<<<<< HEAD
 import { fontColor, mainColor, subColor } from '../config'
+=======
+import { fontColor, mainColor, fontFamily } from '../config'
+>>>>>>> 3b094875a25df2d9febbc755ca23ba1e333fe336
 
 const TodoListItem = ({ title, sessionCount }) => (
   <View style={styles.listItemWrapper}>
@@ -41,10 +45,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   countText: {
-    fontSize: 20,
+    fontFamily: fontFamily.regular,
+    fontSize: 18,
     backgroundColor: 'transparent',
     color: 'white',
+<<<<<<< HEAD
     fontWeight: 'bold',
+=======
+>>>>>>> 3b094875a25df2d9febbc755ca23ba1e333fe336
   },
   listItem: {
     paddingVertical: 15,
@@ -60,6 +68,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    fontFamily: fontFamily.regular,
     fontSize: 16,
     color: fontColor.dark,
   },
