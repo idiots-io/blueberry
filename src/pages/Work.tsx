@@ -19,7 +19,6 @@ import { State, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
 import StartWorkBtn from '../components/StartWorkBtn'
-import WorkModal from './WorkModal'
 
 export interface Work {
   todo: Todo
@@ -28,10 +27,10 @@ export interface Work {
 
 namespace WorkPage {
   export interface Props {
+    navigation: any
     timers: Work[]
   }
   export interface State {
-    modal: boolean
     selectedTimerIndex: number
   }
 }
@@ -62,7 +61,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   constructor(props) {
     super(props)
     this.state = {
-      modal: false,
       selectedTimerIndex: 0,
     }
   }
@@ -82,46 +80,46 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     )
   }
 
+  _renderTimerSelector = () => (
+    <View style={styles.pageWrapper}>
+      <View style={styles.createdDateText}>
+      </View>
+      <Text style={styles.titleText}>
+        {this.props.timers[this.state.selectedTimerIndex].todo.title}
+      </Text>
+      <Carousel
+        style={styles.carousel}
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={Dimensions.get('window').width * 0.5}
+        data={this.props.timers}
+        renderItem={this._renderTimers}
+        onSnapToItem={(index: number) => {
+          this.setState({ selectedTimerIndex: index })
+        }}
+      />
+      <StartWorkBtn
+        onPress={() => this.props.navigation.navigate('WorkModal', { work: this.props.timers[this.state.selectedTimerIndex] })}
+      />
+    </View>
+  )
+
+  _renderNoTimersMessage = () => (
+    <View style={styles.pageWrapper}>
+      <Text>
+        ( •̀_•́;)
+
+        앗. 
+        할일부터 
+        등록할까요?
+      </Text>
+    </View>
+  )
+
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
-        <WorkModal
-          work={this.props.timers[this.state.selectedTimerIndex]}
-          visible={this.state.modal}
-          onClose={() => { this.setState({ ...this.state, modal: false }) }}
-        />
-        <View style={styles.pageWrapper}>
-          <View style={styles.createdDateText}>
-            <Text style={{ color: '#162e80', fontSize: 15 }}>생성일{'   '}</Text>
-            <Text style={{ color: '#a8b7c7', fontSize: 15 }}>
-              {/* {this.props.timers[
-                this.state.selectedTimerIndex
-              ].todo.createdAt.toDateString()} */}
-            </Text>
-          </View>
-          <Text style={styles.titleText}>
-            {this.props.timers[this.state.selectedTimerIndex].todo.title}
-          </Text>
-          <Carousel
-            style={styles.carousel}
-            sliderWidth={Dimensions.get('window').width}
-            itemWidth={Dimensions.get('window').width * 0.5}
-            data={this.props.timers}
-            renderItem={this._renderTimers}
-            onSnapToItem={(index: number) => {
-              this.setState({ selectedTimerIndex: index })
-            }}
-          />
-          <StartWorkBtn
-            onPress={() => {
-              this.setState({
-                ...this.state,
-                modal: true
-              })
-            }}
-          />
-        </View>
+        {this.props.timers.length ? this._renderTimerSelector() : this._renderNoTimersMessage()}
       </PageLayout>
     )
   }

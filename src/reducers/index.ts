@@ -5,7 +5,7 @@ const DEFAULT_STATE: State = {
   sessions: times(40, num => ({
     id: num.toString(),
     duration: moment.duration(num, 'm'),
-    createdAt: new Date,
+    createdAt: new Date(),
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
   todos: times(4, num => ({
@@ -17,11 +17,11 @@ const DEFAULT_STATE: State = {
   settings: {
     workInterval: {
       labelKor: '블루베리 시간',
-      value: '25분',
+      value: moment.duration(5, 's'),
     },
     breakTime: {
       labelKor: '쉬는 시간',
-      value: '5분',
+      value: moment.duration(3, 's'),
     },
     autoStart: {
       labelKor: '블루베리 자동 진행',
@@ -55,11 +55,11 @@ export interface Todo {
 export interface Setting {
   workInterval: {
     labelKor: string
-    value: string
+    value: moment.Duration
   }
   breakTime: {
     labelKor: string
-    value: string
+    value: moment.Duration
   }
   completeSound: {
     labelKor: string

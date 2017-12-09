@@ -3,10 +3,10 @@ import {
   StyleSheet,
   ViewStyle,
   TextStyle,
-  Modal,
   Text,
   View,
 } from 'react-native';
+import { NavigationNavigatorProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import * as moment from 'moment';
@@ -19,57 +19,118 @@ import { Work } from './Work';
 import SurrenderBtn from '../components/SurrenderBtn';
 import PlayAndPauseBtn from '../components/PlayAndPauseBtn';
 import Timer from '../components/Timer';
+import TimeMovement from '../components/TimerMovement';
 
+enum Mode {
+  WORK = 'WORK',
+  BREAK = 'BREAK',
+}
 namespace WorkModal {
   export interface Props {
-    work: Work
-    duration: moment.Duration
-    visible: boolean
-    onClose: () => void
+    navigation: any
     addSession: (session: Session) => Action
+    settings: {
+      workInterval: {
+        labelKor: string;
+        value: moment.Duration;
+      }
+      breakTime: {
+        labelKor: string;
+        value: moment.Duration;
+      }
+      autoStart: {
+        labelKor: string;
+        value: boolean;
+      }
+    }
+  }
+  export interface State {
+    time: moment.Duration
+    countDown: any
+    mode: 'WORK' | 'BREAK'
   }
 }
-class WorkModal extends React.Component<WorkModal.Props> {
-  addSession = () => {
+class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      mode: Mode.WORK,
+      time: moment.duration(this.props.settings.workInterval.value),
+      countDown: setInterval(() => {
+        this.setState({ time: this.state.time.subtract(1, 's') });
+        if (this.state.time.asMilliseconds() <= 0) {
+          // clearInterval(this.state.countDown);
+          (this.state.mode === 'WORK') && this._addSession();
+          this._changeMode();
+          // this.props.navigation.goBack();
+        }
+      }, 1000),
+    }
+  }
+
+  _changeMode = () => {
+    if (this.state.mode === Mode.WORK) {
+      this.setState({
+        mode: Mode.BREAK,
+        time: moment.duration(this.props.settings.breakTime.value),
+      });
+    } else {  // this.state.mode === Mode.BREAK
+      this.setState({
+        mode: Mode.WORK,
+        time: moment.duration(this.props.settings.workInterval.value),
+      });
+
+    }
+  }
+
+  _addSession = () => {
     const session: Session = {
       id: uuid(),
-      duration: this.props.duration,
+      duration: moment.duration(this.props.settings.workInterval.value),
       createdAt: moment.utc().toDate(),
-      todoId: this.props.work.todo.id
+      todoId: this.props.navigation.state.params.work.todo.id
     }
     this.props.addSession(session);
   }
 
   render() {
+    const { work } = this.props.navigation.state.params;
     return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={this.props.visible}
+      <LinearGradient
+        colors={this.state.mode === 'WORK' ? ['#377fd8', '#4551f6'] : ['#ffffff', '#ffffff']}
+        style={styles.background}
       >
-        <LinearGradient colors={['#377fd8', '#4551f6']} style={styles.background}>
-          <View style={styles.metadataView}>
-            <Text style={[styles.text, styles.sessionsCountText]}>{this.props.work.sessionsCount}번째 블루베리</Text>
-            <Text style={[styles.text, styles.titleText]}>{this.props.work.todo.title}</Text>
-          </View>
-          <View style={styles.analogView}>
-            <Text style={[styles.text, styles.epicText]}>딴짓{"\n"}노노</Text>
-          </View>
-          <View style={styles.digitalView}>
-            <Timer
-              time={moment.duration(3, 's')}
-              onFinish={() => {
-                this.addSession()
-                this.props.onClose()
-              }}
+        <View style={styles.metadataView}>
+          <Text style={[styles.text, styles.sessionsCountText]}>{work.sessionsCount + 2}번째 블루베리</Text>
+          <Text style={[styles.text, styles.titleText]}>{work.todo.title}</Text>
+        </View>
+        <View style={styles.analogView}>
+          <Text style={[styles.text, styles.epicText]}>딴짓{"\n"}노노</Text>
+          <View style={{ right: -120 }}>
+            <TimeMovement
+              mode={this.state.mode}
+              duration={
+                this.state.mode === Mode.WORK
+                  ?
+                moment.duration(this.props.settings.workInterval.value)
+                  :
+                moment.duration(this.props.settings.breakTime.value)
+              }
+              time={this.state.time}
             />
-            <PlayAndPauseBtn />
           </View>
-          <View style={styles.flagView}>
-            <SurrenderBtn/>
-          </View>
-        </LinearGradient>
-      </Modal>
+        </View>
+        <View style={styles.digitalView}>
+          <Timer
+            time={this.state.time}
+            mode={this.state.mode}
+          />
+          <PlayAndPauseBtn />
+        </View>
+        <View style={styles.flagView}>
+          <SurrenderBtn/>
+        </View>
+      </LinearGradient>
     )
   }
 }
@@ -90,7 +151,7 @@ const styles = StyleSheet.create<StyleTypes>({
     flex: 1,
   },
   text: {
-    color: 'white',
+    color: '#D0DAF3',
     backgroundColor: 'transparent'
   },
   metadataView: {
@@ -107,7 +168,10 @@ const styles = StyleSheet.create<StyleTypes>({
   },
   analogView: {
     flex: 2,
-    justifyContent: 'center',
+    // justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   epicText: {
     fontSize: 64,
@@ -126,7 +190,8 @@ const styles = StyleSheet.create<StyleTypes>({
 
 export default connect(
   state => ({
-    sessions: state.app.sessions
+    sessions: state.app.sessions,
+    settings: state.app.settings
   }), {
     addSession
   }
