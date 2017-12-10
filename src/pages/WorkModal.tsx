@@ -16,6 +16,7 @@ import { addSession } from '../actions/sessions';
 import { Action, Session } from '../reducers';
 
 import { Work } from './Work';
+import SurrenderDialog from '../components/SurrenderDialog';
 import SurrenderBtn from '../components/SurrenderBtn';
 import PlayAndPauseBtn from '../components/PlayAndPauseBtn';
 import Timer from '../components/Timer';
@@ -101,7 +102,7 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
         style={styles.background}
       >
         <View style={styles.metadataView}>
-          <Text style={[styles.text, styles.sessionsCountText]}>{work.sessionsCount + 2}번째 블루베리</Text>
+          <Text style={[styles.text, styles.sessionsCountText]}>{work.sessionsCount + 1}번째 블루베리</Text>
           <Text style={[styles.text, styles.titleText]}>{work.todo.title}</Text>
         </View>
         <View style={styles.analogView}>
@@ -125,9 +126,15 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
             time={this.state.time}
             mode={this.state.mode}
           />
-          <PlayAndPauseBtn />
+          <PlayAndPauseBtn mode={this.state.mode}/>
         </View>
         <View style={styles.flagView}>
+          <SurrenderDialog
+            onPressConfirm={() => {
+              clearInterval(this.state.countDown);
+              this.props.navigation.goBack();
+            }}
+          />
           <SurrenderBtn/>
         </View>
       </LinearGradient>
@@ -185,6 +192,8 @@ const styles = StyleSheet.create<StyleTypes>({
   },
   flagView: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 })
 
