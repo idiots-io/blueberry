@@ -2,25 +2,29 @@ import React from 'react'
 import {
   StyleSheet,
   Text,
-  Image,
+  ImageBackground,
   TouchableOpacity
 } from 'react-native'
 
 const StartTimerBtn = ({ onPress = () => {} }) => (
   <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-    <Image
-      style={styles.btnWrapper}
+    <ImageBackground
+      style={styles.wrapper}
       source={require('../assets/Timer/startBtn.png')}>
       <Text style={styles.text}>시작하기</Text>
-    </Image>
+    </ImageBackground>
   </TouchableOpacity>
 )
 
 const styles = StyleSheet.create({
-  btnWrapper: {
-    height: 65,
+  wrapper: {
+    height: 50,
+    width: 226,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  wrapperImage: {
+    width: 113,
   },
   text: {
     backgroundColor: 'transparent',

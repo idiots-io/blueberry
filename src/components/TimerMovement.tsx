@@ -1,5 +1,8 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+} from 'react-native';
 import * as Progress from 'react-native-progress';
 import * as moment from 'moment';
 
@@ -18,17 +21,33 @@ export default class TimerMovement extends React.Component<TimerMovement.Props> 
     return (
       <ImageBackground
         source={require('../assets/Timer/timerBgBlue.png')}
-        style={{height: 300, width: 300}}
-        imageStyle={{height: 300, width: 150}}
+        style={styles.wrapper}
+        imageStyle={styles.wrapperImage}
       >
         <Progress.Circle
           progress={progress}
           size={300}
           direction={'counter-clockwise'}
           color={this.props.mode === 'WORK' ? '#ffffff' : '#377FD8'}
-          style={{ transform: [{ scaleX: -1 }, { scaleY: -1 }] }}
+          style={styles.progress}
         />
       </ImageBackground>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    height: 300,
+    width: 300
+  },
+  wrapperImage: {
+    width: 150,
+  },
+  progress: {
+    transform: [
+      { scaleX: -1 },
+      { scaleY: -1 }
+    ]
+  }
+})
