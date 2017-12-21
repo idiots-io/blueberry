@@ -42,8 +42,8 @@ class AddTodoModal extends React.Component<
       id: uuid,
       title: this.state.text,
       isDone: false,
-      createdAt: moment.utc().format('L') + ' ' + moment.utc().format('dddd'),
-      sessionCount: 0,
+      createdAt: new Date(),
+      // createdAt: moment.utc().format('L') + ' ' + moment.utc().format('dddd'),
     })
     this.props.close()
   }

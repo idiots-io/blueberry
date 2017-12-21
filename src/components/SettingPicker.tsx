@@ -21,7 +21,7 @@ namespace SettingPicker {
     offSet: number
     type: string
     currentValue: any
-    changeSetting: (type: string, value: string) => Action
+    changeSetting: (type: string, value: any) => Action
   }
   export interface State {
     opacity: any
