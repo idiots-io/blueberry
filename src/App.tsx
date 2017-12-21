@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/es/integration/react'
 
 import Settings from './pages/Settings'
 import Summary from './pages/Summary'
-import Work from './pages/Work'
+// import Work from './pages/Work'
 import Todo from './pages/Todo'
 import Loading from './components/Loading'
 import configureStore from './store'
