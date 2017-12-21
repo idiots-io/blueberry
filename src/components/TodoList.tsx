@@ -13,7 +13,7 @@ import { SwipeListView } from 'react-native-swipe-list-view'
 import { mainColor } from '../config'
 import { connect } from 'react-redux'
 import { Action, Todo } from '../reducers'
-
+import { fontFamily } from '../config'
 
 namespace TodoListComponent {
   export interface Props {
@@ -66,19 +66,30 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
                   flex: 1,
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
-                  paddingLeft: 15,
                   height: 50,
                 }}
               >
-                <View style={{ backgroundColor: 'red', flex: 1, height: 50 }}>
-                  <Text>Delete</Text>
+                <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.props.onPress}
+                  >
+                    <Image
+                      source={require('../assets/Todo/trash.png')}
+                    />
+                  </TouchableOpacity>
                 </View>
-                <View style={{ backgroundColor: 'blue' }}>
-                  <Text>Start</Text>
+                <View style={{ backgroundColor: mainColor.default, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.props.onPress}
+                  >
+                    <Image source={require('../assets/Todo/checkTask.png')} />
+                  </TouchableOpacity>
                 </View>
               </View>
             )}
-            rightOpenValue={-75}
+            rightOpenValue={-150}
           />
         )
 
@@ -89,9 +100,10 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
 
 const styles = StyleSheet.create({
   emptyText: {
-    // fontFamily: fontFamily.thin,
+    fontFamily: fontFamily.thin,
     fontSize: 40,
     color: mainColor.light,
+    marginBottom: 10,
   },
   emptyBox: {
     justifyContent: 'space-between',

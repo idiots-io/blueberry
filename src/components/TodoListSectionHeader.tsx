@@ -10,8 +10,10 @@ const TodoListSectionHeader = ({ date }) => (
       justifyContent: 'flex-end'
     }}
     textWrapperStyle={{
-      backgroundColor: subColor.dark,
+      // backgroundColor: 'white',
+      borderColor: subColor.dark,
       borderRadius: 100,
+      borderWidth: 1,
       padding: 4,
       // flex: 1,
       justifyContent: 'center',
@@ -23,7 +25,7 @@ const TodoListSectionHeader = ({ date }) => (
       letterSpacing: 0.5
     }}
     lineStyle={{
-      height: 2,
+      height: 1,
       backgroundColor: subColor.dark
     }}
     leadingLineStyle={{

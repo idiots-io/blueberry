@@ -12,6 +12,7 @@ import { SwipeListView } from 'react-native-swipe-list-view'
 import { mainColor } from '../config'
 import { connect } from 'react-redux'
 import { Todo } from '../reducers'
+import { fontFamily } from '../config'
 
 
 namespace CompletedListComponent {
@@ -63,9 +64,10 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
 
 const styles = StyleSheet.create({
   emptyText: {
-    // fontFamily: fontFamily.thin,
+    fontFamily: fontFamily.thin,
     fontSize: 40,
     color: mainColor.light,
+    marginBottom: 10,
   },
   emptyBox: {
     justifyContent: 'space-between',
