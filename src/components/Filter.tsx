@@ -2,13 +2,13 @@ import React from 'react'
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 import { fontColor, subColor, fontFamily } from '../config'
 
-const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
-  <View style={styles.filterAndSearchWrapper}>
+const Filter = ({ changeTodoList, changeCompletedList, isTodoList, isSearchMode = false }) => (
+  <View style={styles.filterWrapper}>
     <View style={styles.btnWrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={changeTodoList}>
         <Text
           style={
-            selectedTab === 'todo'
+            isTodoList
               ? styles.selectedTabText
               : styles.defaultTabText
           }>
@@ -20,7 +20,7 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
             justifyContent: 'center',
             alignItems: 'center'
           }}>
-          {selectedTab === 'todo' ? (
+          {isTodoList ? (
             <Image
               source={require('../assets/Global/select_circle.png')}
             />
@@ -29,10 +29,10 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
       </TouchableOpacity>
     </View>
     <View style={styles.btnWrapper}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={changeCompletedList}>
         <Text
           style={
-            selectedTab === 'completed'
+            !isTodoList
               ? styles.selectedTabText
               : styles.defaultTabText
           }>
@@ -43,7 +43,7 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {selectedTab === 'completed' ? (
+          {!isTodoList ? (
             <Image
               source={require('../assets/Global/select_circle.png')}
             />
@@ -59,7 +59,7 @@ const FilterAndSearch = ({ selectedTab = 'todo', isSearchMode = false }) => (
 )
 
 const styles = StyleSheet.create({
-  filterAndSearchWrapper: {
+  filterWrapper: {
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilterAndSearch
+export default Filter

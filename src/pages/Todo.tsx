@@ -1,15 +1,21 @@
 import React from 'react'
-import { Text, View, ListView, Image } from 'react-native'
+import {
+  View,
+  ListView,
+  Image,
+} from 'react-native'
 import { connect } from 'react-redux'
-import { addTodo } from '../actions/todos'
 import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
-import FilterAndSearch from '../components/FilterAndSearch'
+import Filter from '../components/Filter'
+import Search from '../components/Search'
 import AddBlueberryBtn from '../components/AddBlueberryBtn'
-import TodoListItem from '../components/TodoListItem'
-import TodoListSectionHeader from '../components/TodoListSectionHeader'
-import { SwipeListView } from 'react-native-swipe-list-view'
+import TodoList from '../components/TodoList'
+import CompletedList from '../components/CompletedList'
+import AddTodoModal from '../components/AddTodoModal'
+import _ from 'lodash'
+
 
 namespace TodoComponent {
   export interface Props {
@@ -19,8 +25,11 @@ namespace TodoComponent {
   export interface State {
     ds: any
     dataSource: any
+    isAddMode: boolean
+    isTodoList: boolean
   }
 }
+
 class TodoComponent extends React.Component<
   TodoComponent.Props,
   TodoComponent.State
@@ -34,56 +43,11 @@ class TodoComponent extends React.Component<
     this.state = {
       ds,
       // dataSource: ds.cloneWithRowsAndSections([...props.todos])
-      dataSource: ds.cloneWithRowsAndSections({
-        '2017/10/08': [
-          {
-            text: '타입스크립트 공부하기',
-            sessionCount: 38,
-          },
-          {
-            text: 'Study Typescript',
-            sessionCount: 12,
-          },
-        ],
-        '2017/11/04': [
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-        ],
-        '2017/11/02': [
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-        ],
-        '2017/11/01': [
-          {
-            text: 'Work on Resume',
-            sessionCount: 3,
-          },
-          {
-            text: 'Git commit',
-            sessionCount: 42,
-          },
-        ],
-      }),
+      dataSource: ds.cloneWithRowsAndSections(
+        _.groupBy(this.props.todos, 'createdAt'),
+      ),
+      isAddMode: false,
+      isTodoList: true,
     }
   }
 
@@ -116,48 +80,40 @@ class TodoComponent extends React.Component<
   componentDidUpdate(prevProps) {
     if (prevProps.todos.length !== this.props.todos.length) {
       this.setState({
-        dataSource: this.state.ds.cloneWithRows([...this.props.todos]),
+        dataSource: this.state.ds.cloneWithRowsAndSections(
+          _.groupBy(this.props.todos, 'createdAt'),
+        ),
       })
     }
   }
+
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
+        <AddTodoModal
+          visible={this.state.isAddMode}
+          close={() => this.setState({ isAddMode: false })}
+        />
         <Header />
-        <FilterAndSearch />
-        <AddBlueberryBtn
-          onPress={() => this.props.addTodo('Study Hard, Play Harder')}
+        {/* <Search /> */}
+        <Filter
+          changeTodoList={() => this.setState({ isTodoList: true })}
+          changeCompletedList={() => this.setState({ isTodoList: false })}
+          isTodoList={this.state.isTodoList}
         />
-        <SwipeListView
-          dataSource={this.state.dataSource}
-          renderRow={todo => (
-            <TodoListItem text={todo.text} sessionCount={todo.sessionCount} />
+
+        {this.state.isTodoList ? (
+          <View>
+            <AddBlueberryBtn onPress={() => this.setState({ isAddMode: true })} />
+            <TodoList
+              dataSource={this.state.dataSource}
+              onPress={() => this.setState({ isAddMode: true })}
+            />
+          </View>
+        ) : (
+            <CompletedList dataSource={this.state.dataSource} />
           )}
-          disableRightSwipe
-          renderSectionHeader={(_, category) => (
-            <TodoListSectionHeader date={category} />
-          )}
-          renderHiddenRow={() => (
-            <View
-              style={{
-                alignItems: 'center',
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                paddingLeft: 15,
-                height: 50,
-              }}
-            >
-              <View style={{ backgroundColor: 'red', flex: 1, height: 50 }}>
-                <Text>Delete</Text>
-              </View>
-              <View style={{ backgroundColor: 'blue' }}>
-                <Text>Start</Text>
-              </View>
-            </View>
-          )}
-          rightOpenValue={-75}
-        />
+
       </PageLayout>
     )
   }
@@ -167,7 +123,7 @@ export default connect(
   state => ({
     todos: state.app.todos,
   }),
-  {
-    addTodo,
-  },
+  undefined,
 )(TodoComponent)
+
+
