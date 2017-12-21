@@ -45,6 +45,9 @@ const AppNavigator = StackNavigator(
   },
   {
     headerMode: 'none',
+    cardStyle: {
+      backgroundColor: 'white',
+    },
   },
 )
 
