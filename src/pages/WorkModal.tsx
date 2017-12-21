@@ -47,7 +47,7 @@ namespace WorkModal {
   }
   export interface State {
     time: moment.Duration
-    countDown: any
+    countDown?: any
     mode: 'WORK' | 'BREAK'
   }
 }
@@ -60,13 +60,30 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
       countDown: setInterval(() => {
         this.setState({ time: this.state.time.subtract(1, 's') });
         if (this.state.time.asMilliseconds() <= 0) {
-          // clearInterval(this.state.countDown);
+          this._clearCountDown();
           (this.state.mode === 'WORK') && this._addSession();
           this._changeMode();
-          // this.props.navigation.goBack();
         }
       }, 1000),
     }
+  }
+
+  _playCountDown = () => {
+    this.setState({
+      countDown: setInterval(() => {
+        this.setState({ time: this.state.time.subtract(1, 's') });
+        if (this.state.time.asMilliseconds() <= 0) {
+          this._clearCountDown();
+          (this.state.mode === 'WORK') && this._addSession();
+          this._changeMode();
+        }
+      }, 1000), 
+    })
+  }
+
+  _clearCountDown = () => {
+    clearInterval(this.state.countDown);
+    this.setState({ countDown: undefined });
   }
 
   _changeMode = () => {
@@ -126,7 +143,11 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
             time={this.state.time}
             mode={this.state.mode}
           />
-          <PlayAndPauseBtn mode={this.state.mode}/>
+          <PlayAndPauseBtn
+            mode={this.state.mode}
+            pause={!this.state.countDown}
+            onPress={!this.state.countDown ? this._playCountDown : this._clearCountDown}
+          />
         </View>
         <View style={styles.flagView}>
           <SurrenderDialog
