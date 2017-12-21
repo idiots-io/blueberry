@@ -25,7 +25,8 @@ const SummaryMeta = ({
         marginLeft: 24,
         paddingTop: 16,
         paddingBottom: 24,
-      }}>
+      }}
+    >
       <View style={styles.itemWrapper}>
         <Text style={styles.valueText}>{blueberriesCount}</Text>
         <Text style={styles.labelText}>블루베리</Text>
@@ -57,15 +58,15 @@ const styles = StyleSheet.create({
   },
   valueText: {
     fontSize: 20,
-    color: fontColor.darkNavy,
+    color: fontColor.main,
   },
   labelText: {
     fontSize: 16,
-    color: fontColor.darkNavy,
+    color: fontColor.main,
   },
   totalTimeText: {
     fontSize: 20,
-    color: fontColor.darkNavy,
+    color: fontColor.main,
   },
 })
 

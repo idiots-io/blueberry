@@ -16,11 +16,12 @@ import { connect } from 'react-redux'
 import { Action } from '../reducers'
 import { mainColor, subColor, fontColor } from '../config'
 import { toggleAutoStart, toggleSoundMode } from '../actions/settings'
+import * as moment from 'moment'
 
 namespace Settings {
   export interface Props {
-    workInterval: string
-    breakTime: string
+    workInterval: moment.Duration
+    breakTime: moment.Duration
     completeSound: string
     autoStart: boolean
     isSoundMode: boolean
@@ -34,7 +35,7 @@ namespace Settings {
     isSoundMode: boolean
     autoStart: boolean
     offSet: any
-    currentValue: string
+    currentValue: any
   }
 }
 
@@ -50,7 +51,7 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
       isSoundMode: true,
       offSet: new Animated.Value(deviceHeight),
       type: '',
-      currentValue: '',
+      currentValue: undefined,
     }
   }
 
@@ -61,7 +62,8 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: 5,
-        }}>
+        }}
+      >
         {focused ? (
           <Image
             source={require('../assets/Settings/setting_active.png')}
@@ -94,8 +96,8 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     }
     this.setState({
       picker: true,
-      type: '블루베리 시간',
-      currentValue: this.props.workInterval,
+      type: '블루베리 시간 (분)',
+      currentValue: this.props.workInterval.asMinutes(),
       range: this.state.range,
     })
   }
@@ -106,8 +108,8 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
     }
     this.setState({
       picker: true,
-      type: '쉬는 시간',
-      currentValue: this.props.breakTime,
+      type: '쉬는 시간 (분)',
+      currentValue: this.props.breakTime.asMinutes(),
       range: this.state.range,
     })
   }
@@ -143,7 +145,9 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
               onPress={this.isBlueberryTimePickerMode}
               disabled={this.state.picker}
             >
-              <Text style={styles.countText}>{this.props.workInterval}</Text>
+              <Text style={styles.countText}>
+                {this.props.workInterval.asMinutes()}
+              </Text>
             </TouchableHighlight>
           </View>
           <View style={styles.listItem}>
@@ -155,7 +159,9 @@ class Settings extends React.Component<Settings.Props, Settings.State> {
               onPress={this.isBreakTimePickerMode}
               disabled={this.state.picker}
             >
-              <Text style={styles.countText}>{this.props.breakTime}</Text>
+              <Text style={styles.countText}>
+                {this.props.breakTime.asMinutes()}
+              </Text>
             </TouchableHighlight>
           </View>
 

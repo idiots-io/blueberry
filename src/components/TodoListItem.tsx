@@ -1,18 +1,30 @@
 import React from 'react'
 import { StyleSheet, View, Text, ImageBackground } from 'react-native'
-import { fontColor, mainColor } from '../config'
+import { fontColor, mainColor, fontFamily, subColor } from '../config'
 
-const TodoListItem = ({ text, sessionCount = 0 }) => (
+const TodoListItem = ({ title, sessionCount }) => (
   <View style={styles.listItemWrapper}>
     <View style={styles.listItem}>
       <View style={styles.textWrapper}>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={styles.text}>{title}</Text>
       </View>
-      <ImageBackground
-        source={require('../assets/Todo/blueberry_ing.png')}
-        style={styles.countWrapper}>
-        <Text style={styles.countText}>{sessionCount}</Text>
-      </ImageBackground>
+      {sessionCount === 0 ? (
+        <ImageBackground
+          source={require('../assets/Todo/blueberry_notyet.png')}
+          style={styles.countWrapper}
+        >
+          <Text style={[styles.countText, { color: subColor.dark }]}>
+            {sessionCount}
+          </Text>
+        </ImageBackground>
+      ) : (
+        <ImageBackground
+          source={require('../assets/Todo/blueberry_ing.png')}
+          style={styles.countWrapper}
+        >
+          <Text style={styles.countText}>{sessionCount}</Text>
+        </ImageBackground>
+      )}
     </View>
   </View>
 )
@@ -20,19 +32,20 @@ const TodoListItem = ({ text, sessionCount = 0 }) => (
 const styles = StyleSheet.create({
   listItemWrapper: {
     paddingHorizontal: 15,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   countWrapper: {
     height: 50,
     width: 50,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   countText: {
-    fontSize: 20,
+    fontFamily: fontFamily.regular,
+    fontSize: 18,
     backgroundColor: 'transparent',
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   listItem: {
     paddingVertical: 15,
@@ -40,16 +53,18 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.25,
     borderColor: mainColor.light,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   textWrapper: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   text: {
+    fontFamily: fontFamily.regular,
     fontSize: 16,
-    color: fontColor.dark
-  }
+    color: fontColor.dark,
+  },
 })
 
 export default TodoListItem

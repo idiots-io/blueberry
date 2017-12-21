@@ -12,6 +12,7 @@ import { subColor, fontColor } from '../config'
 import { connect } from 'react-redux'
 import { Action } from '../reducers'
 import { changeSettingWithPicker } from '../actions/settings'
+import * as moment from 'moment'
 
 namespace SettingPicker {
   export interface Props {
@@ -19,7 +20,7 @@ namespace SettingPicker {
     range: string[]
     offSet: number
     type: string
-    currentValue: string
+    currentValue: any
     changeSetting: (type: string, value: string) => Action
   }
   export interface State {
@@ -63,7 +64,11 @@ class SettingPicker extends React.Component<
   }
 
   updateAndCloseModal = () => {
-    this.props.changeSetting(this.props.type, this.state.changeValue)
+    const selectedValue = this.state.changeValue.split(' ')[0]
+    this.props.changeSetting(
+      this.props.type,
+      moment.duration(parseInt(selectedValue), 'm'),
+    )
     const deviceHeight = Dimensions.get('window').height
     Animated.timing(this.props.offSet, {
       toValue: deviceHeight,

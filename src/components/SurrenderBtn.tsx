@@ -2,10 +2,10 @@ import React from 'react';
 import {
   StyleSheet,
   ImageStyle,
-  Image,
+  ImageBackground,
   TouchableOpacity,
   Animated,
-  Dimensions
+  // Dimensions
 } from 'react-native';
 
 namespace GiveUpTimerBtn {
@@ -27,7 +27,7 @@ class GiveUpTimerBtn extends React.Component<GiveUpTimerBtn.Props, GiveUpTimerBt
     }
   }
 
-  calculateXY = (selected: boolean) => ({ x: Dimensions.get('window').width - 80, y: Dimensions.get('window').height/5 - (selected ? 59 : 30) })
+  calculateXY = (selected: boolean) => ({ x: 120, y: (selected ? 20 : 48) })
 
 
   onPress = () => {
@@ -46,8 +46,8 @@ class GiveUpTimerBtn extends React.Component<GiveUpTimerBtn.Props, GiveUpTimerBt
         style={{transform: this.state.showUpAnim.getTranslateTransform()}}
       >
         <TouchableOpacity activeOpacity={0.8} onPress={this.onPress}>
-          <Image
-            style={styles.btnWrapper}
+          <ImageBackground
+            style={styles.wrapper}
             source={require('../assets/Timer/giveUp.png')} />
         </TouchableOpacity>
       </Animated.View>
@@ -56,11 +56,12 @@ class GiveUpTimerBtn extends React.Component<GiveUpTimerBtn.Props, GiveUpTimerBt
 }
 
 interface StyleTypes {
-  btnWrapper: ImageStyle
+  wrapper: ImageStyle
 }
 const styles = StyleSheet.create<StyleTypes>({
-  btnWrapper: {
-
+  wrapper: {
+    height: 59,
+    width: 50
   }
 })
 

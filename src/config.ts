@@ -20,11 +20,11 @@ export const fontColor = {
   sub: '#A8B7C7',
   blue: '#377FD8',
   dark: '#2139A3',
-  darkNavy: 'rgb(22, 46, 128)',
 }
 
 export const fontFamily = {
-  title: 'Pacifico', // fonts.goole.com
-  body_ko: 'Spoqa Han Sans',
-  body_en: '', // 미정이지만 Lato 폰트 사용할 것 같습니다
+  bold: 'SpoqaHanSans-Bold',
+  regular: 'SpoqaHanSans-Regular',
+  light: 'SpoqaHanSans-Light',
+  thin: 'SpoqaHanSans-Thin',
 }

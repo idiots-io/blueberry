@@ -17,11 +17,11 @@ const DEFAULT_STATE: State = {
   settings: {
     workInterval: {
       labelKor: '블루베리 시간',
-      value: '25분',
+      value: moment.duration(5, 's'),
     },
     breakTime: {
       labelKor: '쉬는 시간',
-      value: '5분',
+      value: moment.duration(3, 's'),
     },
     autoStart: {
       labelKor: '블루베리 자동 진행',
@@ -55,11 +55,11 @@ export interface Todo {
 export interface Setting {
   workInterval: {
     labelKor: string
-    value: string
+    value: moment.Duration
   }
   breakTime: {
     labelKor: string
-    value: string
+    value: moment.Duration
   }
   completeSound: {
     labelKor: string
@@ -103,7 +103,6 @@ export default (state = DEFAULT_STATE, action: Action) => {
       sessions: [...state.sessions, action.payload],
     }
   }
-
   if (action.type === 'CHANGE_SETTING_WITH_PICKER') {
     const nextState = { ...state }
     switch (action.payload[0]) {

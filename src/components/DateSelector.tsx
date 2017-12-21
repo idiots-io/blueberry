@@ -28,13 +28,15 @@ const DateSelector = ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30,
-      }}>
+      }}
+    >
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <TouchableOpacity onPress={onPrevDayClick}>
           <Image source={require('../assets/Summary/arrowLeft.png')} />
         </TouchableOpacity>
@@ -43,13 +45,15 @@ const DateSelector = ({
             marginHorizontal: 20,
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+        >
           <Text
             style={{
-              color: fontColor.darkNavy,
+              color: fontColor.main,
               fontSize: 16,
               letterSpacing: 1.2,
-            }}>
+            }}
+          >
             {displayedDate}
           </Text>
         </View>

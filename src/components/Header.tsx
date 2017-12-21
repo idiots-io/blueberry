@@ -1,18 +1,33 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { fontColor } from '../config'
+import { connect } from 'react-redux'
+import { Todo } from '../reducers'
 
-const Header = ({ todaysCount = 100 }) => (
-  <View style={styles.headerWrapper}>
-    <Image source={require('../assets/Global/logo_upper.png')} />
-    <Text style={styles.headerText}>
-      오늘{' '}
-      <Text style={{ color: fontColor.blue }}>
-        뽀모도로 <Text style={{ fontWeight: 'bold' }}>{todaysCount}</Text>
-      </Text>
-    </Text>
-  </View>
-)
+namespace HeaderComponent {
+  export interface Props {
+    todos: Todo[]
+  }
+}
+
+class Header extends React.Component<HeaderComponent.Props, {}> {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <View style={styles.headerWrapper}>
+        <Image source={require('../assets/Global/logo_upper.png')} />
+        <Text style={styles.headerText}>
+          오늘{' '}
+          <Text style={{ color: fontColor.blue }}>
+            뽀모도로 <Text style={{ fontWeight: 'bold' }}>{this.props.todos.length}</Text>
+          </Text>
+        </Text>
+      </View>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   headerWrapper: {
@@ -30,4 +45,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Header
+export default connect(
+  state => ({
+    todos: state.app.todos,
+  }), undefined
+)(Header)
