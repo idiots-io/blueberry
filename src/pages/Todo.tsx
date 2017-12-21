@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
-import FilterAndSearch from '../components/FilterAndSearch'
+import Filter from '../components/Filter'
+import Search from '../components/Search'
 import AddBlueberryBtn from '../components/AddBlueberryBtn'
 import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
@@ -94,11 +95,13 @@ class TodoComponent extends React.Component<
           close={() => this.setState({ isAddMode: false })}
         />
         <Header />
-        <FilterAndSearch
+        <Search />
+        <Filter
           changeTodoList={() => this.setState({ isTodoList: true })}
           changeCompletedList={() => this.setState({ isTodoList: false })}
           isTodoList={this.state.isTodoList}
         />
+
         {this.state.isTodoList ? (
           <View>
             <AddBlueberryBtn onPress={() => this.setState({ isAddMode: true })} />

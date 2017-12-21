@@ -2,8 +2,18 @@ import React from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { fontColor } from '../config'
 import { connect } from 'react-redux'
+import { Todo } from '../reducers'
 
-class Header extends React.Component {
+namespace HeaderComponent {
+  export interface Props {
+    todos: Todo[]
+  }
+}
+
+class Header extends React.Component<HeaderComponent.Props, {}> {
+  constructor(props) {
+    super(props)
+  }
   render() {
     return (
       <View style={styles.headerWrapper}>

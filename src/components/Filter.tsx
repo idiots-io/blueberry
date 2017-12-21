@@ -2,8 +2,8 @@ import React from 'react'
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 import { fontColor, subColor, fontFamily } from '../config'
 
-const FilterAndSearch = ({ changeTodoList, changeCompletedList, isTodoList, isSearchMode = false }) => (
-  <View style={styles.filterAndSearchWrapper}>
+const Filter = ({ changeTodoList, changeCompletedList, isTodoList, isSearchMode = false }) => (
+  <View style={styles.filterWrapper}>
     <View style={styles.btnWrapper}>
       <TouchableOpacity onPress={changeTodoList}>
         <Text
@@ -59,7 +59,7 @@ const FilterAndSearch = ({ changeTodoList, changeCompletedList, isTodoList, isSe
 )
 
 const styles = StyleSheet.create({
-  filterAndSearchWrapper: {
+  filterWrapper: {
     backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilterAndSearch
+export default Filter
