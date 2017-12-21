@@ -51,6 +51,7 @@ namespace WorkModal {
     time: moment.Duration
     countDown?: any
     mode: 'WORK' | 'BREAK'
+    openSurrenderDialog?: boolean
   }
 }
 class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
@@ -153,13 +154,20 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
           />
         </View>
         <View style={styles.flagView}>
-          <SurrenderDialog
-            onPressConfirm={() => {
-              clearInterval(this.state.countDown);
-              this.props.navigation.goBack();
-            }}
+          {
+            this.state.openSurrenderDialog &&
+            <SurrenderDialog
+              onPressConfirm={() => {
+                clearInterval(this.state.countDown);
+                this.props.navigation.goBack();
+              }}
+              onPressCancel={() => this.setState({ openSurrenderDialog: false })}
+            />
+          }
+          <SurrenderBtn
+            selected={this.state.openSurrenderDialog}
+            onPress={() => this.setState({ openSurrenderDialog: !this.state.openSurrenderDialog })}
           />
-          <SurrenderBtn/>
         </View>
       </LinearGradient>
     )
