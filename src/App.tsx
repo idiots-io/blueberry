@@ -1,22 +1,23 @@
 import React from 'react'
-import { TabNavigator } from 'react-navigation'
+import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
 
-import Settings from './pages/Settings'
+// import Settings from './pages/Settings'
 import Summary from './pages/Summary'
-// import Work from './pages/Work'
+import Work from './pages/Work'
+import WorkModal from './pages/WorkModal';
 import Todo from './pages/Todo'
 import Loading from './components/Loading'
 import configureStore from './store'
 import { subColor } from './config'
 
-const AppNavigator = TabNavigator(
+const MainNavigator = TabNavigator(
   {
     Todo: { screen: Todo },
-    // Timer: { screen: Work },
+    Work: { screen: Work },
     Summary: { screen: Summary },
-    Settings: { screen: Settings },
+    // Settings: { screen: Settings },
   },
   {
     tabBarOptions: {
@@ -36,6 +37,16 @@ const AppNavigator = TabNavigator(
       },
     },
   },
+)
+
+const AppNavigator = StackNavigator(
+  {
+    Home: { screen: MainNavigator },
+    WorkModal: { screen: WorkModal }
+  },
+  {
+    headerMode: 'none'
+  }
 )
 
 const { persistor, store } = configureStore()

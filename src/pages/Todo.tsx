@@ -95,7 +95,7 @@ class TodoComponent extends React.Component<
           close={() => this.setState({ isAddMode: false })}
         />
         <Header />
-        <Search />
+        {/* <Search /> */}
         <Filter
           changeTodoList={() => this.setState({ isTodoList: true })}
           changeCompletedList={() => this.setState({ isTodoList: false })}

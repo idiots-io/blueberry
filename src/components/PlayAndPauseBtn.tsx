@@ -1,33 +1,44 @@
 import React from 'react';
 import {
   StyleSheet,
-  ImageStyle,
-  Image,
+  ViewStyle,
+  ImageBackground,
   TouchableOpacity
 } from 'react-native';
 
-const PlayBtn = ({ pause = false, onPress = () => {} }) => (
+const PlayBtn = ({ mode, pause = false, onPress = () => {} }) => (
   <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
     {
       pause ?
-      <Image
-        style={styles.btnWrapper}
-        source={require('../assets/Timer/pause.png')} />
+      <ImageBackground
+        style={styles.wrapper}
+        source={
+          mode === 'WORK' ?
+          require('../assets/Timer/pauseOnWork.png')
+          :
+          require('../assets/Timer/pauseOnBreak.png')
+        } />
       :
-      <Image
-        style={styles.btnWrapper}
-        source={require('../assets/Timer/playBtn.png')} />
+      <ImageBackground
+        style={styles.wrapper}
+        source={
+          mode === 'WORK' ?
+          require('../assets/Timer/playOnWork.png')
+          :
+          require('../assets/Timer/playOnBreak.png')
+        } />
     }
   </TouchableOpacity>
 )
 
 interface StyleTypes {
-  btnWrapper: ImageStyle
+  wrapper: ViewStyle
 }
 const styles = StyleSheet.create<StyleTypes>({
-  btnWrapper: {
-
-  }
+  wrapper: {
+    height: 64,
+    width: 64
+  },
 })
 
 export default PlayBtn;

@@ -8,37 +8,20 @@ const DEFAULT_STATE: State = {
     createdAt: new Date(),
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
-  todos: [
-    // {
-    //   id: 1,
-    //   title: 'text',
-    //   isDone: false,
-    //   createdAt: '2017.12.04 월요일',
-    //   sessionCount: 2,
-    // },
-    // {
-    //   id: 2,
-    //   title: 'text2',
-    //   isDone: false,
-    //   createdAt: '2017.12.04 월요일',
-    //   sessionCount: 4,
-    // },
-    // {
-    //   id: 3,
-    //   title: 'text3',
-    //   isDone: false,
-    //   createdAt: '2017.12.03 일요일',
-    //   sessionCount: 10,
-    // },
-  ],
+  todos: times(4, num => ({
+    id: num.toString(),
+    title: `Todo #${num}`,
+    isDone: num % 2 === 0,
+    createdAt: new Date(),
+  })),
   settings: {
     workInterval: {
       labelKor: '블루베리 시간',
-      value: '25분',
+      value: moment.duration(5, 's'),
     },
     breakTime: {
       labelKor: '쉬는 시간',
-      value: '5분',
+      value: moment.duration(3, 's'),
     },
     autoStart: {
       labelKor: '블루베리 자동 진행',
@@ -66,18 +49,17 @@ export interface Todo {
   id: string
   title: string
   isDone: boolean
-  createdAt: string
-  sessionCount: number
+  createdAt: Date
 }
 
 export interface Setting {
   workInterval: {
     labelKor: string
-    value: string
+    value: moment.Duration
   }
   breakTime: {
     labelKor: string
-    value: string
+    value: moment.Duration
   }
   completeSound: {
     labelKor: string
