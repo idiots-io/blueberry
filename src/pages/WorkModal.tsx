@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import * as moment from 'moment';
 import uuid from 'uuid/v4';
+import { filter } from 'lodash';
 
 import { addSession } from '../actions/sessions';
 import { Action, Session } from '../reducers';
@@ -30,6 +31,7 @@ namespace WorkModal {
   export interface Props {
     navigation: any
     addSession: (session: Session) => Action
+    timers: Work[];
     settings: {
       workInterval: {
         labelKor: string;
@@ -102,17 +104,18 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
   }
 
   _addSession = () => {
+    const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     const session: Session = {
       id: uuid(),
       duration: moment.duration(this.props.settings.workInterval.value),
       createdAt: moment.utc().toDate(),
-      todoId: this.props.navigation.state.params.work.todo.id
+      todoId: work.todo.id
     }
     this.props.addSession(session);
   }
 
   render() {
-    const { work } = this.props.navigation.state.params;
+    const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     return (
       <LinearGradient
         colors={this.state.mode === 'WORK' ? ['#377fd8', '#4551f6'] : ['#ffffff', '#ffffff']}
@@ -220,7 +223,14 @@ const styles = StyleSheet.create<StyleTypes>({
 
 export default connect(
   state => ({
-    sessions: state.app.sessions,
+    timers: state.app.todos.reduce((result, todo) => {
+      const sessionsCount = filter(
+        state.app.sessions,
+        session => session.todoId === todo.id,
+      ).length
+      result.push({ todo, sessionsCount })
+      return result
+    }, []),
     settings: state.app.settings
   }), {
     addSession
