@@ -19,6 +19,7 @@ namespace CompletedListComponent {
   export interface Props {
     todos: Todo[]
     dataSource: any
+    isTodoList: boolean
   }
 }
 
@@ -28,7 +29,7 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
   }
   render() {
     return (
-      this.props.todos.length === 0 ? (
+      this.props.dataSource.length === 0 ? (
         <View style={styles.emptyBox}>
           <View>
             <Image source={require('../assets/Todo/arrow-Up.png')} />
@@ -46,8 +47,10 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
             dataSource={this.props.dataSource}
             renderRow={todo => (
               <TodoListItem
+                overline='line-through'
                 title={todo.title}
                 sessionCount={todo.sessionCount}
+                isTodoList={this.props.isTodoList}
               />
             )}
             disableRightSwipe

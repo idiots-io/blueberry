@@ -2,11 +2,11 @@ import React from 'react'
 import { StyleSheet, View, Text, ImageBackground } from 'react-native'
 import { fontColor, mainColor, fontFamily, subColor } from '../config'
 
-const TodoListItem = ({ title, sessionCount }) => (
+const TodoListItem = ({ overline, title, sessionCount, isTodoList }) => (
   <View style={styles.listItemWrapper}>
     <View style={styles.listItem}>
       <View style={styles.textWrapper}>
-        <Text style={styles.text}>{title}</Text>
+        <Text style={[styles.text, { textDecorationLine: overline }]}>{title}</Text>
       </View>
       {sessionCount === 0 ? (
         <ImageBackground
@@ -18,13 +18,24 @@ const TodoListItem = ({ title, sessionCount }) => (
           </Text>
         </ImageBackground>
       ) : (
-        <ImageBackground
-          source={require('../assets/Todo/blueberry_ing.png')}
-          style={styles.countWrapper}
-        >
-          <Text style={styles.countText}>{sessionCount}</Text>
-        </ImageBackground>
-      )}
+          isTodoList ? (
+            <ImageBackground
+              source={require('../assets/Todo/blueberry_ing.png')}
+              style={styles.countWrapper}
+            >
+              <Text style={styles.countText}>{sessionCount}</Text>
+            </ImageBackground>
+
+          ) : (
+              <ImageBackground
+                source={require('../assets/Todo/blueberry_normal.png')}
+                style={styles.countWrapper}
+              >
+                <Text style={styles.countText}>{sessionCount}</Text>
+              </ImageBackground>
+
+            )
+        )}
     </View>
   </View>
 )
@@ -45,7 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     backgroundColor: 'transparent',
     color: 'white',
-    fontWeight: 'bold',
   },
   listItem: {
     paddingVertical: 15,

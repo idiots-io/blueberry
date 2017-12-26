@@ -9,7 +9,6 @@ import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
 import Filter from '../components/Filter'
-import Search from '../components/Search'
 import AddBlueberryBtn from '../components/AddBlueberryBtn'
 import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
@@ -42,9 +41,8 @@ class TodoComponent extends React.Component<
     })
     this.state = {
       ds,
-      // dataSource: ds.cloneWithRowsAndSections([...props.todos])
       dataSource: ds.cloneWithRowsAndSections(
-        _.groupBy(this.props.todos, 'createdAt'),
+        _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
       ),
       isAddMode: false,
       isTodoList: true,
@@ -77,13 +75,29 @@ class TodoComponent extends React.Component<
     ),
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.todos.length !== this.props.todos.length) {
       this.setState({
         dataSource: this.state.ds.cloneWithRowsAndSections(
-          _.groupBy(this.props.todos, 'createdAt'),
+          _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
         ),
       })
+      console.log(prevState.dataSource.length, this.state.dataSource.length)
+    }
+    if (prevState.isTodoList !== this.state.isTodoList) {
+      if (!this.state.isTodoList) {
+        this.setState({
+          dataSource: this.state.ds.cloneWithRowsAndSections(
+            _.groupBy(_.filter(this.props.todos, (todo) => todo.isDone), 'createdAt'),
+          ),
+        })
+      } else {
+        this.setState({
+          dataSource: this.state.ds.cloneWithRowsAndSections(
+            _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
+          ),
+        })
+      }
     }
   }
 
@@ -95,7 +109,6 @@ class TodoComponent extends React.Component<
           close={() => this.setState({ isAddMode: false })}
         />
         <Header />
-        {/* <Search /> */}
         <Filter
           changeTodoList={() => this.setState({ isTodoList: true })}
           changeCompletedList={() => this.setState({ isTodoList: false })}
@@ -111,7 +124,9 @@ class TodoComponent extends React.Component<
             />
           </View>
         ) : (
-            <CompletedList dataSource={this.state.dataSource} />
+            <CompletedList
+              dataSource={this.state.dataSource}
+            />
           )}
 
       </PageLayout>

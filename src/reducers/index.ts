@@ -93,10 +93,24 @@ export default (state = DEFAULT_STATE, action: Action) => {
       todos: [...state.todos, action.payload],
     }
   }
-  if (action.type === 'RESET_TODOS') {
-    return { ...state, todos: [] }
+  if (action.type === 'DELETE_TODOS') {
+    const deleteTodo = state.todos.filter(
+      todo => todo.id !== action.payload,
+    )
+    return {
+      ...state,
+      todos: [...deleteTodo]
+    }
   }
+  if (action.type === 'COMPLETED_TODOS') {
+    const completedTodoIndex = state.todos.map(
+      todo => todo.id).indexOf(action.payload)
+    state.todos[completedTodoIndex].isDone = true
 
+    return {
+      ...state,
+    }
+  }
   if (action.type === 'ADD_SESSION') {
     return {
       ...state,

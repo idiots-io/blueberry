@@ -12,6 +12,7 @@ import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { mainColor } from '../config'
 import { connect } from 'react-redux'
+import { removeTodo, completedTodo } from '../actions/todos'
 import { Action, Todo } from '../reducers'
 import { fontFamily } from '../config'
 
@@ -19,8 +20,12 @@ namespace TodoListComponent {
   export interface Props {
     todos: Todo[]
     addTodo: (input: string) => Action
+    removeTodo: (id: number) => Action
+    completedTodo: (id: number) => Action
     dataSource: any
     onPress: Function
+    onRowClose: Function
+    isTodoList: boolean
   }
 }
 
@@ -28,9 +33,21 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
   constructor(props) {
     super(props)
   }
+
+
+  deleteRow = (id, secId, rowId, rowMap) => {
+    rowMap[`${secId}${rowId}`].closeRow()
+    this.props.removeTodo(id)
+  }
+
+  completedTodo = (id, secId, rowId, rowMap) => {
+    rowMap[`${secId}${rowId}`].closeRow()
+    this.props.completedTodo(id)
+  }
+
   render() {
     return (
-      this.props.todos.length === 0 ? (
+      this.props.dataSource.length === 0 ? (
         <View style={styles.emptyBox}>
           <View>
             <Text style={styles.emptyText}>블루베리로</Text>
@@ -49,17 +66,19 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
       ) : (
           <SwipeListView
             dataSource={this.props.dataSource}
-            renderRow={todo => (
+            renderRow={(todo) => (
               <TodoListItem
                 title={todo.title}
                 sessionCount={todo.sessionCount}
+                overline='none'
+                isTodoList={this.props.isTodoList}
               />
             )}
             disableRightSwipe
             renderSectionHeader={(_, category) => (
               <TodoListSectionHeader date={category} />
             )}
-            renderHiddenRow={() => (
+            renderHiddenRow={(data, secId, rowId, rowMap) => (
               <View
                 style={{
                   alignItems: 'center',
@@ -72,7 +91,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
                 <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={() => this.props.onPress}
+                    onPress={() => this.deleteRow(data.id, secId, rowId, rowMap)}
                   >
                     <Image
                       source={require('../assets/Todo/trash.png')}
@@ -82,7 +101,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
                 <View style={{ backgroundColor: mainColor.default, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
                   <TouchableOpacity
                     activeOpacity={0.8}
-                    onPress={() => this.props.onPress}
+                    onPress={() => this.completedTodo(data.id, secId, rowId, rowMap)}
                   >
                     <Image source={require('../assets/Todo/checkTask.png')} />
                   </TouchableOpacity>
@@ -114,9 +133,16 @@ const styles = StyleSheet.create({
   },
 })
 
+
+const mapDispatchToProps = (dispatch: any): any => {
+  return {
+    removeTodo: id => dispatch(removeTodo(id)),
+    completedTodo: id => dispatch(completedTodo(id)),
+  }
+}
+
 export default connect(
   state => ({
     todos: state.app.todos,
-  }),
-  undefined,
+  }), mapDispatchToProps
 )(TodoList)
