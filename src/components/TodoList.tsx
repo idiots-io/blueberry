@@ -5,9 +5,9 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  AlertIOS
 } from 'react-native'
-import DropdownAlert from 'react-native-dropdownalert';
 import TodoListItem from '../components/TodoListItem'
 import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
@@ -35,6 +35,24 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
     super(props)
   }
 
+  deleteAlert = (id, secId, rowId, rowMap) => {
+    AlertIOS.alert(
+      '정말 삭제 하시나요?',
+      '삭제 후에는 복구가 불가능합니다.',
+      [
+        {
+          text: '아니요',
+          onPress: () => rowMap[`${secId}${rowId}`].closeRow(),
+          style: 'cancel',
+        },
+        {
+          text: '삭제하기',
+          onPress: () => this.deleteRow(id, secId, rowId, rowMap),
+        },
+      ]
+    )
+  }
+
   deleteRow = (id, secId, rowId, rowMap) => {
     rowMap[`${secId}${rowId}`].closeRow()
     this.props.removeTodo(id)
@@ -47,9 +65,10 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
   }
 
   render() {
-    const items = {
-      type: 'custom', title: '', message: '완료한 작업탭으로 이동했어요 :)  👇'
-    }
+    const items = [
+      { type: 'completed', title: '', message: '완료한 작업탭으로 이동했어요 :)  👇' },
+    ]
+    // { type: 'delete', title: '', message: '할 일이 삭제되었어요! 🙆' }
 
     return (
       this.props.dataSource.length === 0 ? (
@@ -97,7 +116,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
                   <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
                     <TouchableOpacity
                       activeOpacity={0.8}
-                      onPress={() => this.deleteRow(data.id, secId, rowId, rowMap)}
+                      onPress={() => this.deleteAlert(data.id, secId, rowId, rowMap)}
                     >
                       <Image
                         source={require('../assets/Todo/trash.png')}
