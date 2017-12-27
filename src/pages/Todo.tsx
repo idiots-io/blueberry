@@ -5,6 +5,7 @@ import {
   Image,
 } from 'react-native'
 import { connect } from 'react-redux'
+import DropdownAlert from 'react-native-dropdownalert'
 import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
@@ -101,6 +102,24 @@ class TodoComponent extends React.Component<
     }
   }
 
+
+  showAlert(item) {
+    if (item.type == 'close') {
+      this.closeAlert()
+    } else {
+      const title = item.title
+      this.dropdown.alertWithType(item.type, title, item.message)
+    }
+  }
+
+  closeAlert = () => {
+    this.dropdown.close()
+  }
+
+  onClose(data) {
+    console.log(data);
+  }
+
   render() {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
@@ -114,12 +133,23 @@ class TodoComponent extends React.Component<
           changeCompletedList={() => this.setState({ isTodoList: false })}
           isTodoList={this.state.isTodoList}
         />
+        <DropdownAlert
+          ref={(ref) => this.dropdown = ref}
+          containerStyle={{
+            backgroundColor: "#2B73B6",
+          }}
+          startDelta={-100}
+          // showCancel={true}
+          onClose={(data) => this.onClose(data)}
+          onCancel={(data) => this.onClose(data)}
+        />
 
         {this.state.isTodoList ? (
           <View>
             <AddBlueberryBtn onPress={() => this.setState({ isAddMode: true })} />
             <TodoList
               dataSource={this.state.dataSource}
+              dropdownalert={(items) => this.showAlert(items)}
               onPress={() => this.setState({ isAddMode: true })}
             />
           </View>

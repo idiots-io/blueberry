@@ -26,28 +26,13 @@ namespace TodoListComponent {
     onPress: Function
     onRowClose: Function
     isTodoList: boolean
+    dropdownalert: Function
   }
 }
 
 class TodoList extends Component<TodoListComponent.Props, {}> {
   constructor(props) {
     super(props)
-  }
-
-
-  showAlert(item) {
-    if (item.type == 'close') {
-      this.closeAlert()
-    } else {
-      const title = item.title
-      this.dropdown.alertWithType(item.type, title, item.message)
-    }
-  }
-  closeAlert = () => {
-    this.dropdown.close()
-  }
-  onClose(data) {
-    console.log(data);
   }
 
   deleteRow = (id, secId, rowId, rowMap) => {
@@ -58,12 +43,12 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
   completedTodo = (id, secId, rowId, rowMap, item) => {
     rowMap[`${secId}${rowId}`].closeRow()
     this.props.completedTodo(id)
-    this.showAlert(item)
+    this.props.dropdownalert(item)
   }
 
   render() {
     const items = {
-      type: 'custom', title: '완료한 작업으로 이동', message: '실행취소'
+      type: 'custom', title: '', message: '완료한 작업탭으로 이동했어요 :)  👇'
     }
 
     return (
@@ -130,16 +115,6 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
                 </View>
               )}
               rightOpenValue={-150}
-            />
-            <DropdownAlert
-              ref={(ref) => this.dropdown = ref}
-              containerStyle={{
-                backgroundColor: mainColor.default,
-              }}
-              // showCancel={true}
-              onClose={(data) => this.onClose(data)}
-              onCancel={(data) => this.onClose(data)}
-            // imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
             />
           </View>
         )
