@@ -7,14 +7,14 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native'
+import DropdownAlert from 'react-native-dropdownalert';
 import TodoListItem from '../components/TodoListItem'
 import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { mainColor } from '../config'
 import { connect } from 'react-redux'
 import { removeTodo, completedTodo } from '../actions/todos'
-import { Action, Todo } from '../reducers'
-import { fontFamily } from '../config'
+import { Action, Todo, } from '../reducers'
+import { fontFamily, mainColor } from '../config'
 
 namespace TodoListComponent {
   export interface Props {
@@ -35,17 +35,37 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
   }
 
 
+  showAlert(item) {
+    if (item.type == 'close') {
+      this.closeAlert()
+    } else {
+      const title = item.title
+      this.dropdown.alertWithType(item.type, title, item.message)
+    }
+  }
+  closeAlert = () => {
+    this.dropdown.close()
+  }
+  onClose(data) {
+    console.log(data);
+  }
+
   deleteRow = (id, secId, rowId, rowMap) => {
     rowMap[`${secId}${rowId}`].closeRow()
     this.props.removeTodo(id)
   }
 
-  completedTodo = (id, secId, rowId, rowMap) => {
+  completedTodo = (id, secId, rowId, rowMap, item) => {
     rowMap[`${secId}${rowId}`].closeRow()
     this.props.completedTodo(id)
+    this.showAlert(item)
   }
 
   render() {
+    const items = {
+      type: 'custom', title: '완료한 작업으로 이동', message: '실행취소'
+    }
+
     return (
       this.props.dataSource.length === 0 ? (
         <View style={styles.emptyBox}>
@@ -64,52 +84,64 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
           </View>
         </View>
       ) : (
-          <SwipeListView
-            dataSource={this.props.dataSource}
-            renderRow={(todo) => (
-              <TodoListItem
-                title={todo.title}
-                sessionCount={todo.sessionCount}
-                overline='none'
-                isTodoList={this.props.isTodoList}
-              />
-            )}
-            disableRightSwipe
-            renderSectionHeader={(_, category) => (
-              <TodoListSectionHeader date={category} />
-            )}
-            renderHiddenRow={(data, secId, rowId, rowMap) => (
-              <View
-                style={{
-                  alignItems: 'center',
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  height: 50,
-                }}
-              >
-                <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => this.deleteRow(data.id, secId, rowId, rowMap)}
-                  >
-                    <Image
-                      source={require('../assets/Todo/trash.png')}
-                    />
-                  </TouchableOpacity>
+          <View>
+            <SwipeListView
+              dataSource={this.props.dataSource}
+              renderRow={(todo) => (
+                <TodoListItem
+                  title={todo.title}
+                  sessionCount={todo.sessionCount}
+                  overline='none'
+                  isTodoList={this.props.isTodoList}
+                />
+              )}
+              disableRightSwipe
+              renderSectionHeader={(_, category) => (
+                <TodoListSectionHeader date={category} />
+              )}
+              renderHiddenRow={(data, secId, rowId, rowMap) => (
+                <View
+                  style={{
+                    alignItems: 'center',
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    height: 50,
+                  }}
+                >
+                  <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => this.deleteRow(data.id, secId, rowId, rowMap)}
+                    >
+                      <Image
+                        source={require('../assets/Todo/trash.png')}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{ backgroundColor: mainColor.default, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => this.completedTodo(data.id, secId, rowId, rowMap, items)}
+                    >
+                      <Image source={require('../assets/Todo/checkTask.png')} />
+                    </TouchableOpacity>
+                  </View>
                 </View>
-                <View style={{ backgroundColor: mainColor.default, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
-                  <TouchableOpacity
-                    activeOpacity={0.8}
-                    onPress={() => this.completedTodo(data.id, secId, rowId, rowMap)}
-                  >
-                    <Image source={require('../assets/Todo/checkTask.png')} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            )}
-            rightOpenValue={-150}
-          />
+              )}
+              rightOpenValue={-150}
+            />
+            <DropdownAlert
+              ref={(ref) => this.dropdown = ref}
+              containerStyle={{
+                backgroundColor: mainColor.default,
+              }}
+              // showCancel={true}
+              onClose={(data) => this.onClose(data)}
+              onCancel={(data) => this.onClose(data)}
+            // imageSrc={'https://facebook.github.io/react/img/logo_og.png'}
+            />
+          </View>
         )
 
 
