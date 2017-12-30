@@ -77,13 +77,22 @@ class TodoComponent extends React.Component<
   }
 
   componentDidUpdate(prevProps, prevState) {
+    const prev = _.filter(prevProps.todos, 'isDone')
+    const cur = _.filter(this.props.todos, 'isDone')
+
     if (prevProps.todos.length !== this.props.todos.length) {
       this.setState({
         dataSource: this.state.ds.cloneWithRowsAndSections(
           _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
         ),
       })
-      console.log(prevState.dataSource.length, this.state.dataSource.length)
+    }
+    if (prev.length !== cur.length) {
+      this.setState({
+        dataSource: this.state.ds.cloneWithRowsAndSections(
+          _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
+        ),
+      })
     }
     if (prevState.isTodoList !== this.state.isTodoList) {
       if (!this.state.isTodoList) {
