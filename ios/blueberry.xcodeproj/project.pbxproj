@@ -553,6 +553,7 @@
 			children = (
 				FA7E0ABC3F31410983AAA10E /* libBVLinearGradient.a */,
 				153BF45B1FD29384008DCA52 /* libART.a */,
+				6F173464F8DC48D8995F298E /* libRNSVG.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
