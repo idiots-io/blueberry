@@ -1,53 +1,130 @@
 import React from 'react'
-import { StyleSheet, View, Text, ImageBackground } from 'react-native'
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { fontColor, mainColor, fontFamily, subColor } from '../config'
 
-const TodoListItem = ({ overline, title, sessionCount, isTodoList }) => (
-  <View style={styles.listItemWrapper}>
-    <View style={styles.listItem}>
-      <View style={styles.textWrapper}>
-        <Text style={[styles.text, { textDecorationLine: overline }]}>{title}</Text>
-      </View>
-      {sessionCount === 0 ? (
-        <ImageBackground
-          source={require('../assets/Todo/blueberry_notyet.png')}
-          style={styles.countWrapper}
-        >
-          <Text style={[styles.countText, { color: subColor.dark }]}>
-            {sessionCount}
-          </Text>
-        </ImageBackground>
-      ) : (
-          isTodoList ? (
-            <ImageBackground
-              source={require('../assets/Todo/blueberry_ing.png')}
-              style={styles.countWrapper}
-            >
-              <Text style={styles.countText}>{sessionCount}</Text>
-            </ImageBackground>
+namespace TodoListItem {
+  export interface Props {
+    overline: any // 궁금 : string으로 하면 에러
+    title: any
+    sessionCount: any
+    isTodoList: any
+  }
+  export interface State {
+    isStartChecking: boolean
+  }
+}
 
-          ) : (
-              <ImageBackground
-                source={require('../assets/Todo/blueberry_normal.png')}
-                style={styles.countWrapper}
+class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.State> {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isStartChecking: false
+    }
+  }
+  render() {
+    const {
+      overline,
+      title,
+      sessionCount,
+      isTodoList,
+    } = this.props
+
+    const { isStartChecking } = this.state
+
+    return (
+      <View style={styles.listItemWrapper}>
+        <View style={styles.listItem}>
+          <View style={styles.textWrapper}>
+            <Text style={[styles.text, { textDecorationLine: overline }]}>{title}</Text>
+          </View>
+          {sessionCount === 0 ? (
+            isStartChecking ? (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => this.setState({ isStartChecking: true })}
               >
-                <Text style={styles.countText}>{sessionCount}</Text>
-              </ImageBackground>
+                < ImageBackground
+                  source={require('../assets/Todo/activeBtn.png')}
+                  style={styles.countActiveWrapper}
+                >
+                </ImageBackground>
+              </TouchableOpacity>
+            ) : (
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => this.setState({ isStartChecking: true })}
+                >
+                  < ImageBackground
+                    source={require('../assets/Todo/blueberry_notyet.png')}
+                    style={styles.countWrapper}
+                  >
+                    <Text style={[styles.countText, { color: subColor.dark }]}>
+                      {sessionCount}
+                    </Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+              )
+          ) : (
+              isTodoList ? (
+                isStartChecking ? (
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this.setState({ isStartChecking: true })}
+                  >
+                    < ImageBackground
+                      source={require('../assets/Todo/activeBtn.png')}
+                      style={styles.countWrapper}
+                    >
+                    </ImageBackground>
+                  </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity
+                      activeOpacity={0.8}
+                      onPress={() => this.setState({ isStartChecking: true })}
+                    >
+                      <ImageBackground
+                        source={require('../assets/Todo/blueberry_ing.png')}
+                        style={styles.countWrapper}
+                      >
+                        <Text style={styles.countText}>{sessionCount}</Text>
+                      </ImageBackground>
+                    </TouchableOpacity>
+                  )
+              ) : (
+                  <ImageBackground
+                    source={require('../assets/Todo/blueberry_normal.png')}
+                    style={styles.countWrapper}
+                  >
+                    <Text style={styles.countText}>{sessionCount}</Text>
+                  </ImageBackground>
 
-            )
-        )}
-    </View>
-  </View>
-)
+                )
+            )}
+        </View>
+      </View >
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   listItemWrapper: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 25,
     backgroundColor: 'white',
   },
   countWrapper: {
     height: 50,
     width: 50,
+    marginVertical: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  countActiveWrapper: {
+    height: 63,
+    width: 70,
+    marginVertical: 0,
+    marginTop: 15,
+    marginBottom: 2,
+    marginRight: -10,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -58,8 +135,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   listItem: {
-    paddingVertical: 15,
-    paddingHorizontal: 10,
     borderBottomWidth: 0.25,
     borderColor: mainColor.light,
     flexDirection: 'row',

@@ -10,7 +10,6 @@ import { Action, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
 import Header from '../components/Header'
 import Filter from '../components/Filter'
-import AddBlueberryBtn from '../components/AddBlueberryBtn'
 import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
 import AddTodoModal from '../components/AddTodoModal'
@@ -116,13 +115,13 @@ class TodoComponent extends React.Component<
     if (item.type == 'close') {
       this.closeAlert()
     } else {
-      const title = item.title
-      this.dropdown.alertWithType(item.type, title, item.message)
+      // const title = item.title
+      // this.dropdown.alertWithType(item.type, title, item.message)
     }
   }
 
   closeAlert = () => {
-    this.dropdown.close()
+    // this.dropdown.close()
   }
 
   onClose(data) {
@@ -143,7 +142,7 @@ class TodoComponent extends React.Component<
           isTodoList={this.state.isTodoList}
         />
         <DropdownAlert
-          ref={(ref) => this.dropdown = ref}
+          // ref={(ref) => this.dropdown = ref}
           containerStyle={{
             backgroundColor: "#2B73B6",
           }}
@@ -155,7 +154,6 @@ class TodoComponent extends React.Component<
 
         {this.state.isTodoList ? (
           <View>
-            <AddBlueberryBtn onPress={() => this.setState({ isAddMode: true })} />
             <TodoList
               dataSource={this.state.dataSource}
               dropdownalert={(items) => this.showAlert(items)}

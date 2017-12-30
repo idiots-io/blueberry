@@ -10,11 +10,13 @@ import {
 } from 'react-native'
 import TodoListItem from '../components/TodoListItem'
 import TodoListSectionHeader from '../components/TodoListSectionHeader'
+import AddBlueberryBtn from '../components/AddBlueberryBtn'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { connect } from 'react-redux'
 import { removeTodo, completedTodo } from '../actions/todos'
 import { Action, Todo, } from '../reducers'
 import { fontFamily, mainColor } from '../config'
+import _ from 'lodash'
 
 namespace TodoListComponent {
   export interface Props {
@@ -66,12 +68,12 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
 
   render() {
     const items = [
-      { type: 'completed', title: '', message: '완료한 작업탭으로 이동했어요 :)  👇' },
+      { type: 'custom', title: '', message: '완료한 작업탭으로 이동했어요 :)  👇' },
     ]
     // { type: 'delete', title: '', message: '할 일이 삭제되었어요! 🙆' }
-
+    const todos = _.filter(this.props.todos, ['isDone', false])
     return (
-      this.props.dataSource.length === 0 ? (
+      todos.length === 0 ? (
         <View style={styles.emptyBox}>
           <View>
             <Text style={styles.emptyText}>블루베리로</Text>
@@ -81,7 +83,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
           <View style={{ alignItems: 'flex-end' }}>
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => this.props.onPress}
+              onPress={() => this.props.onPress()}
             >
               <Image source={require('../assets/Todo/blueberry_empty.png')} />
             </TouchableOpacity>
@@ -89,6 +91,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
         </View>
       ) : (
           <View>
+            <AddBlueberryBtn onPress={() => this.props.onPress()} />
             <SwipeListView
               dataSource={this.props.dataSource}
               renderRow={(todo) => (
