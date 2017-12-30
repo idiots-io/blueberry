@@ -5,7 +5,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Animated,
-  // Dimensions
+  Dimensions,
 } from 'react-native';
 
 namespace GiveUpTimerBtn {
@@ -14,7 +14,6 @@ namespace GiveUpTimerBtn {
     selected?: boolean
   }
   export interface State {
-    selected: boolean
     showUpAnim: Animated.ValueXY
   }
 }
@@ -22,21 +21,17 @@ class GiveUpTimerBtn extends React.Component<GiveUpTimerBtn.Props, GiveUpTimerBt
   constructor(props) {
     super(props);
     this.state = {
-      selected: this.props.selected,
       showUpAnim: new Animated.ValueXY(this.calculateXY(this.props.selected))
     }
   }
 
-  calculateXY = (selected: boolean) => ({ x: 120, y: (selected ? 20 : 48) })
+  calculateXY = (selected: boolean) => ({ x: Dimensions.get('screen').width - 100, y: (selected ? Dimensions.get('screen').height - 56 : Dimensions.get('screen').height - 30) })
 
 
   onPress = () => {
     Animated.spring(this.state.showUpAnim, {
-        toValue: this.calculateXY(!this.state.selected)
+        toValue: this.calculateXY(!this.props.selected)
     }).start();  
-    this.setState({
-      selected: !this.state.selected
-    })
     this.props.onPress && this.props.onPress();
   }
 
@@ -61,7 +56,7 @@ interface StyleTypes {
 const styles = StyleSheet.create<StyleTypes>({
   wrapper: {
     height: 59,
-    width: 50
+    width: 50,
   }
 })
 

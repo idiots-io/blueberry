@@ -49,6 +49,7 @@ namespace WorkModal {
     time: moment.Duration
     countDown: any
     mode: 'WORK' | 'BREAK'
+    isOpenSurrenderDialog: boolean
   }
 }
 class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
@@ -56,6 +57,7 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
     super(props)
     this.state = {
       mode: Mode.WORK,
+      isOpenSurrenderDialog: false,
       time: moment.duration(this.props.settings.workInterval.value),
       countDown: setInterval(() => {
         this.setState({ time: this.state.time.subtract(1, 's') });
@@ -128,14 +130,19 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
           />
           <PlayAndPauseBtn mode={this.state.mode}/>
         </View>
-        <View style={styles.flagView}>
-          <SurrenderDialog
+        <View style={styles.dialogView}>
+          {this.state.isOpenSurrenderDialog && <SurrenderDialog
             onPressConfirm={() => {
               clearInterval(this.state.countDown);
               this.props.navigation.goBack();
             }}
+          />}
+        </View>
+        <View style={styles.flagView}>
+          <SurrenderBtn
+            selected={this.state.isOpenSurrenderDialog}
+            onPress={() => { this.setState({ isOpenSurrenderDialog: !this.state.isOpenSurrenderDialog })}}
           />
-          <SurrenderBtn/>
         </View>
       </LinearGradient>
     )
@@ -151,6 +158,7 @@ interface StyleTypes {
   analogView: ViewStyle
   epicText: TextStyle
   digitalView: ViewStyle
+  dialogView: ViewStyle
   flagView: ViewStyle
 }
 const styles = StyleSheet.create<StyleTypes>({
@@ -190,10 +198,13 @@ const styles = StyleSheet.create<StyleTypes>({
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  flagView: {
+  dialogView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  flagView: {
+    position: 'absolute'
   }
 })
 
