@@ -9,7 +9,7 @@ import {
 const PlayBtn = ({ mode, pause = false, onPress = () => {} }) => (
   <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
     {
-      pause ?
+      !pause ?
       <ImageBackground
         style={styles.wrapper}
         source={

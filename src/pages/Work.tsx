@@ -99,7 +99,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
         }}
       />
       <StartWorkBtn
-        onPress={() => this.props.navigation.navigate('WorkModal', { work: this.props.timers[this.state.selectedTimerIndex] })}
+        onPress={() => this.props.navigation.navigate('WorkModal', { timerIndex: this.state.selectedTimerIndex })}
       />
     </View>
   )
