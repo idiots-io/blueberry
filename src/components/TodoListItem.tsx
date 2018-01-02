@@ -12,6 +12,7 @@ namespace TodoListItem {
     title: any
     sessionCount: any
     isTodoList: any
+    navigation: any
   }
   export interface State {
     isStartChecking: boolean
@@ -26,7 +27,16 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
     }
   }
 
+<<<<<<< HEAD
 
+=======
+  goToWorkTab = () => {
+    this.props.navigation.navigate('Work', { name: 'Work' })
+    this.setState({
+      isStartChecking: false
+    })
+  }
+>>>>>>> Add button for moving to timerTab
   render() {
     const {
       overline,
@@ -36,8 +46,11 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
     } = this.props
 
     const { isStartChecking } = this.state
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> Add button for moving to timerTab
     return (
       <View style={styles.listItemWrapper}>
         <View style={styles.listItem}>
@@ -48,7 +61,7 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
             isStartChecking ? (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => this.setState({ isStartChecking: true })}
+                onPress={() => this.goToWorkTab()}
               >
                 <Animatable.Image animation="pulse" easing="ease-out" iterationCount="infinite"
                   source={require('../assets/Todo/activeBtn.png')}

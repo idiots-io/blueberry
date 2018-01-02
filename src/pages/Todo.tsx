@@ -17,6 +17,7 @@ namespace TodoComponent {
     todos: Todo[]
     completedTodos: Todo[]
     addTodo: (input: string) => Action
+    navigation: any
   }
   export interface State {
     ds: any
@@ -157,11 +158,13 @@ class TodoComponent extends React.Component<
               dataSource={this.state.dataSource}
               dropdownalert={(items) => this.showAlert(items)}
               onPress={() => this.setState({ isAddMode: true })}
+              navigation={this.props.navigation}
             />
           </View>
         ) : (
             <CompletedList
               dataSource={this.state.dataSource}
+              navigation={this.props.navigation}
             />
           )}
 
