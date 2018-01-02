@@ -14,11 +14,13 @@ import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
 import AddTodoModal from '../components/AddTodoModal'
 import _ from 'lodash'
+// import { completedTodo } from '../actions/todos';
 
 
 namespace TodoComponent {
   export interface Props {
     todos: Todo[]
+    completedTodos: Todo[]
     addTodo: (input: string) => Action
   }
   export interface State {
@@ -76,17 +78,16 @@ class TodoComponent extends React.Component<
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const prev = _.filter(prevProps.todos, 'isDone')
-    const cur = _.filter(this.props.todos, 'isDone')
-
     if (prevProps.todos.length !== this.props.todos.length) {
+      console.log('is changed')
       this.setState({
         dataSource: this.state.ds.cloneWithRowsAndSections(
           _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
         ),
       })
     }
-    if (prev.length !== cur.length) {
+    if (prevProps.completedTodos.length !== this.props.completedTodos.length) {
+      console.log('is changed to done')
       this.setState({
         dataSource: this.state.ds.cloneWithRowsAndSections(
           _.groupBy(_.filter(this.props.todos, (todo) => !todo.isDone), 'createdAt'),
@@ -174,6 +175,7 @@ class TodoComponent extends React.Component<
 export default connect(
   state => ({
     todos: state.app.todos,
+    completedTodos: state.app.todos.filter(todo => todo.isDone)
   }),
   undefined,
 )(TodoComponent)
