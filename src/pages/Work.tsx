@@ -166,6 +166,8 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   )
 
   render() {
+    // console.log(this.props.navigation.state.params.workId)
+    // console.log(this.props.timers)
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />

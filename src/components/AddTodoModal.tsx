@@ -30,7 +30,7 @@ namespace AddTodoModalComponent {
 class AddTodoModal extends React.Component<
   AddTodoModalComponent.Props,
   AddTodoModalComponent.State
-> {
+  > {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,7 +39,7 @@ class AddTodoModal extends React.Component<
   }
   addTodo = () => {
     this.props.addTodo({
-      id: uuid,
+      id: uuid.v4(),
       title: this.state.text,
       isDone: false,
       createdAt: moment.utc().format('L') + ' ' + moment.utc().format('dddd'),
