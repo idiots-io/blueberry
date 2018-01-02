@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  View,
-  ListView,
-  Image,
-} from 'react-native'
+import { View, ListView, Image, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import DropdownAlert from 'react-native-dropdownalert'
 import { Action, Todo } from '../reducers'
@@ -14,7 +10,11 @@ import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
 import AddTodoModal from '../components/AddTodoModal'
 import _ from 'lodash'
+<<<<<<< HEAD
 // import { completedTodo } from '../actions/todos';
+=======
+import Sound from 'react-native-sound';
+>>>>>>> Add sound file and play once
 
 
 namespace TodoComponent {
@@ -41,6 +41,7 @@ class TodoComponent extends React.Component<
       rowHasChanged: (r1, r2) => r1 !== r2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     })
+
     this.state = {
       ds,
       dataSource: ds.cloneWithRowsAndSections(
@@ -49,7 +50,11 @@ class TodoComponent extends React.Component<
       isAddMode: false,
       isTodoList: true,
     }
+
+
   }
+
+
 
   static navigationOptions = {
     tabBarLabel: '할 일 목록',
@@ -111,6 +116,15 @@ class TodoComponent extends React.Component<
     }
   }
 
+  playSound = () => {
+    const s = new Sound('tick-tock_ver1.mp3', Sound.MAIN_BUNDLE, (e) => {
+      if (e) {
+        return;
+      }
+      s.setNumberOfLoops(-1)
+      s.play();
+    });
+  };
 
   showAlert(item) {
     if (item.type == 'close') {
@@ -152,7 +166,18 @@ class TodoComponent extends React.Component<
           onClose={(data) => this.onClose(data)}
           onCancel={(data) => this.onClose(data)}
         />
-
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => this.playSound()}
+          >
+            < ImageBackground
+              source={require('../assets/Todo/activeBtn.png')}
+              style={styles.countWrapper}
+            >
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
         {this.state.isTodoList ? (
           <View>
             <TodoList
@@ -171,6 +196,20 @@ class TodoComponent extends React.Component<
     )
   }
 }
+
+const styles = StyleSheet.create({
+  listItemWrapper: {
+    paddingHorizontal: 25,
+    backgroundColor: 'white',
+  },
+  countWrapper: {
+    height: 50,
+    width: 50,
+    marginVertical: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+})
 
 export default connect(
   state => ({

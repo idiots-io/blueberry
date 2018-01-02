@@ -3917,6 +3917,10 @@ react-native-snap-carousel@^3.4.0:
     prop-types "^15.5.10"
     react-addons-shallow-compare "15.6.0"
 
+react-native-sound@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.10.4.tgz#242286558f457e023dbed42e8c6cbe52cfd313d4"
+
 react-native-swipe-list-view@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/react-native-swipe-list-view/-/react-native-swipe-list-view-0.4.6.tgz#4d477c1f64af33ed6582663eb4d88cada722a435"

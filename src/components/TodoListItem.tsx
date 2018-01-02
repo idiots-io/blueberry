@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { fontColor, mainColor, fontFamily, subColor } from '../config'
 
+
+
 namespace TodoListItem {
   export interface Props {
     overline: any // 궁금 : string으로 하면 에러
@@ -21,6 +23,8 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
       isStartChecking: false
     }
   }
+
+
   render() {
     const {
       overline,
@@ -30,6 +34,7 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
     } = this.props
 
     const { isStartChecking } = this.state
+
 
     return (
       <View style={styles.listItemWrapper}>

@@ -30,6 +30,7 @@
 		"react-native-modal": "^4.1.1",
 		"react-native-progress": "^3.4.0",
 		"react-native-snap-carousel": "^3.4.0",
+		"react-native-sound": "^0.10.4",
 		"react-native-swipe-list-view": "^0.4.6",
 		"react-navigation": "^1.0.0-beta.15",
 		"react-redux": "^5.0.6",
