@@ -35,6 +35,8 @@ class TodoComponent extends React.Component<
   TodoComponent.Props,
   TodoComponent.State
   > {
+  dropdown: any;
+
   constructor(props) {
     super(props)
     const ds = new ListView.DataSource({
@@ -51,10 +53,19 @@ class TodoComponent extends React.Component<
       isTodoList: true,
     }
 
+    this.s = new Sound('tick-tock_ver1.mp3', Sound.MAIN_BUNDLE, (e) => {
+      if (e) {
+        return;
+      }
 
+      this.s.setVolume(0)
+      this.s.play()
+      this.s.setNumberOfLoops(-1)
+      // this.s.play()
+    });
   }
 
-
+  s: any
 
   static navigationOptions = {
     tabBarLabel: '할 일 목록',
@@ -117,26 +128,21 @@ class TodoComponent extends React.Component<
   }
 
   playSound = () => {
-    const s = new Sound('tick-tock_ver1.mp3', Sound.MAIN_BUNDLE, (e) => {
-      if (e) {
-        return;
-      }
-      s.setNumberOfLoops(-1)
-      s.play();
-    });
+    this.s.setVolume(1)
+    this.s.play();
   };
 
   showAlert(item) {
     if (item.type == 'close') {
       this.closeAlert()
     } else {
-      // const title = item.title
-      // this.dropdown.alertWithType(item.type, title, item.message)
+      const title = item.title
+      this.dropdown.alertWithType(item.type, title, item.message)
     }
   }
 
   closeAlert = () => {
-    // this.dropdown.close()
+    this.dropdown.close()
   }
 
   onClose(data) {
@@ -157,7 +163,7 @@ class TodoComponent extends React.Component<
           isTodoList={this.state.isTodoList}
         />
         <DropdownAlert
-          // ref={(ref) => this.dropdown = ref}
+          ref={(ref) => this.dropdown = ref}
           containerStyle={{
             backgroundColor: "#2B73B6",
           }}
