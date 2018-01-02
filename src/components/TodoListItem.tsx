@@ -1,6 +1,8 @@
 import React from 'react'
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
 import { fontColor, mainColor, fontFamily, subColor } from '../config'
+import * as Animatable from 'react-native-animatable';
+
 
 
 
@@ -48,11 +50,11 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
                 activeOpacity={0.8}
                 onPress={() => this.setState({ isStartChecking: true })}
               >
-                < ImageBackground
+                <Animatable.Image animation="pulse" easing="ease-out" iterationCount="infinite"
                   source={require('../assets/Todo/activeBtn.png')}
                   style={styles.countActiveWrapper}
                 >
-                </ImageBackground>
+                </Animatable.Image>
               </TouchableOpacity>
             ) : (
                 <TouchableOpacity
