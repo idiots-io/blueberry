@@ -14,7 +14,7 @@ import {
 import { connect } from 'react-redux'
 const Carousel = require('react-native-snap-carousel').default
 // import Carousel from 'react-native-snap-carousel';
-import { filter } from 'lodash'
+import { filter, findIndex } from 'lodash'
 import Sound from 'react-native-sound';
 
 import { State, Todo } from '../reducers'
@@ -86,6 +86,15 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   _stopSound = () => {
     this.s.pause();
   };
+
+  componentDidUpdate(prevProps, { }) {
+    if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
+      const todoIndex = this.props.navigation.state.params !== undefined ? findIndex(this.props.timers, e => e.todo.id === this.props.navigation.state.params.workId) : 0
+      this.setState({
+        selectedTimerIndex: todoIndex
+      })
+    }
+  }
 
   _renderTimers = ({ item, index }: { item: Work; index: number }) => {
     return (
@@ -166,8 +175,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   )
 
   render() {
-    // console.log(this.props.navigation.state.params.workId)
-    // console.log(this.props.timers)
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
