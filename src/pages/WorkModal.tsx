@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import * as moment from 'moment';
 import uuid from 'uuid/v4';
+import { filter } from 'lodash';
 
 import { addSession } from '../actions/sessions';
 import { Action, Session } from '../reducers';
@@ -30,6 +31,7 @@ namespace WorkModal {
   export interface Props {
     navigation: any
     addSession: (session: Session) => Action
+    timers: Work[];
     settings: {
       workInterval: {
         labelKor: string;
@@ -47,8 +49,9 @@ namespace WorkModal {
   }
   export interface State {
     time: moment.Duration
-    countDown: any
+    countDown?: any
     mode: 'WORK' | 'BREAK'
+    openSurrenderDialog?: boolean
   }
 }
 class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
@@ -60,13 +63,30 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
       countDown: setInterval(() => {
         this.setState({ time: this.state.time.subtract(1, 's') });
         if (this.state.time.asMilliseconds() <= 0) {
-          // clearInterval(this.state.countDown);
+          this._clearCountDown();
           (this.state.mode === 'WORK') && this._addSession();
           this._changeMode();
-          // this.props.navigation.goBack();
         }
       }, 1000),
     }
+  }
+
+  _playCountDown = () => {
+    this.setState({
+      countDown: setInterval(() => {
+        this.setState({ time: this.state.time.subtract(1, 's') });
+        if (this.state.time.asMilliseconds() <= 0) {
+          this._clearCountDown();
+          (this.state.mode === 'WORK') && this._addSession();
+          this._changeMode();
+        }
+      }, 1000), 
+    })
+  }
+
+  _clearCountDown = () => {
+    clearInterval(this.state.countDown);
+    this.setState({ countDown: undefined });
   }
 
   _changeMode = () => {
@@ -85,17 +105,18 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
   }
 
   _addSession = () => {
+    const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     const session: Session = {
       id: uuid(),
       duration: moment.duration(this.props.settings.workInterval.value),
       createdAt: moment.utc().toDate(),
-      todoId: this.props.navigation.state.params.work.todo.id
+      todoId: work.todo.id
     }
     this.props.addSession(session);
   }
 
   render() {
-    const { work } = this.props.navigation.state.params;
+    const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     return (
       <LinearGradient
         colors={this.state.mode === 'WORK' ? ['#377fd8', '#4551f6'] : ['#ffffff', '#ffffff']}
@@ -126,16 +147,27 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
             time={this.state.time}
             mode={this.state.mode}
           />
-          <PlayAndPauseBtn mode={this.state.mode}/>
+          <PlayAndPauseBtn
+            mode={this.state.mode}
+            pause={!this.state.countDown}
+            onPress={!this.state.countDown ? this._playCountDown : this._clearCountDown}
+          />
         </View>
         <View style={styles.flagView}>
-          <SurrenderDialog
-            onPressConfirm={() => {
-              clearInterval(this.state.countDown);
-              this.props.navigation.goBack();
-            }}
+          {
+            this.state.openSurrenderDialog &&
+            <SurrenderDialog
+              onPressConfirm={() => {
+                clearInterval(this.state.countDown);
+                this.props.navigation.goBack();
+              }}
+              onPressCancel={() => this.setState({ openSurrenderDialog: false })}
+            />
+          }
+          <SurrenderBtn
+            selected={this.state.openSurrenderDialog}
+            onPress={() => this.setState({ openSurrenderDialog: !this.state.openSurrenderDialog })}
           />
-          <SurrenderBtn/>
         </View>
       </LinearGradient>
     )
@@ -199,7 +231,14 @@ const styles = StyleSheet.create<StyleTypes>({
 
 export default connect(
   state => ({
-    sessions: state.app.sessions,
+    timers: state.app.todos.reduce((result, todo) => {
+      const sessionsCount = filter(
+        state.app.sessions,
+        session => session.todoId === todo.id,
+      ).length
+      result.push({ todo, sessionsCount })
+      return result
+    }, []),
     settings: state.app.settings
   }), {
     addSession

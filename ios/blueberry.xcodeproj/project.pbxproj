@@ -1121,6 +1121,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				B0116C9A1FFE047A00801297 /* tick-tock.mp3 in Resources */,
 				B0D5F74C1FD5A38C00EE1118 /* Fonts in Resources */,
+				B02E59141FFB5B99008B09C3 /* tick-tock_ver1.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
