@@ -6,11 +6,12 @@ import * as Animatable from 'react-native-animatable';
 
 namespace TodoListItem {
   export interface Props {
-    overline: any // 궁금 : string으로 하면 에러
-    title: any
-    sessionCount: any
-    isTodoList: any
+    overline: "none" | "underline" | "line-through" | "underline line-through"
+    title: string
+    sessionCount: number
+    isTodoList: boolean
     navigation: any
+    id: string
   }
   export interface State {
     isStartChecking: boolean
@@ -25,7 +26,12 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
     }
   }
 
-
+  goToWorkTab = (workId) => {
+    this.props.navigation.navigate('Work', { name: 'Work', workId })
+    this.setState({
+      isStartChecking: false
+    })
+  }
 
   render() {
     const {
@@ -33,6 +39,7 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
       title,
       sessionCount,
       isTodoList,
+      id
     } = this.props
 
     const { isStartChecking } = this.state
@@ -48,7 +55,7 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
             isStartChecking ? (
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => this.setState({ isStartChecking: true })}
+                onPress={() => this.goToWorkTab(id)}
               >
                 <Animatable.Image animation="pulse" easing="ease-out" iterationCount="infinite"
                   source={require('../assets/Todo/activeBtn.png')}
