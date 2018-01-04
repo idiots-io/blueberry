@@ -86,14 +86,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   _stopSound = () => {
     this.s.pause();
   };
-  componentDidUpdate(prevProps, { }) {
-    if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
-      const todoIndex = this.props.navigation.state.params !== undefined ? findIndex(this.props.timers, e => e.todo.id === this.props.navigation.state.params.workId) : 0
-      this.setState({
-        selectedTimerIndex: todoIndex
-      })
-    }
-  }
 
   componentDidUpdate(prevProps, { }) {
     if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
