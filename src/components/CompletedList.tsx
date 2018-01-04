@@ -48,6 +48,7 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
             dataSource={this.props.dataSource}
             renderRow={todo => (
               <TodoListItem
+                id={todo.id}
                 overline='line-through'
                 title={todo.title}
                 sessionCount={todo.sessionCount}
