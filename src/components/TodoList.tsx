@@ -29,6 +29,7 @@ namespace TodoListComponent {
     onRowClose: Function
     isTodoList: boolean
     dropdownalert: Function
+    navigation: Object
   }
 }
 
@@ -57,7 +58,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
 
   deleteRow = (id, secId, rowId, rowMap) => {
     rowMap[`${secId}${rowId}`].closeRow()
-    this.props.removeTodo(id)
+    setTimeout(() => this.props.removeTodo(id), 200)
   }
 
   completedTodo = (id, secId, rowId, rowMap, item) => {
@@ -96,10 +97,12 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
               dataSource={this.props.dataSource}
               renderRow={(todo) => (
                 <TodoListItem
+                  id={todo.id}
                   title={todo.title}
                   sessionCount={todo.sessionCount}
                   overline='none'
                   isTodoList={this.props.isTodoList}
+                  navigation={this.props.navigation}
                 />
               )}
               disableRightSwipe

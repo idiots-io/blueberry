@@ -20,6 +20,7 @@ namespace CompletedListComponent {
     todos: Todo[]
     dataSource: any
     isTodoList: boolean
+    navigation: Object
   }
 }
 
@@ -47,10 +48,12 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
             dataSource={this.props.dataSource}
             renderRow={todo => (
               <TodoListItem
+                id={todo.id}
                 overline='line-through'
                 title={todo.title}
                 sessionCount={todo.sessionCount}
                 isTodoList={this.props.isTodoList}
+                navigation={this.props.navigation}
               />
             )}
             disableRightSwipe
