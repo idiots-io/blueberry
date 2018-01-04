@@ -148,7 +148,7 @@ class TodoComponent extends React.Component<
             backgroundColor: "#2B73B6",
           }}
           startDelta={-100}
-          // showCancel={true}
+          showCancel={true}
           onClose={(data) => this.onClose(data)}
           onCancel={(data) => this.onClose(data)}
         />
