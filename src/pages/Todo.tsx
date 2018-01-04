@@ -11,7 +11,6 @@ import CompletedList from '../components/CompletedList'
 import AddTodoModal from '../components/AddTodoModal'
 import _ from 'lodash'
 
-
 namespace TodoComponent {
   export interface Props {
     todos: Todo[]
