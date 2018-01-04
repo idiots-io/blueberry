@@ -14,12 +14,8 @@ import {
 import { connect } from 'react-redux'
 const Carousel = require('react-native-snap-carousel').default
 // import Carousel from 'react-native-snap-carousel';
-<<<<<<< HEAD
-import { filter } from 'lodash'
-import Sound from 'react-native-sound';
-=======
 import { filter, findIndex } from 'lodash'
->>>>>>> Add todoitem's Index Moved from Todo to Work
+import Sound from 'react-native-sound';
 
 import { State, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
@@ -82,7 +78,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     });
   }
 
-<<<<<<< HEAD
   _playSound = () => {
     this.s.setVolume(1)
     this.s.play();
@@ -91,7 +86,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
   _stopSound = () => {
     this.s.pause();
   };
-=======
   componentDidUpdate(prevProps, { }) {
     if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
       const todoIndex = this.props.navigation.state.params !== undefined ? findIndex(this.props.timers, e => e.todo.id === this.props.navigation.state.params.workId) : 0
@@ -100,7 +94,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
       })
     }
   }
->>>>>>> Add todoitem's Index Moved from Todo to Work
 
   _renderTimers = ({ item, index }: { item: Work; index: number }) => {
     return (
