@@ -3,7 +3,12 @@ export const addTodo = todoItem => ({
   payload: todoItem
 })
 
-// For Development
-export const resetTodos = () => ({
-  type: 'RESET_TODOS'
+export const removeTodo = (id) => ({
+  type: 'DELETE_TODOS',
+  payload: id
+})
+
+export const completedTodo = (id) => ({
+  type: 'COMPLETED_TODOS',
+  payload: id
 })

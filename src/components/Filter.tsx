@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 import { fontColor, subColor, fontFamily } from '../config'
 
-const Filter = ({ changeTodoList, changeCompletedList, isTodoList, isSearchMode = false }) => (
+const Filter = ({ changeTodoList, changeCompletedList, isTodoList }) => (
   <View style={styles.filterWrapper}>
     <View style={styles.btnWrapper}>
       <TouchableOpacity onPress={changeTodoList}>
@@ -51,10 +51,10 @@ const Filter = ({ changeTodoList, changeCompletedList, isTodoList, isSearchMode 
         </View>
       </TouchableOpacity>
     </View>
-    <TouchableOpacity style={styles.searchBtnWrapper}>
+    {/* <TouchableOpacity style={styles.searchBtnWrapper}>
       <Image source={require('../assets/Todo/search.png')} />
       {isSearchMode}
-    </TouchableOpacity>
+    </TouchableOpacity> */}
   </View>
 )
 

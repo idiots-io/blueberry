@@ -3885,6 +3885,12 @@ react-native-drawer-layout@1.3.2:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-dropdownalert@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-dropdownalert/-/react-native-dropdownalert-3.1.2.tgz#784b573a335987d66908bd66075b5d48ef7b5d70"
+  dependencies:
+    prop-types "15.5.10"
+
 react-native-linear-gradient@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.3.0.tgz#757997197e35edf52e290891a11566e462845da1"
@@ -3910,6 +3916,10 @@ react-native-snap-carousel@^3.4.0:
   dependencies:
     prop-types "^15.5.10"
     react-addons-shallow-compare "15.6.0"
+
+react-native-sound@^0.10.4:
+  version "0.10.4"
+  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.10.4.tgz#242286558f457e023dbed42e8c6cbe52cfd313d4"
 
 react-native-swipe-list-view@^0.4.6:
   version "0.4.6"
