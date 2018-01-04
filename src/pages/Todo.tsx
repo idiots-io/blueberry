@@ -10,8 +10,6 @@ import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
 import AddTodoModal from '../components/AddTodoModal'
 import _ from 'lodash'
-import Sound from 'react-native-sound';
-
 
 namespace TodoComponent {
   export interface Props {
