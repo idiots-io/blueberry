@@ -29,6 +29,7 @@ namespace TodoListComponent {
     onRowClose: Function
     isTodoList: boolean
     dropdownalert: Function
+    navigation: Object
   }
 }
 
@@ -100,6 +101,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
                   sessionCount={todo.sessionCount}
                   overline='none'
                   isTodoList={this.props.isTodoList}
+                  navigation={this.props.navigation}
                 />
               )}
               disableRightSwipe

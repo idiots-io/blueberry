@@ -10,6 +10,7 @@ namespace TodoListItem {
     title: any
     sessionCount: any
     isTodoList: any
+    navigation: any
   }
   export interface State {
     isStartChecking: boolean
@@ -23,6 +24,7 @@ class TodoListItem extends React.Component<TodoListItem.Props, TodoListItem.Stat
       isStartChecking: false
     }
   }
+
 
 
   render() {
