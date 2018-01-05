@@ -12,3 +12,8 @@ export const completedTodo = (id) => ({
   type: 'COMPLETED_TODOS',
   payload: id
 })
+
+export const undoIsDone = (id) => ({
+  type: 'UNDO_IS_DONE',
+  payload: id
+})
