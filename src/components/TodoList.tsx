@@ -63,7 +63,7 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
 
   completedTodo = (id, secId, rowId, rowMap, item) => {
     rowMap[`${secId}${rowId}`].closeRow()
-    this.props.completedTodo(id)
+    setTimeout(() => this.props.completedTodo(id), 200)
     this.props.dropdownalert(...item)
   }
 
