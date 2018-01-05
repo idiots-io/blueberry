@@ -93,54 +93,56 @@ class TodoList extends Component<TodoListComponent.Props, {}> {
       ) : (
           <View>
             <AddBlueberryBtn onPress={() => this.props.onPress()} />
-            <SwipeListView
-              dataSource={this.props.dataSource}
-              renderRow={(todo) => (
-                <TodoListItem
-                  id={todo.id}
-                  title={todo.title}
-                  sessionCount={todo.sessionCount}
-                  overline='none'
-                  isTodoList={this.props.isTodoList}
-                  navigation={this.props.navigation}
-                />
-              )}
-              disableRightSwipe
-              renderSectionHeader={(_, category) => (
-                <TodoListSectionHeader date={category} />
-              )}
-              renderHiddenRow={(data, secId, rowId, rowMap) => (
-                <View
-                  style={{
-                    alignItems: 'center',
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    height: 50,
-                  }}
-                >
-                  <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => this.deleteAlert(data.id, secId, rowId, rowMap)}
-                    >
-                      <Image
-                        source={require('../assets/Todo/trash.png')}
-                      />
-                    </TouchableOpacity>
+            <View style={{ height: Dimensions.get('window').height - 255 }}>
+              <SwipeListView
+                dataSource={this.props.dataSource}
+                renderRow={(todo) => (
+                  <TodoListItem
+                    id={todo.id}
+                    title={todo.title}
+                    sessionCount={todo.sessionCount}
+                    overline='none'
+                    isTodoList={this.props.isTodoList}
+                    navigation={this.props.navigation}
+                  />
+                )}
+                disableRightSwipe
+                renderSectionHeader={(_, category) => (
+                  <TodoListSectionHeader date={category} />
+                )}
+                renderHiddenRow={(data, secId, rowId, rowMap) => (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'flex-end',
+                      height: 50,
+                    }}
+                  >
+                    <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => this.deleteAlert(data.id, secId, rowId, rowMap)}
+                      >
+                        <Image
+                          source={require('../assets/Todo/trash.png')}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={{ backgroundColor: mainColor.default, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                      <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={() => this.completedTodo(data.id, secId, rowId, rowMap, items)}
+                      >
+                        <Image source={require('../assets/Todo/checkTask.png')} />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                  <View style={{ backgroundColor: mainColor.default, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
-                    <TouchableOpacity
-                      activeOpacity={0.8}
-                      onPress={() => this.completedTodo(data.id, secId, rowId, rowMap, items)}
-                    >
-                      <Image source={require('../assets/Todo/checkTask.png')} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              )}
-              rightOpenValue={-150}
-            />
+                )}
+                rightOpenValue={-150}
+              />
+            </View>
           </View>
         )
 
