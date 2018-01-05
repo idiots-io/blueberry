@@ -128,6 +128,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
         onSnapToItem={(index: number) => {
           this.setState({ selectedTimerIndex: index })
         }}
+        firstItem={this.state.selectedTimerIndex}
       />
       <StartWorkBtn
         onPress={() => this.props.navigation.navigate('WorkModal', { timerIndex: this.state.selectedTimerIndex })}
