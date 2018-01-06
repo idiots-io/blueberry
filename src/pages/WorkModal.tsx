@@ -5,6 +5,7 @@ import {
   TextStyle,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import { NavigationNavigatorProps } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -116,6 +117,47 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
     this.props.addSession(session);
   }
 
+  _renderBottom() {
+    if (this.state.mode === Mode.WORK) {
+      return (
+        <View style={[styles.bottomView, styles.workDialogView]}>
+          {this.state.isOpenSurrenderDialog && <SurrenderDialog
+            onPressConfirm={() => {
+              clearInterval(this.state.countDown);
+              this.props.navigation.goBack();
+            }}
+            onPressCancel={() => {
+              this.setState({ isOpenSurrenderDialog: false });
+            }}
+          />}
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.bottomView}>
+        <TouchableOpacity activeOpacity={0.8} onPress={this._changeMode}>
+          <Text style={[styles.text, styles.skipBreakBtnText]}>← 계속 진행</Text>
+        </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
+  _renderFlag() {
+    if (this.state.mode === Mode.WORK) {
+      return (
+        <View style={styles.flagView}>
+          <SurrenderBtn
+            selected={this.state.isOpenSurrenderDialog}
+            onPress={() => { this.setState({ isOpenSurrenderDialog: !this.state.isOpenSurrenderDialog })}}
+          />
+        </View>
+      )
+    } else {
+      return undefined;
+    }
+  }
+
   render() {
     const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     return (
@@ -154,20 +196,9 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
             onPress={!this.state.countDown ? this._playCountDown : this._clearCountDown}
           />
         </View>
-        <View style={styles.dialogView}>
-          {this.state.isOpenSurrenderDialog && <SurrenderDialog
-            onPressConfirm={() => {
-              clearInterval(this.state.countDown);
-              this.props.navigation.goBack();
-            }}
-          />}
-        </View>
-        <View style={styles.flagView}>
-          <SurrenderBtn
-            selected={this.state.isOpenSurrenderDialog}
-            onPress={() => { this.setState({ isOpenSurrenderDialog: !this.state.isOpenSurrenderDialog })}}
-          />
-        </View>
+        {this._renderBottom()}
+        {this._renderFlag()}
+
       </LinearGradient>
     )
   }
@@ -182,7 +213,9 @@ interface StyleTypes {
   analogView: ViewStyle
   epicText: TextStyle
   digitalView: ViewStyle
-  dialogView: ViewStyle
+  bottomView: ViewStyle
+  workDialogView: ViewStyle
+  skipBreakBtnText: TextStyle
   flagView: ViewStyle
 }
 const styles = StyleSheet.create<StyleTypes>({
@@ -194,7 +227,7 @@ const styles = StyleSheet.create<StyleTypes>({
     backgroundColor: 'transparent'
   },
   metadataView: {
-    flex: 1,
+    flex: 2,
   },
   sessionsCountText: {
     paddingTop: 60,
@@ -206,7 +239,7 @@ const styles = StyleSheet.create<StyleTypes>({
     fontSize: 32
   },
   analogView: {
-    flex: 2,
+    flex: 3,
     // justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
@@ -217,15 +250,21 @@ const styles = StyleSheet.create<StyleTypes>({
     opacity: 0.28
   },
   digitalView: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  dialogView: {
+  bottomView: {
     flex: 1,
+  },
+  workDialogView: {
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  skipBreakBtnText: {
+    left: 30,
+    fontSize: 20,
+    color: '#377FD8'
   },
   flagView: {
     position: 'absolute'
