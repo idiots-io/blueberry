@@ -25,12 +25,18 @@ class GiveUpTimerBtn extends React.Component<GiveUpTimerBtn.Props, GiveUpTimerBt
     }
   }
 
+  componentDidUpdate() {
+    Animated.spring(this.state.showUpAnim, {
+      toValue: this.calculateXY(this.props.selected)
+    }).start();  
+  }
+
   calculateXY = (selected: boolean) => ({ x: Dimensions.get('screen').width - 100, y: (selected ? Dimensions.get('screen').height - 56 : Dimensions.get('screen').height - 30) })
 
 
   onPress = () => {
     Animated.spring(this.state.showUpAnim, {
-        toValue: this.calculateXY(!this.props.selected)
+        toValue: this.calculateXY(this.props.selected)
     }).start();  
     this.props.onPress && this.props.onPress();
   }
