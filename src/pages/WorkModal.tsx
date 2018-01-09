@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import * as moment from 'moment';
 import uuid from 'uuid/v4';
 import { filter } from 'lodash';
+import Sound from 'react-native-sound';
 
 import { addSession } from '../actions/sessions';
 import { Action, Session } from '../reducers';
@@ -56,13 +57,20 @@ namespace WorkModal {
   }
 }
 class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
+  sound: Sound;
+
   constructor(props) {
     super(props)
+    this.sound = new Sound('tick-tock_shorter.mp3', Sound.MAIN_BUNDLE, e => {
+      if (e) return;
+      this.sound.setVolume(1)
+    });
     this.state = {
       mode: Mode.WORK,
       isOpenSurrenderDialog: false,
       time: moment.duration(this.props.settings.workInterval.value),
       countDown: setInterval(() => {
+        this.sound.play()
         this.setState({ time: this.state.time.subtract(1, 's') });
         if (this.state.time.asMilliseconds() <= 0) {
           this._clearCountDown();
@@ -76,6 +84,7 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
   _playCountDown = () => {
     this.setState({
       countDown: setInterval(() => {
+        this.sound.play()
         this.setState({ time: this.state.time.subtract(1, 's') });
         if (this.state.time.asMilliseconds() <= 0) {
           this._clearCountDown();
