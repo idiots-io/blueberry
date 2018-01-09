@@ -8,11 +8,14 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle,
+  TouchableOpacity,
+  ImageBackground
 } from 'react-native'
 import { connect } from 'react-redux'
 const Carousel = require('react-native-snap-carousel').default
 // import Carousel from 'react-native-snap-carousel';
-import { filter } from 'lodash'
+import { filter, findIndex } from 'lodash'
+import Sound from 'react-native-sound';
 
 import { State, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
@@ -35,6 +38,7 @@ namespace WorkPage {
 }
 
 class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
+  s: any;
   static navigationOptions = {
     tabBarIcon: ({ focused }) => (
       <View
@@ -62,6 +66,33 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     super(props)
     this.state = {
       selectedTimerIndex: 0,
+    }
+    this.s = new Sound('tick-tock.mp3', Sound.MAIN_BUNDLE, (e) => {
+      if (e) {
+        return;
+      }
+
+      this.s.setVolume(0)
+      this.s.play()
+      this.s.setNumberOfLoops(-1)
+    });
+  }
+
+  _playSound = () => {
+    this.s.setVolume(1)
+    this.s.play();
+  };
+
+  _stopSound = () => {
+    this.s.pause();
+  };
+
+  componentDidUpdate(prevProps, { }) {
+    if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
+      const todoIndex = this.props.navigation.state.params !== undefined ? findIndex(this.props.timers, e => e.todo.id === this.props.navigation.state.params.workId) : 0
+      this.setState({
+        selectedTimerIndex: todoIndex
+      })
     }
   }
 
@@ -99,8 +130,35 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
         }}
       />
       <StartWorkBtn
-        onPress={() => this.props.navigation.navigate('WorkModal', { work: this.props.timers[this.state.selectedTimerIndex] })}
+        onPress={() => this.props.navigation.navigate('WorkModal', { timerIndex: this.state.selectedTimerIndex })}
       />
+
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => this._playSound()}
+          >
+            <ImageBackground
+              source={require('../assets/Timer/playOnBreak.png')}
+              style={styles.countWrapper}
+            >
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+        <View>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => this._stopSound()}
+          >
+            <ImageBackground
+              source={require('../assets/Timer/pauseOnBreak.png')}
+              style={styles.countWrapper}
+            >
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   )
 
@@ -134,6 +192,7 @@ interface StyleTypes {
   timer: ViewStyle
   timerImage: ImageStyle
   timerSessionCounter: TextStyle
+  countWrapper: ImageStyle
 }
 const styles = StyleSheet.create<StyleTypes>({
   pageWrapper: {
@@ -172,6 +231,11 @@ const styles = StyleSheet.create<StyleTypes>({
     opacity: 0.7,
     zIndex: 1,
   },
+  countWrapper: {
+    height: 50,
+    width: 50,
+    marginVertical: 15,
+  }
 })
 
 export default connect((state: { app: State }) => {

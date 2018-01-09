@@ -5,12 +5,14 @@ import {
   TextStyle,
   Text,
   View,
+  TouchableOpacity,
 } from 'react-native';
 import { NavigationNavigatorProps } from 'react-navigation';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import * as moment from 'moment';
 import uuid from 'uuid/v4';
+import { filter } from 'lodash';
 
 import { addSession } from '../actions/sessions';
 import { Action, Session } from '../reducers';
@@ -30,6 +32,7 @@ namespace WorkModal {
   export interface Props {
     navigation: any
     addSession: (session: Session) => Action
+    timers: Work[];
     settings: {
       workInterval: {
         labelKor: string;
@@ -47,8 +50,9 @@ namespace WorkModal {
   }
   export interface State {
     time: moment.Duration
-    countDown: any
+    countDown?: any
     mode: 'WORK' | 'BREAK'
+    isOpenSurrenderDialog: boolean
   }
 }
 class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
@@ -56,17 +60,35 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
     super(props)
     this.state = {
       mode: Mode.WORK,
+      isOpenSurrenderDialog: false,
       time: moment.duration(this.props.settings.workInterval.value),
       countDown: setInterval(() => {
         this.setState({ time: this.state.time.subtract(1, 's') });
         if (this.state.time.asMilliseconds() <= 0) {
-          // clearInterval(this.state.countDown);
+          this._clearCountDown();
           (this.state.mode === 'WORK') && this._addSession();
           this._changeMode();
-          // this.props.navigation.goBack();
         }
       }, 1000),
     }
+  }
+
+  _playCountDown = () => {
+    this.setState({
+      countDown: setInterval(() => {
+        this.setState({ time: this.state.time.subtract(1, 's') });
+        if (this.state.time.asMilliseconds() <= 0) {
+          this._clearCountDown();
+          (this.state.mode === 'WORK') && this._addSession();
+          this._changeMode();
+        }
+      }, 1000), 
+    })
+  }
+
+  _clearCountDown = () => {
+    clearInterval(this.state.countDown);
+    this.setState({ countDown: undefined });
   }
 
   _changeMode = () => {
@@ -85,17 +107,59 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
   }
 
   _addSession = () => {
+    const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     const session: Session = {
       id: uuid(),
       duration: moment.duration(this.props.settings.workInterval.value),
       createdAt: moment.utc().toDate(),
-      todoId: this.props.navigation.state.params.work.todo.id
+      todoId: work.todo.id
     }
     this.props.addSession(session);
   }
 
+  _renderBottom() {
+    if (this.state.mode === Mode.WORK) {
+      return (
+        <View style={[styles.bottomView, styles.workDialogView]}>
+          {this.state.isOpenSurrenderDialog && <SurrenderDialog
+            onPressConfirm={() => {
+              clearInterval(this.state.countDown);
+              this.props.navigation.goBack();
+            }}
+            onPressCancel={() => {
+              this.setState({ isOpenSurrenderDialog: false });
+            }}
+          />}
+        </View>
+      )
+    } else {
+      return (
+        <View style={styles.bottomView}>
+        <TouchableOpacity activeOpacity={0.8} onPress={this._changeMode}>
+          <Text style={[styles.text, styles.skipBreakBtnText]}>← 계속 진행</Text>
+        </TouchableOpacity>
+        </View>
+      );
+    }
+  }
+
+  _renderFlag() {
+    if (this.state.mode === Mode.WORK) {
+      return (
+        <View style={styles.flagView}>
+          <SurrenderBtn
+            selected={this.state.isOpenSurrenderDialog}
+            onPress={() => { this.setState({ isOpenSurrenderDialog: !this.state.isOpenSurrenderDialog })}}
+          />
+        </View>
+      )
+    } else {
+      return undefined;
+    }
+  }
+
   render() {
-    const { work } = this.props.navigation.state.params;
+    const work = this.props.timers[this.props.navigation.state.params.timerIndex];
     return (
       <LinearGradient
         colors={this.state.mode === 'WORK' ? ['#377fd8', '#4551f6'] : ['#ffffff', '#ffffff']}
@@ -126,17 +190,15 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
             time={this.state.time}
             mode={this.state.mode}
           />
-          <PlayAndPauseBtn mode={this.state.mode}/>
-        </View>
-        <View style={styles.flagView}>
-          <SurrenderDialog
-            onPressConfirm={() => {
-              clearInterval(this.state.countDown);
-              this.props.navigation.goBack();
-            }}
+          <PlayAndPauseBtn
+            mode={this.state.mode}
+            pause={!this.state.countDown}
+            onPress={!this.state.countDown ? this._playCountDown : this._clearCountDown}
           />
-          <SurrenderBtn/>
         </View>
+        {this._renderBottom()}
+        {this._renderFlag()}
+
       </LinearGradient>
     )
   }
@@ -151,6 +213,9 @@ interface StyleTypes {
   analogView: ViewStyle
   epicText: TextStyle
   digitalView: ViewStyle
+  bottomView: ViewStyle
+  workDialogView: ViewStyle
+  skipBreakBtnText: TextStyle
   flagView: ViewStyle
 }
 const styles = StyleSheet.create<StyleTypes>({
@@ -162,7 +227,7 @@ const styles = StyleSheet.create<StyleTypes>({
     backgroundColor: 'transparent'
   },
   metadataView: {
-    flex: 1,
+    flex: 2,
   },
   sessionsCountText: {
     paddingTop: 60,
@@ -174,7 +239,7 @@ const styles = StyleSheet.create<StyleTypes>({
     fontSize: 32
   },
   analogView: {
-    flex: 2,
+    flex: 3,
     // justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
@@ -185,21 +250,37 @@ const styles = StyleSheet.create<StyleTypes>({
     opacity: 0.28
   },
   digitalView: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
-  flagView: {
+  bottomView: {
     flex: 1,
+  },
+  workDialogView: {
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  skipBreakBtnText: {
+    left: 30,
+    fontSize: 20,
+    color: '#377FD8'
+  },
+  flagView: {
+    position: 'absolute'
   }
 })
 
 export default connect(
   state => ({
-    sessions: state.app.sessions,
+    timers: state.app.todos.reduce((result, todo) => {
+      const sessionsCount = filter(
+        state.app.sessions,
+        session => session.todoId === todo.id,
+      ).length
+      result.push({ todo, sessionsCount })
+      return result
+    }, []),
     settings: state.app.settings
   }), {
     addSession
