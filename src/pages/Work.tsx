@@ -67,7 +67,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     this.state = {
       selectedTimerIndex: 0,
     }
-    this.s = new Sound('tick-tock.mp3', Sound.MAIN_BUNDLE, (e) => {
+    this.s = new Sound('tick-tock_shorter.mp3', Sound.MAIN_BUNDLE, (e) => {
       if (e) {
         return;
       }
