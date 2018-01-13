@@ -2,7 +2,7 @@ import React from 'react'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/es/integration/react'
-
+// import { SafeArea } from 'react-native-safe-area'
 // import Settings from './pages/Settings'
 import Summary from './pages/Summary'
 import Work from './pages/Work'
