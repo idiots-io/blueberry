@@ -13,14 +13,13 @@
     "sourceMap": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
-    "noUnusedLocals": true
-  },
-  "types": [
-    "react",
-    "react-native",
-    "jest"
-  ],
-  "include": [
-    "src/**/*"
-  ]
+    "noUnusedLocals": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "paths": {
+      "react-native": ["node_modules/@types/react-native"]
+    },
+    "baseUrl": "."
+  }
 }
