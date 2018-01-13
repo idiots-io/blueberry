@@ -8,14 +8,11 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle,
-  TouchableOpacity,
-  ImageBackground
 } from 'react-native'
 import { connect } from 'react-redux'
 const Carousel = require('react-native-snap-carousel').default
 // import Carousel from 'react-native-snap-carousel';
 import { filter, findIndex } from 'lodash'
-import Sound from 'react-native-sound';
 
 import { State, Todo } from '../reducers'
 import PageLayout from '../components/PageLayout'
@@ -67,25 +64,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     this.state = {
       selectedTimerIndex: 0,
     }
-    this.s = new Sound('tick-tock_shorter.mp3', Sound.MAIN_BUNDLE, (e) => {
-      if (e) {
-        return;
-      }
-
-      this.s.setVolume(0)
-      this.s.play()
-      this.s.setNumberOfLoops(-1)
-    });
   }
-
-  _playSound = () => {
-    this.s.setVolume(1)
-    this.s.play();
-  };
-
-  _stopSound = () => {
-    this.s.pause();
-  };
 
   componentDidUpdate(prevProps, { }) {
     if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
@@ -132,33 +111,6 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
       <StartWorkBtn
         onPress={() => this.props.navigation.navigate('WorkModal', { timerIndex: this.state.selectedTimerIndex })}
       />
-
-      <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this._playSound()}
-          >
-            <ImageBackground
-              source={require('../assets/Timer/playOnBreak.png')}
-              style={styles.countWrapper}
-            >
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity
-            activeOpacity={0.8}
-            onPress={() => this._stopSound()}
-          >
-            <ImageBackground
-              source={require('../assets/Timer/pauseOnBreak.png')}
-              style={styles.countWrapper}
-            >
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-      </View>
     </View>
   )
 
