@@ -56,11 +56,12 @@ namespace WorkModal {
     isOpenSurrenderDialog: boolean
   }
 }
-class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work }}>, WorkModal.State> {
+class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorProps<{ params: { work: Work } }>, WorkModal.State> {
   ticktockSound: Sound;
 
   constructor(props) {
     super(props)
+    Sound.setCategory('Playback', false);
     this.ticktockSound = new Sound('tick-tock.mp3', Sound.MAIN_BUNDLE, e => {
       if (e) return;
       this.ticktockSound.setVolume(1);
@@ -91,7 +92,7 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
           (this.state.mode === 'WORK') && this._addSession();
           this._changeMode();
         }
-      }, 1000), 
+      }, 1000),
     })
   }
 
@@ -144,9 +145,9 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
     } else {
       return (
         <View style={styles.bottomView}>
-        <TouchableOpacity activeOpacity={0.8} onPress={this._changeMode}>
-          <Text style={[styles.text, styles.skipBreakBtnText]}>← 계속 진행</Text>
-        </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8} onPress={this._changeMode}>
+            <Text style={[styles.text, styles.skipBreakBtnText]}>← 계속 진행</Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -158,7 +159,7 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
         <View style={styles.flagView}>
           <SurrenderBtn
             selected={this.state.isOpenSurrenderDialog}
-            onPress={() => { this.setState({ isOpenSurrenderDialog: !this.state.isOpenSurrenderDialog })}}
+            onPress={() => { this.setState({ isOpenSurrenderDialog: !this.state.isOpenSurrenderDialog }) }}
           />
         </View>
       )
@@ -186,9 +187,9 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
               duration={
                 this.state.mode === Mode.WORK
                   ?
-                moment.duration(this.props.settings.workInterval.value)
+                  moment.duration(this.props.settings.workInterval.value)
                   :
-                moment.duration(this.props.settings.breakTime.value)
+                  moment.duration(this.props.settings.breakTime.value)
               }
               time={this.state.time}
             />
