@@ -62,7 +62,7 @@ class WorkModal extends React.Component<WorkModal.Props & NavigationNavigatorPro
   constructor(props) {
     super(props)
     Sound.setCategory('Playback', false);
-    this.ticktockSound = new Sound('tick-tock.mp3', Sound.MAIN_BUNDLE, e => {
+    this.ticktockSound = new Sound('tick-tock_1.mp3', Sound.MAIN_BUNDLE, e => {
       if (e) return;
       this.ticktockSound.setVolume(1);
     })
