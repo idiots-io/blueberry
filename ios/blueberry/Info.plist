@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -37,6 +39,15 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Fonts/Spoqa Han Sans Bold.ttf</string>
+		<string>Fonts/Spoqa Han Sans Regular.ttf</string>
+		<string>Fonts/Spoqa Han Sans Light.ttf</string>
+		<string>Fonts/Spoqa Han Sans Thin.ttf</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -47,15 +58,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Fonts/Spoqa Han Sans Bold.ttf</string>
-		<string>Fonts/Spoqa Han Sans Regular.ttf</string>
-		<string>Fonts/Spoqa Han Sans Light.ttf</string>
-		<string>Fonts/Spoqa Han Sans Thin.ttf</string>
-	</array>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

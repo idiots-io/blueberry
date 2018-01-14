@@ -10,6 +10,14 @@ import TodoList from '../components/TodoList'
 import CompletedList from '../components/CompletedList'
 import AddTodoModal from '../components/AddTodoModal'
 import _ from 'lodash'
+const SafeArea = require('react-native-safe-area')
+
+export interface SafeAreaInsets {
+  top: number
+  left: number
+  bottom: number
+  right: number
+}
 
 namespace TodoComponent {
   export interface Props {
@@ -23,6 +31,7 @@ namespace TodoComponent {
     dataSource: any
     isAddMode: boolean
     isTodoList: boolean
+    safeAreaInsets: SafeAreaInsets
   }
 }
 
@@ -46,9 +55,10 @@ class TodoComponent extends React.Component<
       ),
       isAddMode: false,
       isTodoList: true,
+      safeAreaInsets: {
+        top: 0, left: 0, bottom: 0, right: 0,
+      }
     }
-
-
   }
 
 
@@ -130,46 +140,77 @@ class TodoComponent extends React.Component<
     console.log(data);
   }
 
-  render() {
-    return (
-      <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
-        <AddTodoModal
-          visible={this.state.isAddMode}
-          close={() => this.setState({ isAddMode: false })}
-        />
-        <Header />
-        <Filter
-          changeTodoList={() => this.setState({ isTodoList: true })}
-          changeCompletedList={() => this.setState({ isTodoList: false })}
-          isTodoList={this.state.isTodoList}
-        />
-        <DropdownAlert
-          ref={(ref) => this.dropdown = ref}
-          containerStyle={{
-            backgroundColor: "#2B73B6",
-          }}
-          startDelta={-100}
-          showCancel={true}
-          onClose={(data) => this.onClose(data)}
-          onCancel={(data) => this.onClose(data)}
-        />
-        {this.state.isTodoList ? (
-          <View>
-            <TodoList
-              dataSource={this.state.dataSource}
-              dropdownalert={(items) => this.showAlert(items)}
-              onPress={() => this.setState({ isAddMode: true })}
-              navigation={this.props.navigation}
-            />
-          </View>
-        ) : (
-            <CompletedList
-              dataSource={this.state.dataSource}
-              navigation={this.props.navigation}
-            />
-          )}
+  componentWillMount() {
+    SafeArea.default.__proto__.getSafeAreaInsetsForRootView()
+      .then((result) => {
+        const { safeAreaInsets } = result
+        this.setState({ safeAreaInsets })
+      })
+  }
 
-      </PageLayout>
+  componentDidMount() {
+    // Add event listener
+    SafeArea.default.__proto__.addEventListener('safeAreaInsetsForRootViewDidChange', this.onSafeAreaInsetsForRootViewChange)
+  }
+
+  componentWillUnmount() {
+    // Remove event listener
+    SafeArea.default.__proto__.removeEventListener('safeAreaInsetsForRootViewDidChange', this.onSafeAreaInsetsForRootViewChange)
+  }
+
+  onSafeAreaInsetsForRootViewChange = (result: { safeAreaInsets: SafeAreaInsets }) => {
+    const { safeAreaInsets } = result
+    this.setState({ safeAreaInsets })
+  }
+
+  render() {
+    const { safeAreaInsets } = this.state
+    return (
+      <View style={[{
+        marginTop: safeAreaInsets.top,
+        marginLeft: safeAreaInsets.left,
+        marginBottom: safeAreaInsets.bottom,
+        marginRight: safeAreaInsets.right,
+      }]}>
+        <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
+          <AddTodoModal
+            visible={this.state.isAddMode}
+            close={() => this.setState({ isAddMode: false })}
+          />
+          <Header />
+          <Filter
+            changeTodoList={() => this.setState({ isTodoList: true })}
+            changeCompletedList={() => this.setState({ isTodoList: false })}
+            isTodoList={this.state.isTodoList}
+          />
+          <DropdownAlert
+            ref={(ref) => this.dropdown = ref}
+            containerStyle={{
+              backgroundColor: "#2B73B6",
+            }}
+            startDelta={-100}
+            showCancel={true}
+            onClose={(data) => this.onClose(data)}
+            onCancel={(data) => this.onClose(data)}
+          />
+          {this.state.isTodoList ? (
+            <View>
+              <TodoList
+                dataSource={this.state.dataSource}
+                dropdownalert={(items) => this.showAlert(items)}
+                onPress={() => this.setState({ isAddMode: true })}
+                navigation={this.props.navigation}
+              />
+            </View>
+          ) : (
+              <CompletedList
+                dataSource={this.state.dataSource}
+                navigation={this.props.navigation}
+              />
+            )}
+
+        </PageLayout>
+      </View>
     )
   }
 }

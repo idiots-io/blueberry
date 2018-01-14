@@ -39,6 +39,7 @@
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B0116C9A1FFE047A00801297 /* tick-tock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0116C991FFE047A00801297 /* tick-tock.mp3 */; };
+		B024794A200BB5B300A1CD4B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0247949200BB5B300A1CD4B /* LaunchScreen.storyboard */; };
 		B0D5F74C1FD5A38C00EE1118 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = B0D5F74B1FD5A38C00EE1118 /* Fonts */; };
 		D074ED1FD9294440B903B4F0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DEDDAF4B70554C78ABA1DBE7 /* libRNSound.a */; };
 		D6274E29C76E40D7A86AD683 /* libRNSafeArea.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A675C2F15E84345A5184816 /* libRNSafeArea.a */; };
@@ -370,6 +371,7 @@
 		AC68F2BAA9E14298A495B6E2 /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B0116C991FFE047A00801297 /* tick-tock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "tick-tock.mp3"; path = "../src/sound/tick-tock.mp3"; sourceTree = "<group>"; };
+		B0247949200BB5B300A1CD4B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B0D5F74B1FD5A38C00EE1118 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		C4AB3546FE744AF2AFB5870E /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		DEDDAF4B70554C78ABA1DBE7 /* libRNSound.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSound.a; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B0247949200BB5B300A1CD4B /* LaunchScreen.storyboard */,
 			);
 			name = blueberry;
 			sourceTree = "<group>";
@@ -1170,6 +1173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				B024794A200BB5B300A1CD4B /* LaunchScreen.storyboard in Resources */,
 				B0116C9A1FFE047A00801297 /* tick-tock.mp3 in Resources */,
 				B0D5F74C1FD5A38C00EE1118 /* Fonts in Resources */,
 			);
