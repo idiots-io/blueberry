@@ -90,7 +90,7 @@ class TodoComponent extends React.Component<
         ),
       })
     }
-    if (prevProps.completedTodos.length !== this.props.completedTodos.length) {
+    if (prevProps.completedTodos.length !== this.props.completedTodos.length && this.state.isTodoList) {
       console.log('is changed to done')
       this.setState({
         dataSource: this.state.ds.cloneWithRowsAndSections(
@@ -98,6 +98,13 @@ class TodoComponent extends React.Component<
             _.filter(this.props.todos, todo => !todo.isDone),
             'createdAt',
           ),
+        ),
+      })
+    }
+    if (prevProps.completedTodos.length !== this.props.completedTodos.length && !this.state.isTodoList) {
+      this.setState({
+        dataSource: this.state.ds.cloneWithRowsAndSections(
+          _.groupBy(_.filter(this.props.todos, (todo) => todo.isDone), 'createdAt'),
         ),
       })
     }
@@ -160,9 +167,9 @@ class TodoComponent extends React.Component<
             backgroundColor: '#2B73B6',
           }}
           startDelta={-100}
-          showCancel={true}
-          onClose={data => this.onClose(data)}
-          onCancel={data => this.onClose(data)}
+          showCancel={false}
+          onClose={(data) => this.onClose(data)}
+          onCancel={(data) => this.onClose(data)}
         />
         {this.state.isTodoList ? (
           <View>
