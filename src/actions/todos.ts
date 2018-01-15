@@ -12,3 +12,10 @@ export const completedTodo = (id) => ({
   type: 'COMPLETED_TODOS',
   payload: id
 })
+
+export const getSafeAreaMargin = (margin) => {
+  return {
+    type: 'GET_MARGIN',
+    payload: margin,
+  }
+};

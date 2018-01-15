@@ -36,6 +36,7 @@ const DEFAULT_STATE: State = {
       value: 'Alarm clock',
     },
   },
+  safeArea: 0
 }
 
 export interface Session {
@@ -79,6 +80,7 @@ export interface State {
   sessions: Session[]
   todos: Todo[]
   settings: Setting
+  safeArea: number
 }
 
 export interface Action {
@@ -109,6 +111,12 @@ export default (state = DEFAULT_STATE, action: Action) => {
 
     return {
       ...state,
+    }
+  }
+  if (action.type === 'GET_MARGIN') {
+    return {
+      ...state,
+      safeArea: action.payload
     }
   }
   if (action.type === 'ADD_SESSION') {
