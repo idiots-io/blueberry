@@ -119,6 +119,15 @@ export default (state = DEFAULT_STATE, action: Action) => {
       safeArea: action.payload
     }
   }
+  if (action.type === 'UNDO_IS_DONE') {
+    const undoTodoIndex = state.todos.map(
+      todo => todo.id).indexOf(action.payload)
+    state.todos[undoTodoIndex].isDone = false
+
+    return {
+      ...state,
+    }
+  }
   if (action.type === 'ADD_SESSION') {
     return {
       ...state,

@@ -4,16 +4,17 @@ import {
   View,
   Image,
   StyleSheet,
-  Dimensions
+  Dimensions,
+  TouchableOpacity
 } from 'react-native'
 import TodoListItem from '../components/TodoListItem'
 import TodoListSectionHeader from '../components/TodoListSectionHeader'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import { mainColor } from '../config'
 import { connect } from 'react-redux'
-import { Todo } from '../reducers'
+import { Todo, Action } from '../reducers'
+import { undoIsDone } from '../actions/todos'
 import { fontFamily } from '../config'
-
 
 namespace CompletedListComponent {
   export interface Props {
@@ -21,6 +22,7 @@ namespace CompletedListComponent {
     dataSource: any
     isTodoList: boolean
     navigation: Object
+    undoIsDone: (id: number) => Action
   }
 }
 
@@ -28,6 +30,12 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
   constructor(props) {
     super(props)
   }
+
+  _undoIsDone = (id, secId, rowId, rowMap) => {
+    rowMap[`${secId}${rowId}`].closeRow()
+    this.props.undoIsDone(id)
+  }
+
   render() {
     return (
       this.props.dataSource.length === 0 ? (
@@ -56,10 +64,33 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
                 navigation={this.props.navigation}
               />
             )}
-            disableRightSwipe
             renderSectionHeader={(_, category) => (
               <TodoListSectionHeader date={category} />
             )}
+            renderHiddenRow={(data, secId, rowId, rowMap) => (
+              <View
+                style={{
+                  alignItems: 'center',
+                  flex: 1,
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  height: 50,
+                }}
+              >
+                <View style={{ backgroundColor: mainColor.light, flex: 0.2, height: 75, alignItems: 'center', justifyContent: 'center' }}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => this._undoIsDone(data.id, secId, rowId, rowMap)}
+                  >
+                    {console.log(data, secId, rowId, rowMap)}
+                    <Image
+                      source={require('../assets/Todo/back.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </ View>
+            )}
+            rightOpenValue={-75}
           />
         )
 
@@ -84,9 +115,15 @@ const styles = StyleSheet.create({
   },
 })
 
+const mapDispatchToProps = (dispatch: any): any => {
+  return {
+    undoIsDone: id => dispatch(undoIsDone(id)),
+  }
+}
+
 export default connect(
   state => ({
     todos: state.app.todos,
   }),
-  undefined,
+  mapDispatchToProps,
 )(CompletedList)

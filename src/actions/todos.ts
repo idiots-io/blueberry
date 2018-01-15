@@ -19,3 +19,7 @@ export const getSafeAreaMargin = (margin) => {
     payload: margin,
   }
 };
+export const undoIsDone = (id) => ({
+  type: 'UNDO_IS_DONE',
+  payload: id
+})
