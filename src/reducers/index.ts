@@ -1,11 +1,11 @@
 import { times, sample } from 'lodash'
-import * as moment from 'moment'
+import moment from 'moment'
 
 const DEFAULT_STATE: State = {
   sessions: times(40, num => ({
     id: num.toString(),
     duration: moment.duration(num, 'm'),
-    createdAt: new Date(),
+    createdAt: moment().add(sample([-6, -5, -4, -3, -2, -1, 0]), 'days'),
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
   todos: times(4, num => ({
@@ -41,7 +41,7 @@ const DEFAULT_STATE: State = {
 export interface Session {
   id: string
   duration: moment.Duration
-  createdAt: Date
+  createdAt: moment.Moment
   todoId: string
 }
 
@@ -94,17 +94,16 @@ export default (state = DEFAULT_STATE, action: Action) => {
     }
   }
   if (action.type === 'DELETE_TODOS') {
-    const deleteTodo = state.todos.filter(
-      todo => todo.id !== action.payload,
-    )
+    const deleteTodo = state.todos.filter(todo => todo.id !== action.payload)
     return {
       ...state,
-      todos: [...deleteTodo]
+      todos: [...deleteTodo],
     }
   }
   if (action.type === 'COMPLETED_TODOS') {
-    const completedTodoIndex = state.todos.map(
-      todo => todo.id).indexOf(action.payload)
+    const completedTodoIndex = state.todos
+      .map(todo => todo.id)
+      .indexOf(action.payload)
     state.todos[completedTodoIndex].isDone = true
 
     return {
@@ -112,8 +111,9 @@ export default (state = DEFAULT_STATE, action: Action) => {
     }
   }
   if (action.type === 'UNDO_IS_DONE') {
-    const undoTodoIndex = state.todos.map(
-      todo => todo.id).indexOf(action.payload)
+    const undoTodoIndex = state.todos
+      .map(todo => todo.id)
+      .indexOf(action.payload)
     state.todos[undoTodoIndex].isDone = false
 
     return {

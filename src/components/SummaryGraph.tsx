@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Dimensions } from 'react-native'
+import { connect } from 'react-redux'
 import {
   VictoryLine,
   VictoryAxis,
@@ -12,10 +13,12 @@ import moment from 'moment'
 
 const SummaryGraph = ({
   mode = 'day',
+  sessions,
 }: // currentDate,
 {
   mode: string
   currentDate: any
+  sessions: any
 }) => {
   let xAxisLabels: any = [6, 5, 4, 3, 2, 1, 0]
 
@@ -39,7 +42,27 @@ const SummaryGraph = ({
     )
   }
 
-  let yAxisValues = [2, 9, 7, 12, 3, 4, 11]
+  const convertToDuration = (
+    mode: string,
+  ): moment.unitOfTime.DurationConstructor => {
+    if (mode === 'day') return 'days'
+    if (mode === 'week') return 'weeks'
+    if (mode === 'month') return 'months'
+    return 'days' // Default mode is hours
+  }
+
+  let yAxisValues = [6, 5, 4, 3, 2, 1, 0].map(label => {
+    return sessions.filter(session =>
+      session.createdAt.isSame(
+        moment().subtract(label, convertToDuration(mode)),
+        mode,
+      ),
+    ).length
+  })
+
+  const maxYValue = Math.max(...yAxisValues, 15)
+
+  console.log(maxYValue)
 
   return (
     <View>
@@ -51,7 +74,8 @@ const SummaryGraph = ({
           left: 30,
           right: 50,
           bottom: 50,
-        }}>
+        }}
+      >
         <VictoryAxis
           style={{
             axis: { stroke: 'rgb(239, 243, 248)' }, // grid: { stroke: 'rgb(239, 243, 248)' },
@@ -89,7 +113,7 @@ const SummaryGraph = ({
         />
         <VictoryBar
           style={{ data: { fill: 'rgba(55, 127, 216, 0.2)', width: 20 } }}
-          data={[{ x: xAxisLabels[6], y: 15 }]}
+          data={[{ x: xAxisLabels[6], y: maxYValue }]}
         />
         <VictoryScatter
           style={{
@@ -107,4 +131,6 @@ const SummaryGraph = ({
   )
 }
 
-export default SummaryGraph
+export default connect(state => ({
+  sessions: state.app.sessions,
+}))(SummaryGraph)

@@ -6,24 +6,25 @@ import SummaryGraph from '../components/SummaryGraph'
 import SummaryMeta from '../components/SummaryMeta'
 import GraphModeSelector from '../components/GraphModeSelector'
 import { View, Image } from 'react-native'
+import { connect } from 'react-redux'
 import moment from 'moment'
 
 namespace Summary {
-  export interface Props {}
+  export interface Props {
+    sessionsCount: number
+    todosCount: number
+  }
   export interface State {
     selectedMode: string
     currentDate: any
   }
 }
 
-export default class Summary extends React.Component<
-  Summary.Props,
-  Summary.State
-> {
+class Summary extends React.Component<Summary.Props, Summary.State> {
   constructor(props) {
     super(props)
     this.state = {
-      currentDate: moment(),
+      currentDate: moment().format('YYYY.MM.DD'),
       selectedMode: 'day',
     }
   }
@@ -41,7 +42,8 @@ export default class Summary extends React.Component<
           justifyContent: 'center',
           alignItems: 'center',
           marginBottom: 5,
-        }}>
+        }}
+      >
         {focused ? (
           <Image
             source={require('../assets/Summary/summary_active.png')}
@@ -57,14 +59,28 @@ export default class Summary extends React.Component<
     ),
   }
 
+  goToNextDay = () => {
+    this.setState({
+      currentDate: moment(this.state.currentDate)
+        .add(1, 'days')
+        .format('YYYY.MM.DD'),
+    })
+  }
+  goToPrevDay = () => {
+    this.setState({
+      currentDate: moment(this.state.currentDate)
+        .add(-1, 'days')
+        .format('YYYY.MM.DD'),
+    })
+  }
   render() {
     return (
       <PageLayout statusBarBackgroundColor="white">
         <Header />
         <DateSelector
-          currentDate={moment().format('YYYY.MM.DD')}
-          onNextDayClick={() => console.log('Go to next date')}
-          onPrevDayClick={() => console.log('Go to previous date')}
+          currentDate={this.state.currentDate}
+          onNextDayClick={this.goToNextDay}
+          onPrevDayClick={this.goToPrevDay}
           selectedMode={this.state.selectedMode}
         />
         <GraphModeSelector
@@ -78,11 +94,16 @@ export default class Summary extends React.Component<
           currentDate={this.state.currentDate}
         />
         <SummaryMeta
-          sessionsCount={121}
-          blueberriesCount={3212}
+          todosCount={this.props.todosCount}
+          blueberriesCount={this.props.sessionsCount}
           totalTime="99시간 40분"
         />
       </PageLayout>
     )
   }
 }
+
+export default connect(state => ({
+  sessionsCount: state.app.sessions.length,
+  todosCount: state.app.todos.length,
+}))(Summary)

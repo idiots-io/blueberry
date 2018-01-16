@@ -3,10 +3,10 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import { subColor, fontColor } from '../config'
 
 const SummaryMeta = ({
-  sessionsCount,
+  todosCount,
   blueberriesCount,
 }: {
-  sessionsCount: number
+  todosCount: number
   blueberriesCount: number
   totalTime?: string
 }) => (
@@ -32,7 +32,7 @@ const SummaryMeta = ({
         <Text style={styles.labelText}>블루베리</Text>
       </View>
       <View style={styles.itemWrapper}>
-        <Text style={styles.valueText}>{sessionsCount}</Text>
+        <Text style={styles.valueText}>{todosCount}</Text>
         <Text style={styles.labelText}>완료</Text>
       </View>
       <View style={styles.totalTimeWrapper}>
