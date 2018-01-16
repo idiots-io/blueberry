@@ -10,7 +10,7 @@ import {
 import { NavigationNavigatorProps } from 'react-navigation'
 import { connect } from 'react-redux'
 import LinearGradient from 'react-native-linear-gradient'
-import * as moment from 'moment'
+import moment from 'moment'
 import uuid from 'uuid/v4'
 import { filter } from 'lodash'
 import Sound from 'react-native-sound'
