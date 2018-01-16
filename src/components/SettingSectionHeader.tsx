@@ -4,7 +4,6 @@ import { StyleSheet, View, Image } from 'react-native'
 
 const SettingSectionHeader = ({ section }) => (
   <View style={styles.listItemWrapper}>
-    {/* {console.log(section)} */}
     {section == 'intervalSection' ? (
       <Image source={require('../assets/Settings/sectionFirst.png')} />
     ) : (

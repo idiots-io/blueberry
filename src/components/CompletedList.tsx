@@ -82,7 +82,6 @@ class CompletedList extends Component<CompletedListComponent.Props, {}> {
                     activeOpacity={0.8}
                     onPress={() => this._undoIsDone(data.id, secId, rowId, rowMap)}
                   >
-                    {console.log(data, secId, rowId, rowMap)}
                     <Image
                       source={require('../assets/Todo/back.png')}
                     />
