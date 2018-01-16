@@ -99,6 +99,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
         {this.props.timers[this.state.selectedTimerIndex].todo.title}
       </Text>
       <Carousel
+        removeClippedSubviews={false}
         style={styles.carousel}
         sliderWidth={Dimensions.get('window').width}
         itemWidth={Dimensions.get('window').width * 0.5}
