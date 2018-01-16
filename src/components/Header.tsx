@@ -1,12 +1,13 @@
 import React from 'react'
+import moment from 'moment'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { fontColor } from '../config'
 import { connect } from 'react-redux'
-import { Todo } from '../reducers'
+import { Session } from '../reducers'
 
 namespace HeaderComponent {
   export interface Props {
-    todos: Todo[]
+    todaySessions: Session[]
   }
 }
 
@@ -21,7 +22,7 @@ class Header extends React.Component<HeaderComponent.Props, {}> {
         <Text style={styles.headerText}>
           오늘{' '}
           <Text style={{ color: fontColor.blue }}>
-            뽀모도로 <Text style={{ fontWeight: 'bold' }}>{this.props.todos.length}</Text>
+            뽀모도로 <Text style={{ fontWeight: 'bold' }}>{this.props.todaySessions.length}</Text>
           </Text>
         </Text>
       </View>
@@ -47,6 +48,8 @@ const styles = StyleSheet.create({
 
 export default connect(
   state => ({
-    todos: state.app.todos,
+    todaySessions: state.app.sessions.filter((session: Session) => (
+      moment(session.createdAt).isSame(new Date(), 'day')
+    ))
   }), undefined
 )(Header)
