@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    width: Dimensions.get('window').width * .8,
+    width: Dimensions.get('window').width * .7,
     fontFamily: fontFamily.regular,
     fontSize: 16,
     color: fontColor.dark,
