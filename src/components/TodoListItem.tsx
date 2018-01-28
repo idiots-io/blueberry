@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, Dimensions } from 'react-native'
 import { fontColor, mainColor, fontFamily, subColor } from '../config'
 import * as Animatable from 'react-native-animatable';
 
@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    width: Dimensions.get('window').width * .7,
     fontFamily: fontFamily.regular,
     fontSize: 16,
     color: fontColor.dark,

@@ -5,12 +5,13 @@ import {
   Modal,
   Text,
   Image,
+  ImageBackground,
   TextInput,
   KeyboardAvoidingView,
   TouchableOpacity,
   Dimensions,
 } from 'react-native'
-import { mainColor } from '../config'
+import { mainColor, fontFamily, fontColor } from '../config'
 import { connect } from 'react-redux'
 import { addTodo } from '../actions/todos'
 import * as moment from 'moment'
@@ -59,57 +60,86 @@ class AddTodoModal extends React.Component<
       >
         <View style={styles.modalBox}>
           <View style={styles.contentsAlign}>
-            <TouchableOpacity activeOpacity={0.8} onPress={this.props.close}>
-              <Image
-                source={require('../assets/Todo/close.png')}
-                style={{ position: 'absolute', right: 0, top: 15 }}
-              />
-            </TouchableOpacity>
-            <View style={{ marginTop: 20, marginLeft: 15 }}>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={{ color: 'white' }}>
-                  {moment.utc().format('L')}{' '}
-                </Text>
-                <Text style={{ color: 'white' }}>
-                  {moment.utc().format('dddd')}
-                </Text>
-              </View>
-              <TextInput
-                style={{
-                  height: Dimensions.get('window').height - 150,
-                  fontSize: 40,
-                  color: 'white',
-                  marginTop: 25,
-                }}
-                placeholder=" 할일 추가"
-                onChangeText={text => this.setState({ text })}
-                editable={true}
-                multiline={true}
-                autoFocus={true}
-                placeholderTextColor="#9CB9EF"
-                // maxLength={40}
-                numberOfLines={4}
-              />
-            </View>
-            <KeyboardAvoidingView behavior="position">
+            <View style={{
+              marginHorizontal: 20,
+              marginVertical: 20,
+            }}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => this.addTodo()}
-              >
+                onPress={this.props.close}
+                style={{ width: 20, height: 20, position: 'absolute', right: 0, top: 15 }}>
                 <Image
-                  source={require('../assets/Todo/addBlueberry.png')}
-                  style={{ right: 0, position: 'absolute', bottom: 0 }}
+                  source={require('../assets/Todo/close.png')}
                 />
               </TouchableOpacity>
+              <View style={{ marginTop: 25 }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={{ color: 'white' }}>
+                    {moment.utc().format('L')}{' '}
+                  </Text>
+                  <Text style={{ color: 'white' }}>
+                    {moment.utc().format('dddd')}
+                  </Text>
+                </View>
+                <TextInput
+                  style={{
+                    height: (Dimensions.get('window').height - 150) / 2,
+                    fontSize: 40,
+                    color: 'white',
+                    marginTop: 5,
+                  }}
+                  placeholder=" 할일 추가"
+                  onChangeText={text => this.setState({ text })}
+                  editable={true}
+                  multiline={true}
+                  autoFocus={true}
+                  placeholderTextColor="#9CB9EF"
+                  // maxLength={40}
+                  numberOfLines={4}
+                />
+              </View>
+            </View>
+            <KeyboardAvoidingView behavior="position">
+              <View style={styles.btnAlign}>
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => this.addTodo()}
+                >
+                  <ImageBackground
+                    style={styles.btnWrapper}
+                    source={require('../assets/Todo/modalAddBtn.png')} >
+                    <Text style={styles.addTodoText}>추가하기</Text>
+                  </ImageBackground>
+                </TouchableOpacity>
+              </View>
             </KeyboardAvoidingView>
           </View>
         </View>
-      </Modal>
+      </Modal >
     )
   }
 }
 
 const styles = StyleSheet.create({
+  btnAlign: {
+    left: (Dimensions.get('window').width - 256) / 2,
+  },
+  btnWrapper: {
+    width: 226,
+    height: 50,
+    bottom: 30,
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addTodoText: {
+    fontFamily: fontFamily.light,
+    letterSpacing: -0.3,
+    backgroundColor: 'transparent',
+    marginBottom: 4,
+    color: fontColor.blue,
+    fontSize: 16
+  },
   modalBox: {
     backgroundColor: mainColor.default,
     height: Dimensions.get('window').height,
@@ -122,11 +152,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     marginVertical: 15,
     justifyContent: 'space-between',
-  },
-  addTodoText: {
-    marginTop: 5,
-    color: 'white',
-    fontSize: 18,
   },
 })
 
