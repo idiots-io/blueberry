@@ -1,73 +1,76 @@
 {
-	"name": "blueberry",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"precommit": "lint-staged",
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest",
-		"tsc": "tsc",
-		"clean": "rimraf artifacts",
-		"build": "npm run clean && gulp && npm run tsc --",
-		"watch": "npm run build -- -w",
-		"start:ios": "npm run build && concurrently -r 'npm run watch' 'react-native run-ios'"
-	},
-	"lint-staged": {
-		"*.{ts,tsx}": [
-			"prettier --write",
-			"tslint --fix -c tslint.json -p tsconfig.json",
-			"git add"
-		]
-	},
-	"dependencies": {
-		"gulp": "^3.9.1",
-		"lodash": "^4.17.4",
-		"moment": "^2.19.2",
-		"react": "16.0.0-beta.5",
-		"react-native": "0.49.5",
-		"react-native-animatable": "^1.2.4",
-		"react-native-dropdownalert": "^3.1.2",
-		"react-native-linear-gradient": "^2.3.0",
-		"react-native-modal": "^4.1.1",
-		"react-native-progress": "^3.4.0",
-		"react-native-snap-carousel": "^3.4.0",
-		"react-native-svg": "5.4.1",
-		"react-native-sound": "^0.10.4",
-		"react-native-swipe-list-view": "^0.4.6",
-		"react-navigation": "^1.0.0-beta.15",
-		"react-redux": "^5.0.6",
-		"redux": "^3.7.2",
-		"redux-logger": "^3.0.6",
-		"redux-persist": "^5.2.0",
-		"victory-native": "^0.16.1"
-	},
-	"devDependencies": {
-		"@types/jest": "^21.1.5",
-		"@types/lodash": "^4.14.85",
-		"@types/moment": "^2.13.0",
-		"@types/react": "^16.0.19",
-		"@types/react-native": "^0.49.5",
-		"@types/react-native-linear-gradient": "^2.3.0",
-		"@types/react-native-modal": "^3.1.1",
-		"@types/react-native-snap-carousel": "^2.4.0",
-		"@types/react-navigation": "^1.0.22",
-		"babel-jest": "21.2.0",
-		"babel-preset-react-native": "4.0.0",
-		"concurrently": "^3.5.0",
-		"jest": "21.2.1",
-		"prettier": "^1.8.2",
-		"react-test-renderer": "16.0.0-beta.5",
-		"rimraf": "^2.6.2",
-		"tslint": "^5.8.0",
-		"tslint-config-prettier": "^1.6.0",
-		"typescript": "^2.5.3"
-	},
-	"jest": {
-		"preset": "react-native"
-	},
-	"prettier": {
-		"semi": false,
-		"trailingComma": "all",
-		"singleQuote": true
-	}
+  "name": "blueberry",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "precommit": "lint-staged",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "tsc": "tsc",
+    "clean": "rimraf artifacts",
+    "build": "npm run clean && gulp && npm run tsc --",
+    "watch": "npm run build -- -w",
+    "start:ios":
+      "npm run build && concurrently -r 'npm run watch' 'react-native run-ios'",
+    "build:ios":
+      "react-native bundle --entry-file='./artifacts/index.js' --bundle-output='./ios/blueberry/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "tslint --fix -c tslint.json -p tsconfig.json",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.2",
+    "react": "16.0.0-beta.5",
+    "react-native": "0.49.5",
+    "react-native-animatable": "^1.2.4",
+    "react-native-dropdownalert": "^3.1.2",
+    "react-native-linear-gradient": "^2.3.0",
+    "react-native-modal": "^4.1.1",
+    "react-native-progress": "^3.4.0",
+    "react-native-snap-carousel": "^3.4.0",
+    "react-native-svg": "5.4.1",
+    "react-native-sound": "^0.10.4",
+    "react-native-swipe-list-view": "^0.4.6",
+    "react-navigation": "^1.0.0-beta.15",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.2.0",
+    "victory-native": "^0.16.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.5",
+    "@types/lodash": "^4.14.85",
+    "@types/moment": "^2.13.0",
+    "@types/react": "^16.0.19",
+    "@types/react-native": "^0.49.5",
+    "@types/react-native-linear-gradient": "^2.3.0",
+    "@types/react-native-modal": "^3.1.1",
+    "@types/react-native-snap-carousel": "^2.4.0",
+    "@types/react-navigation": "^1.0.22",
+    "babel-jest": "21.2.0",
+    "babel-preset-react-native": "4.0.0",
+    "concurrently": "^3.5.0",
+    "jest": "21.2.1",
+    "prettier": "^1.8.2",
+    "react-test-renderer": "16.0.0-beta.5",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.5.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "prettier": {
+    "semi": false,
+    "trailingComma": "all",
+    "singleQuote": true
+  }
 }
