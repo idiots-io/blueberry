@@ -8,12 +8,32 @@ const DEFAULT_STATE: State = {
     createdAt: moment().add(sample([-6, -5, -4, -3, -2, -1, 0]), 'days'),
     todoId: sample([0, 1, 2, 3]).toString(),
   })),
-  todos: times(4, num => ({
-    id: num.toString(),
-    title: `Todo #${num}`,
-    isDone: num % 2 === 0,
-    createdAt: new Date(),
-  })),
+  todos: [
+    {
+      id: '0',
+      title: '당신의 작은 성공을 응원합니다! ^-^',
+      isDone: false,
+      createdAt: new Date(),
+    },
+    {
+      id: '1',
+      title: '블루베리(할 일)를 먼저 등록하세요!',
+      isDone: false,
+      createdAt: new Date(),
+    },
+    {
+      id: '2',
+      title: '블루베리를 선택하시고 세션을 진행하세요',
+      isDone: false,
+      createdAt: new Date(),
+    },
+    {
+      id: '3',
+      title: '완료된 할일은 이렇게 완료 처리를 해주세요',
+      isDone: true,
+      createdAt: new Date(),
+    },
+  ],
   settings: {
     workInterval: {
       labelKor: '블루베리 시간',

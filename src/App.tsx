@@ -14,9 +14,9 @@ import { subColor } from './config'
 
 const MainNavigator = TabNavigator(
   {
-    Summary: { screen: Summary },
     Todo: { screen: Todo },
     Work: { screen: Work },
+    Summary: { screen: Summary },
     Settings: { screen: Settings },
   },
   {
