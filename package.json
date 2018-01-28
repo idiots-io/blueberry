@@ -13,7 +13,7 @@
     "start:ios":
       "npm run build && concurrently -r 'npm run watch' 'react-native run-ios'",
     "build:ios":
-      "react-native bundle --entry-file='./artifacts/index.js' --bundle-output='./ios/blueberry/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
+      "react-native bundle --entry-file='./artifacts/index.js' --bundle-output='./ios/blueberry/main.jsbundle' --dev=false --platform='ios' --assets-dest='./'"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
