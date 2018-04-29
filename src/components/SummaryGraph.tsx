@@ -62,8 +62,6 @@ const SummaryGraph = ({
 
   const maxYValue = Math.max(...yAxisValues, 15)
 
-  console.log(maxYValue)
-
   return (
     <View>
       <VictoryChart

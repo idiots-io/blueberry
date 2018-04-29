@@ -35,7 +35,7 @@ namespace WorkPage {
 }
 
 class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
-  s: any;
+  s: any
   static navigationOptions = {
     tabBarIcon: ({ focused }) => (
       <View
@@ -51,11 +51,11 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
             style={{ height: 28, width: 28, marginTop: 8 }}
           />
         ) : (
-            <Image
-              source={require('../assets/Global/timer_default.png')}
-              style={{ height: 22, width: 22, marginTop: 5 }}
-            />
-          )}
+          <Image
+            source={require('../assets/Global/timer_default.png')}
+            style={{ height: 22, width: 22, marginTop: 5 }}
+          />
+        )}
       </View>
     ),
   }
@@ -66,11 +66,19 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     }
   }
 
-  componentDidUpdate(prevProps, { }) {
-    if (prevProps.navigation.state.params !== this.props.navigation.state.params) {
-      const todoIndex = this.props.navigation.state.params !== undefined ? findIndex(this.props.timers, e => e.todo.id === this.props.navigation.state.params.workId) : 0
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.navigation.state.params !== this.props.navigation.state.params
+    ) {
+      const todoIndex =
+        this.props.navigation.state.params !== undefined
+          ? findIndex(
+              this.props.timers,
+              e => e.todo.id === this.props.navigation.state.params.workId,
+            )
+          : 0
       this.setState({
-        selectedTimerIndex: todoIndex
+        selectedTimerIndex: todoIndex,
       })
     }
   }
@@ -93,8 +101,7 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
 
   _renderTimerSelector = () => (
     <View style={styles.pageWrapper}>
-      <View style={styles.createdDateText}>
-      </View>
+      <View style={styles.createdDateText} />
       <Text style={styles.titleText}>
         {this.props.timers[this.state.selectedTimerIndex].todo.title}
       </Text>
@@ -111,20 +118,18 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
         firstItem={this.state.selectedTimerIndex}
       />
       <StartWorkBtn
-        onPress={() => this.props.navigation.navigate('WorkModal', { timerIndex: this.state.selectedTimerIndex })}
+        onPress={() =>
+          this.props.navigation.navigate('WorkModal', {
+            timerIndex: this.state.selectedTimerIndex,
+          })
+        }
       />
     </View>
   )
 
   _renderNoTimersMessage = () => (
     <View style={styles.pageWrapper}>
-      <Text>
-        ( •̀_•́;)
-
-        앗.
-        할일부터
-        등록할까요?
-      </Text>
+      <Text>( •̀_•́;) 앗. 할일부터 등록할까요?</Text>
     </View>
   )
 
@@ -132,7 +137,9 @@ class WorkPage extends React.Component<WorkPage.Props, WorkPage.State> {
     return (
       <PageLayout statusBarBackgroundColor={'rgb(217, 217, 217)'}>
         <Header />
-        {this.props.timers.length ? this._renderTimerSelector() : this._renderNoTimersMessage()}
+        {this.props.timers.length
+          ? this._renderTimerSelector()
+          : this._renderNoTimersMessage()}
       </PageLayout>
     )
   }
@@ -189,7 +196,7 @@ const styles = StyleSheet.create<StyleTypes>({
     height: 50,
     width: 50,
     marginVertical: 15,
-  }
+  },
 })
 
 export default connect((state: { app: State }) => {
@@ -203,4 +210,4 @@ export default connect((state: { app: State }) => {
       return result
     }, []),
   }
-}, {})(WorkPage)
+}, null)(WorkPage)

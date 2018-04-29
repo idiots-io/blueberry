@@ -16,7 +16,7 @@ import { connect } from 'react-redux'
 import { addTodo } from '../actions/todos'
 import * as moment from 'moment'
 import 'moment/locale/ko'
-import uuid from 'uuid/v4'
+import uuidv4 from 'uuid/v4'
 
 namespace AddTodoModalComponent {
   export interface Props {
@@ -31,7 +31,7 @@ namespace AddTodoModalComponent {
 class AddTodoModal extends React.Component<
   AddTodoModalComponent.Props,
   AddTodoModalComponent.State
-  > {
+> {
   constructor(props) {
     super(props)
     this.state = {
@@ -40,7 +40,7 @@ class AddTodoModal extends React.Component<
   }
   addTodo = () => {
     this.props.addTodo({
-      id: uuid.v4(),
+      id: uuidv4(),
       title: this.state.text,
       isDone: false,
       createdAt: new Date(),
@@ -60,17 +60,24 @@ class AddTodoModal extends React.Component<
       >
         <View style={styles.modalBox}>
           <View style={styles.contentsAlign}>
-            <View style={{
-              marginHorizontal: 20,
-              marginVertical: 20,
-            }}>
+            <View
+              style={{
+                marginHorizontal: 20,
+                marginVertical: 20,
+              }}
+            >
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={this.props.close}
-                style={{ width: 20, height: 20, position: 'absolute', right: 0, top: 15 }}>
-                <Image
-                  source={require('../assets/Todo/close.png')}
-                />
+                style={{
+                  width: 20,
+                  height: 20,
+                  position: 'absolute',
+                  right: 0,
+                  top: 15,
+                }}
+              >
+                <Image source={require('../assets/Todo/close.png')} />
               </TouchableOpacity>
               <View style={{ marginTop: 25 }}>
                 <View style={{ flexDirection: 'row' }}>
@@ -107,7 +114,8 @@ class AddTodoModal extends React.Component<
                 >
                   <ImageBackground
                     style={styles.btnWrapper}
-                    source={require('../assets/Todo/modalAddBtn.png')} >
+                    source={require('../assets/Todo/modalAddBtn.png')}
+                  >
                     <Text style={styles.addTodoText}>추가하기</Text>
                   </ImageBackground>
                 </TouchableOpacity>
@@ -115,7 +123,7 @@ class AddTodoModal extends React.Component<
             </KeyboardAvoidingView>
           </View>
         </View>
-      </Modal >
+      </Modal>
     )
   }
 }
@@ -138,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginBottom: 4,
     color: fontColor.blue,
-    fontSize: 16
+    fontSize: 16,
   },
   modalBox: {
     backgroundColor: mainColor.default,
