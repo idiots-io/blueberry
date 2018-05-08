@@ -22,7 +22,10 @@ class Header extends React.Component<HeaderComponent.Props, {}> {
         <Text style={styles.headerText}>
           오늘{' '}
           <Text style={{ color: fontColor.blue }}>
-            뽀모도로 <Text style={{ fontWeight: 'bold' }}>{this.props.todaySessions.length}</Text>
+            블루베리{' '}
+            <Text style={{ fontWeight: 'bold' }}>
+              {this.props.todaySessions.length}
+            </Text>
           </Text>
         </Text>
       </View>
@@ -39,17 +42,18 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   headerText: {
-    color: fontColor.sub
-  }
+    color: fontColor.sub,
+  },
 })
 
 export default connect(
   state => ({
-    todaySessions: state.app.sessions.filter((session: Session) => (
-      moment(session.createdAt).isSame(new Date(), 'day')
-    ))
-  }), undefined
+    todaySessions: state.app.sessions.filter((session: Session) =>
+      moment(session.createdAt).isSame(new Date(), 'day'),
+    ),
+  }),
+  undefined,
 )(Header)
